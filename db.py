@@ -1,5 +1,7 @@
 import mysql.connector
 import random
+import webbrowser as wb
+import time
 
 def showCategories():
     conn = mysql.connector.connect(user='root', password='asdf12345', host='localhost', database='hommy')
@@ -35,3 +37,8 @@ if __name__ == '__main__':
     """res= showCategories()
     print(res)
     getChallenge("DEMO")"""
+    url= 'file:///D:/lorry/Documents/Atom/Repo%20Hommy/HOMMY/index.html'
+    wb.open(url)
+    time.sleep(3);
+    wb.open("https://www.google.it")
+
