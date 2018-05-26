@@ -14,14 +14,7 @@
 </head>
 <body>
     <div class="categories">
-        <h1>LISTA DELLE CATEGORIE</h1>
-        <ul>
-            {% for element in res['categories'] %}
-                <li>
-                    id: {{ element['id'] }} - name: {{ element['name'] }} - challenges: {{ element['n_chal'] }}
-                </li>
-            {% endfor %}
-        </ul>
+        <h1>{{ res }}</h1>
     </div>
 
 <!-- Latest compiled and minified JavaScript -->
