@@ -20,7 +20,7 @@ def showCategories():
 def getChallenge(category):
     conn = mysql.connector.connect(user='root', password='asdf12345', host='localhost', database='hommy')
     query1 = "SELECT nChallenges FROM categories WHERE name=%s"
-    query2 = "SELECT id, name, type FROM hommy.challenges WHERE id = %s"
+    query2 = "SELECT id, name, description, type FROM hommy.challenges WHERE id = %s"
 
     cursor = conn.cursor()
     cursor.execute(query1,(category,))
@@ -28,10 +28,23 @@ def getChallenge(category):
     rand = random.randint(1,nChal)
     cursor.execute(query2,(rand,))
     chal = cursor.fetchone()
+
+    cursor.close()
+    conn.close
     return chal
 
+def getChallenge2(id):
+    conn = mysql.connector.connect(user='root', password='asdf12345', host='localhost', database='hommy')
+    query = "SELECT id, name, description, type FROM hommy.challenges WHERE id = %s"
 
+    cursor = conn.cursor()
+    cursor.execute(query, (id,))
+    res =  cursor.fetchone()
 
+    cursor.close()
+    conn.close
+
+    return res
 
 if __name__ == '__main__':
     """res= showCategories()

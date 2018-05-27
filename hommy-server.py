@@ -31,6 +31,15 @@ def getChallenge(category):
     chal.append(res)
     return jsonify({'challenges': chal})
 
+@app.route('/getChallenge/<int:id>', methods=['GET'])
+def getChallenge2(id):
+    res = db.getChallenge2(id)
+    chal = []
+
+    res = prepare_chal_json(res)
+    chal.append(res)
+    return jsonify({'challenges': chal})
+
 def prepare_cat_json(item):
     cat = dict()
     cat['name'] = item[0]
@@ -41,7 +50,8 @@ def prepare_chal_json(item):
     chal = dict()
     chal['id'] = item[0]
     chal['name'] = item[1]
-    chal['type'] = item[2]
+    chal['description'] = item[2]
+    chal['type'] = item[3]
     return chal
 
     return cat
