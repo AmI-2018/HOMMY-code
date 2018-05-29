@@ -1,0 +1,71 @@
+body,html{
+  width: 100%;
+  height: 100%;
+}
+h2{
+  color: red; font-weight: 500; font: Gugi; font-size: 50px;
+}
+#sfondo{
+  background: url(../Imgs/bg.jpg);
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  color: white;
+}
+.col-md-3{
+  top: 250px;
+}
+.col-md-9{
+  left: 20px;
+  top: 150px;
+}
+
+.name{
+  color: white; font-style: normal; font-weight: bold; font-family: "gugi"; font-size: 70px;
+  position: absolute;
+    left: 30px;
+    top: 40px;
+  }
+
+.bar{
+  width: 50px;
+  height: auto;
+  position: absolute;
+  top: 70px;
+  right: 50px;
+
+}
+
+.bar2{
+  width: 50px;
+  height: auto;
+  position: absolute;
+  top: 120px;
+  right: 50px;
+
+}
+
+.bar3{
+  width: 50px;
+  height: auto;
+  position: absolute;
+  top: 170px;
+  right: 50px;
+
+}
+
+
+.player{
+  width: 50px;
+  height: auto;
+  position: absolute;
+  top: 15px;
+  right: 50px;
+}
+
+.playername{
+  color: yellow; position:absolute; font-style: normal; font-weight: bold; font: "Gugi";
+  font-size: 35px;
+
+  right: 150px;
+  top: 20px;
