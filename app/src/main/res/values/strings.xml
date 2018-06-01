@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Login-register form</string>
+    <string name="user">Username</string>
+    <string name="psw">Password</string>
+    <string name="logo">hommy_logo</string>
+    <string name="login">Login</string>
+    <string name="register">or Create an Account here!</string>
+    <string name="join">Join Game</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+</resources>
