@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, jsonify
+from flask import Flask, render_template, url_for, redirect, jsonify, request
 import db
 app = Flask(__name__)
 
@@ -40,10 +40,34 @@ def getChallenge2(id):
     chal.append(res)
     return jsonify({'challenges': chal})
 
+@app.route('/login', methods=['POST'])
+def login():
+    json = request.json
+
+    if (json is not None) and ('username' in json) and ('psw' in json):
+        res = db.getUserInfo(json['username'], json['psw'])
+        if res is not None:
+            return jsonify(prepare_user_json(res))
+        return "WRONG"
+
+    return "ERROR JSON"
+
+@app.route('/signin', methods=['POST'])
+def signin():
+    json = request.json
+    print(json)
+    if (json is not None) and ('username' in json) and ('psw' in json) and ('birth' in json):
+        #res = db.registerUser(json['username'], json['psw'], json['birth'], json['genre'])
+        return db.registerUser(json['username'], json['psw'], json['birth'], json['genre'])
+
+    return "ERROR JSON"
+
 def prepare_cat_json(item):
     cat = dict()
-    cat['name'] = item[0]
-    cat['n_chal'] = item[1]
+    cat['id'] = item[0]
+    cat['name'] = item[1]
+    cat['n_chal'] = item[2]
+    cat['disabled'] = item[3]
     return cat
 
 def prepare_chal_json(item):
@@ -54,7 +78,14 @@ def prepare_chal_json(item):
     chal['type'] = item[3]
     return chal
 
-    return cat
+def prepare_user_json(item):
+    user = dict()
+    user['username'] = item[0]
+    user['age'] = item[1]
+    user['genre'] = item[2]
+    user['challengeWon'] = item[3]
+    user['mostPlayedCat'] = item[4]
+    return user
 
 if __name__ == '__main__':
     app.run()
