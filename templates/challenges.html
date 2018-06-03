@@ -13,11 +13,9 @@
     <title>HOMMY</title>
 </head>
 <body>
-    <!--<audio controls autoplay loop id="music">
-        <source src="{{ url_for('static', filename='Hall Of Fame.mp3') }}" type="audio/mp3">
-    </audio>-->
+
     <div class="categories">
-        <h1>{{ res['challenges'][0]['name'] }} - {{ res['challenges'][0]['description'] }}</h1>
+        <h1 id="{{ res['challenges'][0]['id'] }}">{{ res['challenges'][0]['name'] }} - {{ res['challenges'][0]['description'] }}</h1>
 
         <button class="btn btn-primary" id="play">PLAY</button>
         <button class="btn btn-primary" id="stop">STOP</button>

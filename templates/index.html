@@ -10,26 +10,28 @@
 
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+  <!--<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">-->
   <link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet">
   <title>HOMMY</title>
 </head>
 
 <body>
-  <div class="categories">
-    <h1>Scegli Tra le seguenti categorie</h1>
-    <ul>
-      <div id="box">
+    {% if name == '' %}
+        <h1>HELLO</h1>
+    <form method="post" action="{{ url_for('login') }}">
+        <p>Username*: </p>
+        <input type="text" name="username">
+        <p>Password*: </p>
+        <input type="password" name="psw">
+        <input type="submit" value="Login">
+    </form>
+    {% else %}
+        <h1>HELLO {{ name }}</h1>
+        <form method="get" action="{{ url_for('logout') }}">
+            <input type=submit value=Logout hr>
+        </form>
+    {% endif %}
 
-        {% for element in res['categories'] %}
-            <li id="{{ element['name'] }}" disable="{{ element['disabled'] }}">
-                {{ element['name'] }} - ({{ element['n_chal'] }})
-            </li>
-        {% endfor %}
-
-      </div>
-    </ul>
-  </div>
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
