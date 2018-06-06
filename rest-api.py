@@ -1,60 +1,72 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session
-import requests, webbrowser, winsound as ws
+import requests, winsound as ws, threading, mythreads as mt
 
 app = Flask(__name__)
 app.secret_key = "alksjd@1'fjksjdh3mnjnrmajkr092i'#"
 ONLINE_SERVER = "http://127.0.0.1:5000"
 THIS_SERVER = "http://192.168.1.111:5000"
-players=[]
-admin=''
+MAX_PLAYERS = 8
+players = list()
+played_chal = [1,2,3,4]
+admin = ''
 
 @app.route('/')
-def hello_world():
-    username = session.get('username', '')
-    return render_template('index.html', name= username)
+def lobby():
+    return redirect(url_for('showPlayers'))
 
 
 @app.route('/categories')
 def categories():
     r = requests.get(ONLINE_SERVER + "/categories")
-    return render_template('categories.html', res = r.json())
+    return render_template('categories.html', res=r.json())
+
 
 @app.route('/viewChallenge/<challenge>')
 def viewChallenge(challenge):
     result = requests.get(ONLINE_SERVER + "/getChallenge/" + challenge)
     json = result.json()
 
-    return render_template('challenges.html', res = json)
+    return render_template('challenges.html', res=json)
+
 
 @app.route('/players')
 def showPlayers():
-    return render_template('players.html', players= players)
+    return render_template('lobby.html', players=players, admin=admin, n=len(players))
+
+
+@app.route('/endgame')
+def endgame():
+    return render_template('endgame.html')
+
 
 @app.route('/do/<int:challenge>')
 def do(challenge):
-    if(int(challenge) == 2):
+    if int(challenge)==2:
         ws.Beep(1000, 1000)
     return "success"
+
 
 @app.route('/login', methods=['POST'])
 def login():
     user = request.form['username']
     psw = request.form['psw']
     json = {'username': user, 'psw': psw}
-    result = requests.post(ONLINE_SERVER + "/login", json = json)
+    result = requests.post(ONLINE_SERVER + "/login", json=json)
 
     if result.text != "WRONG" and result.text != "ERROR JSON":
         session['username'] = user
-        return redirect(url_for('hello_world'))
+        return redirect(url_for('lobby'))
 
     return "USERNAME O PASSWORD ERRATI"
+
 
 @app.route('/logout')
 def logout():
     session.pop('username')
     return redirect(url_for('hello_world'))
 
-@app.route('/signin', methods = ['GET','POST'])
+
+@app.route('/signin', methods=['GET', 'POST'])
 def signin():
     if request.method == "GET":
         if session.get('username'):
@@ -71,35 +83,44 @@ def signin():
         res = requests.post(ONLINE_SERVER + "/signin", json=json)
         return res.text
 
-#MOBILE
+
+# MOBILE
 @app.route('/categoriesM')
 def categoriesM():
-
     result = requests.get(ONLINE_SERVER + "/categories")
-    webbrowser.open(THIS_SERVER + "/categories")
+    threading.Thread(target=mt.categories).start()
     return jsonify(result.json())
 
-#MOBILE
+
+# MOBILE
 @app.route('/getChallenge/<category>')
 def getChallenge(category):
-    r = requests.get(ONLINE_SERVER + "/getChallenge/" + category)
+    r = requests.post(ONLINE_SERVER + "/getChallenge/" + category, json={'list': played_chal})
+    if r.text == "-1":
+        threading.Thread(target=mt.endGame).start()
+        return "SFIDE TERMINATE"
     json = r.json()
-    webbrowser.open(THIS_SERVER + '/viewChallenge/' + str(json['challenges'][0]['id']))
+    chal_id = str(json['challenges'][0]['id'])
+    played_chal.append(int(chal_id))
+    threading.Thread(target=mt.challenge, args=(chal_id,)).start()
     return jsonify(r.json())
 
-#MOBILE
+
+# MOBILE
 @app.route('/join', methods=['POST'])
 def joinMatch():
+    global admin
     json = request.json
     if(json is None) or ('username' not in json):
         return "ERROR USER"
-    if len(players)==0:
+    if len(players) == 0:
         players.append(json['username'])
         admin = json['username']
+        threading.Thread(target=mt.players).start()
         return "ADMIN"
-    elif(len(players) < 8):
+    elif len(players) < MAX_PLAYERS:
         players.append(json['username'])
-        webbrowser.open(THIS_SERVER+"/players")
+        threading.Thread(target=mt.players).start()
     else:
         return "LIMITE GIOCATORI RAGGIUNTO"
     return "SUCCESS"
