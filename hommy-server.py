@@ -22,9 +22,12 @@ def categories():
 
     return jsonify({'categories': categories})
 
-@app.route('/getChallenge/<category>', methods=['GET'])
+@app.route('/getChallenge/<category>', methods=['POST'])
 def getChallenge(category):
-    res = db.getChallenge(category)
+    chal_list = request.json
+    res = db.getRandomChallenge(category, chal_list['list'])
+    if res == -1:
+        return str(res)
     chal = []
 
     res = prepare_chal_json(res)
@@ -33,7 +36,7 @@ def getChallenge(category):
 
 @app.route('/getChallenge/<int:id>', methods=['GET'])
 def getChallenge2(id):
-    res = db.getChallenge2(id)
+    res = db.getChallenge(id)
     chal = []
 
     res = prepare_chal_json(res)
@@ -57,7 +60,6 @@ def signin():
     json = request.json
     print(json)
     if (json is not None) and ('username' in json) and ('psw' in json) and ('birth' in json):
-        #res = db.registerUser(json['username'], json['psw'], json['birth'], json['genre'])
         return db.registerUser(json['username'], json['psw'], json['birth'], json['genre'])
 
     return "ERROR JSON"
@@ -81,7 +83,7 @@ def prepare_chal_json(item):
 def prepare_user_json(item):
     user = dict()
     user['username'] = item[0]
-    user['age'] = item[1]
+    user['birthDate'] = item[1]
     user['genre'] = item[2]
     user['challengeWon'] = item[3]
     user['mostPlayedCat'] = item[4]

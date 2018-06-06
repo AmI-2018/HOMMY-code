@@ -1,12 +1,20 @@
 import mysql.connector
 import random
-import webbrowser as wb
-import time
 
 userdb = 'root'
 pswdb = 'asdf12345'
 host = 'localhost'
 db = 'hommy'
+
+def chalQuery(query, n):
+    if(n!=0):
+        query = query + " WHERE id NOT IN (SELECT id FROM challenges WHERE id = %s"
+        for i in range(1,n):
+            query= query + " or id = %s"
+        query = query +')'
+
+    return query
+
 
 def showCategories():
     conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
@@ -21,23 +29,34 @@ def showCategories():
     conn.close()
     return result
 
-def getChallenge(category):
+
+def getRandomChallenge(category, chal_list):
+    chal = -1
     conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
     query1 = "SELECT nChallenges FROM categories WHERE name=%s"
-    query2 = "SELECT id, name, description, type FROM hommy.challenges WHERE id = %s"
+    query2 = "SELECT id, name, description, type FROM hommy.challenges"
+    query2 = chalQuery(query2, len(chal_list))
 
-    cursor = conn.cursor()
-    cursor.execute(query1,(category,))
-    nChal = int((cursor.fetchone())[0])
-    rand = random.randint(1,nChal)
-    cursor.execute(query2,(rand,))
-    chal = cursor.fetchone()
+    c1 = conn.cursor()
+    c1.execute(query1,(category,))
+    nChal = int((c1.fetchone())[0]) - len(chal_list)
+    c1.close()
+    contatore=0
+    if nChal != 0:
+        c2 = conn.cursor()
+        rand = random.randint(1,nChal)
+        if len(chal_list) == 0:
+            c2.execute(query2)
+        else:
+            c2.execute(query2,tuple(chal_list))
+        chal = c2.fetchall()
+        chal = chal[rand-1]
+        c2.close()
 
-    cursor.close()
-    conn.close
+    conn.close()
     return chal
 
-def getChallenge2(id):
+def getChallenge(id):
     conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
     query = "SELECT id, name, description, type FROM hommy.challenges WHERE id = %s"
 
@@ -46,13 +65,13 @@ def getChallenge2(id):
     res =  cursor.fetchone()
 
     cursor.close()
-    conn.close
+    conn.close()
 
     return res
 
 def getUserInfo(username, psw):
     conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
-    query = "SELECT username, age, genre, challengeWon, mostPlayedCat FROM profiles WHERE username = %s AND psw = %s"
+    query = "SELECT username, birthDate, genre, challengeWon, mostPlayedCat FROM profiles WHERE username = %s AND psw = %s"
 
     cursor = conn.cursor()
     cursor.execute(query,(username,psw))
@@ -83,14 +102,8 @@ def registerUser(username, psw, date, genre):
 
 
 if __name__ == '__main__':
-    """res= showCategories()
-    print(res)
-    getChallenge("DEMO")
-    url= 'file:///D:/lorry/Documents/Atom/Repo%20Hommy/HOMMY/index.html'
-    wb.open(url)
-    time.sleep(3)
-    wb.open("https://www.google.it")"""
-
     #getUserInfo("lorry03","asdf12345")
-    print(registerUser("lorry96", "abdullah", "1996-12-25", "M"))
+    #print(registerUser("lorry96", "abdullah", "1996-12-25", "M"))
+    #print(getRandomChallenge("DEMO", [1,2]))
+    print(getRandomChallenge("DEMO", []))
 
