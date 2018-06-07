@@ -1,0 +1,80 @@
+body,html{
+  width: 100%;
+  height: 100%;
+}
+body{
+  background: url(../Imgs/bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+}
+ul{list-style: none; margin: 0 0; padding: 0 0;}
+.lead{font-size: 25px;}
+.waiting_room{margin: 4% 0;}
+.waiting_room h1{
+  font-family: 'Gugi', cursive;
+  color: white;
+  font-size: 55px;
+  margin: 0 10%;
+
+}
+#wifi{
+  height: 400px;
+}
+.waiting_room_form{
+  padding-top: 2%;
+  color: white;
+}
+.waiting_room_form h2{
+  font-family: 'Gugi', cursive;
+  color: #93DE74;
+  font-size: 40px;
+}
+.waiting_room_form li{
+  background-color: orange;
+  border-radius: 25px;
+}
+#admin{
+  height: 20px;
+  margin: 0 1%;
+  margin-bottom: 0.3%
+}
+.list{
+  margin: 5% 15%;
+  width: 70%;
+  text-align: center;
+}
+#buffering{
+  height: 50px;
+}
+#rate{
+  height: 150px;
+}
+.central_field{margin: 5% 0; text-align: center;}
+#join{background: #93DE74; color: white; border-radius: 30px; padding: 0 15px;}
+.setting{text-align: right;}
+.settings img{
+  height: 70px;
+  margin: 20px 0;
+}
+#logo{height: 70px; margin-bottom: 2%;}
+#pulse{height: 350px}
+#biglogo{height: 130px; margin: 0 50%;}
+
+.challenge_room{margin: 4% 0;}
+
+.name{
+  color: white; font-style: normal; font-weight: bold; font-family: "gugi"; font-size: 90px;
+  position: absolute;
+    left: 30px;
+    top: 40px;
+  }
+.challenge_room_form{
+    padding-top: 2%;
+    color: white;
+  }
+.challenge_room_form h2{
+    font-family: 'Gugi', cursive;
+    color: red;
+    font-size: 40px;
