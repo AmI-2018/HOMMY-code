@@ -23,7 +23,7 @@ def categories():
     return jsonify({'categories': categories})
 
 @app.route('/getChallenge/<category>', methods=['POST'])
-def getChallenge(category):
+def getRandomChallenge(category):
     chal_list = request.json
     res = db.getRandomChallenge(category, chal_list['list'])
     if res == -1:
@@ -35,13 +35,28 @@ def getChallenge(category):
     return jsonify({'challenges': chal})
 
 @app.route('/getChallenge/<int:id>', methods=['GET'])
-def getChallenge2(id):
+def getChallenge(id):
     res = db.getChallenge(id)
     chal = []
 
     res = prepare_chal_json(res)
     chal.append(res)
     return jsonify({'challenges': chal})
+
+
+@app.route('/getQuiz/<int:id>')
+def getRandomQuiz(id):
+    res = db.getRandomQuiz(id)
+    quiz = {
+        'q_id': res[0],
+        'question': res[1],
+        'answer': res[2],
+        'wrong1': res[3],
+        'wrong2': res[4],
+        'wrong3': res[5]
+    }
+    return jsonify(quiz)
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -78,6 +93,7 @@ def prepare_chal_json(item):
     chal['name'] = item[1]
     chal['description'] = item[2]
     chal['type'] = item[3]
+    chal['trivia'] = item[4]
     return chal
 
 def prepare_user_json(item):

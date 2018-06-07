@@ -34,14 +34,14 @@ def getRandomChallenge(category, chal_list):
     chal = -1
     conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
     query1 = "SELECT nChallenges FROM categories WHERE name=%s"
-    query2 = "SELECT id, name, description, type FROM hommy.challenges"
+    query2 = "SELECT id, name, description, type, trivia FROM hommy.challenges"
     query2 = chalQuery(query2, len(chal_list))
 
     c1 = conn.cursor()
     c1.execute(query1,(category,))
     nChal = int((c1.fetchone())[0]) - len(chal_list)
     c1.close()
-    contatore=0
+
     if nChal != 0:
         c2 = conn.cursor()
         rand = random.randint(1,nChal)
@@ -58,16 +58,33 @@ def getRandomChallenge(category, chal_list):
 
 def getChallenge(id):
     conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
-    query = "SELECT id, name, description, type FROM hommy.challenges WHERE id = %s"
+    query = "SELECT id, name, description, type, trivia FROM hommy.challenges WHERE id = %s"
 
     cursor = conn.cursor()
     cursor.execute(query, (id,))
-    res =  cursor.fetchone()
+    res = cursor.fetchone()
 
     cursor.close()
     conn.close()
 
     return res
+
+
+def getRandomQuiz(id):
+    conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
+    query = "SELECT idQuestion, question, answer, wrong1, wrong2, wrong3 FROM triviachallenge WHERE idChal = %s"
+
+    cursor = conn.cursor()
+    cursor.execute(query, (id,))
+    res = cursor.fetchall()
+    rand = random.randint(1, len(res))
+    res = res[rand-1]
+
+    cursor.close()
+    conn.close()
+
+    return res
+
 
 def getUserInfo(username, psw):
     conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
@@ -105,5 +122,6 @@ if __name__ == '__main__':
     #getUserInfo("lorry03","asdf12345")
     #print(registerUser("lorry96", "abdullah", "1996-12-25", "M"))
     #print(getRandomChallenge("DEMO", [1,2]))
-    print(getRandomChallenge("DEMO", []))
+    #print(getRandomChallenge("DEMO", []))
+    print(getRandomQuiz(4))
 
