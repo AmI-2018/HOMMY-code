@@ -13,14 +13,40 @@
     <title>HOMMY</title>
 </head>
 <body>
+    {% if info == '' %}
+        <div class="challenge">
+            <h1 id="{{ res['challenges'][0]['id'] }}">{{ res['challenges'][0]['name'] }} - {{ res['challenges'][0]['description'] }}</h1>
+            <button class="btn btn-primary" id="play">PLAY</button>
+            <button class="btn btn-primary" id="stop">STOP</button>
+        </div>
+    {% else %}
+        <div class="trivia">
+            <h1 id="{{ res['challenges'][0]['id'] }}">{{ res['challenges'][0]['name'] }}</h1>
+            <h2 id="{{ info[0] }}">{{ info[1] }}</h2>
+            <div class="row">
+                <div class="col-md-6 answer">
+                    <span class="lead">A) {{ info[2] }}</span>
+                </div>
+                <div class="col-md-6 answer">
+                    <span class="lead">B) {{ info[3] }}</span>
+                </div>
+            </div>
+            {% if size_info >= 3 %}
+                <div class="row">
+                    <div class="col-md-6 answer">
+                        <span class="lead">C) {{ info[4] }}</span>
+                    </div>
+                    <div class="col-md-6 answer">
+                        <span class="lead">D) {{ info[5] }}</span>
+                    </div>
+                </div>
+            {% endif %}
+            <h3>Choose the correct answer on your App</h3>
+            <button class="btn btn-primary" id="play">PLAY</button>
+            <button class="btn btn-primary" id="stop">STOP</button>
+        </div>
+    {% endif %}
 
-    <div class="categories">
-        <h1 id="{{ res['challenges'][0]['id'] }}">{{ res['challenges'][0]['name'] }} - {{ res['challenges'][0]['description'] }}</h1>
-
-        <button class="btn btn-primary" id="play">PLAY</button>
-        <button class="btn btn-primary" id="stop">STOP</button>
-
-    </div>
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

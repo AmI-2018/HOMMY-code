@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session
-import requests, winsound as ws, threading, mythreads as mt
+import requests, winsound as ws, threading, service as srv
 
 app = Flask(__name__)
 app.secret_key = "alksjd@1'fjksjdh3mnjnrmajkr092i'#"
@@ -7,8 +7,9 @@ ONLINE_SERVER = "http://127.0.0.1:5000"
 THIS_SERVER = "http://192.168.1.111:5000"
 MAX_PLAYERS = 8
 players = list()
-played_chal = [1,2,3,4]
+played_chal = list()
 admin = ''
+current_trivia = ''
 
 @app.route('/')
 def lobby():
@@ -25,8 +26,19 @@ def categories():
 def viewChallenge(challenge):
     result = requests.get(ONLINE_SERVER + "/getChallenge/" + challenge)
     json = result.json()
+    trivia = int(json['challenges'][0]['trivia'])
 
-    return render_template('challenges.html', res=json)
+    if trivia == 1:
+        current_trivia = requests.get(ONLINE_SERVER + "/getQuiz/" + challenge).json()
+        info = dict(current_trivia)
+        info_list = [info['answer'], info['wrong1'], info['wrong2'], info['wrong3']]
+        info_list = srv.randomize(info_list)
+        info = [info['q_id'], info['question']] + info_list
+        size = len(info_list)
+    else:
+        info = ""
+        size = -1
+    return render_template('challenges.html', res=json, info=info, size_info=size)
 
 
 @app.route('/players')
@@ -88,7 +100,7 @@ def signin():
 @app.route('/categoriesM')
 def categoriesM():
     result = requests.get(ONLINE_SERVER + "/categories")
-    threading.Thread(target=mt.categories).start()
+    threading.Thread(target=srv.categories).start()
     return jsonify(result.json())
 
 
@@ -97,12 +109,12 @@ def categoriesM():
 def getChallenge(category):
     r = requests.post(ONLINE_SERVER + "/getChallenge/" + category, json={'list': played_chal})
     if r.text == "-1":
-        threading.Thread(target=mt.endGame).start()
+        threading.Thread(target=srv.endGame).start()
         return "SFIDE TERMINATE"
     json = r.json()
     chal_id = str(json['challenges'][0]['id'])
     played_chal.append(int(chal_id))
-    threading.Thread(target=mt.challenge, args=(chal_id,)).start()
+    threading.Thread(target=srv.challenge, args=(chal_id,)).start()
     return jsonify(r.json())
 
 
@@ -116,11 +128,11 @@ def joinMatch():
     if len(players) == 0:
         players.append(json['username'])
         admin = json['username']
-        threading.Thread(target=mt.players).start()
+        threading.Thread(target=srv.players).start()
         return "ADMIN"
     elif len(players) < MAX_PLAYERS:
         players.append(json['username'])
-        threading.Thread(target=mt.players).start()
+        threading.Thread(target=srv.players).start()
     else:
         return "LIMITE GIOCATORI RAGGIUNTO"
     return "SUCCESS"

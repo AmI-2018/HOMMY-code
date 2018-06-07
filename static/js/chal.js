@@ -7,9 +7,9 @@ $(document).ready(function () {
     $('#play').attr("onclick", "myPlay()");
     $('#stop').attr("onclick", "myStop()");
 
-    let id = $('.categories h1').attr('id')*1;
+    let id = $('.challenge h1').attr('id')*1;
     $.get(SERVER+"/do/" + id, function (data) {
-       $(".categories").append("<h3>"+data+"</h3>");
+       $(".challenge").append("<h3>"+data+"</h3>");
     });
 
 

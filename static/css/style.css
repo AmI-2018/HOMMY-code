@@ -57,6 +57,34 @@ CHALLENGES.html
 }
 #box-chal{margin: 30px 10%;}
 .challenge p{padding: 100px 0;}
+/*-------------------
+TRIVIA
+-------------------*/
+.trivia{text-align: center;}
+.trivia h1{
+  font-family: 'Gugi', cursive;
+  color: white;
+  font-size: 50px;
+  margin: 0 0;
+  padding: 20px 0;
+}
+.trivia h2,h3{
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  color: #93DE74;
+  font-size: 60px;
+  padding: 80px 0 ;
+}
+.trivia h3{color: white; font-size: 30px; margin: 0 0;}
+.trivia span{
+  background: orange;
+  padding: 0 150px;
+  color: white;
+  border-radius: 25px;
+  font-size: 45px;
+}
+.answer{
+  padding: 50px 0;
+}
 
 /*-------------------
 LOBBY.html
