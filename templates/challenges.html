@@ -21,27 +21,32 @@
         </div>
     {% else %}
         <div class="trivia">
-            <h1 id="{{ res['challenges'][0]['id'] }}">{{ res['challenges'][0]['name'] }}</h1>
-            <h2 id="{{ info[0] }}">{{ info[1] }}</h2>
+            <h1 id="{{ info[0] }}">{{ res['challenges'][0]['name'] }}</h1>
+            <h2 id="{{ info[1] }}">{{ info[2] }}</h2>
             <div class="row">
                 <div class="col-md-6 answer">
-                    <span class="lead">A) {{ info[2] }}</span>
+                    <span class="lead">A) {{ info[3] }}</span>
                 </div>
                 <div class="col-md-6 answer">
-                    <span class="lead">B) {{ info[3] }}</span>
+                    <span class="lead">B) {{ info[4] }}</span>
                 </div>
             </div>
             {% if size_info >= 3 %}
                 <div class="row">
                     <div class="col-md-6 answer">
-                        <span class="lead">C) {{ info[4] }}</span>
+                        <span class="lead">C) {{ info[5] }}</span>
                     </div>
                     <div class="col-md-6 answer">
-                        <span class="lead">D) {{ info[5] }}</span>
+                        <span class="lead">D) {{ info[6] }}</span>
                     </div>
                 </div>
             {% endif %}
             <h3>Choose the correct answer on your App</h3>
+            <h3>Turn:
+            {% for p in players %}
+                {{ p }}
+            {% endfor %}
+            </h3>
             <button class="btn btn-primary" id="play">PLAY</button>
             <button class="btn btn-primary" id="stop">STOP</button>
         </div>

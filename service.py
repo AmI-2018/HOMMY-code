@@ -1,23 +1,19 @@
-from selenium import webdriver as wd
 import random
-driver = wd.Firefox()
-THIS_SERVER = "http://192.168.1.111:5000"
+
+def categories(driver, url):
+    driver.get(url)
 
 
-def categories():
-    driver.get(THIS_SERVER + "/categories")
+def challenge(driver, url):
+    driver.get(url)
 
 
-def challenge(chal_id):
-    driver.get(THIS_SERVER + "/viewChallenge/" + chal_id)
+def players(driver, url):
+    driver.get(url)
 
 
-def players():
-    driver.get(THIS_SERVER + "/players")
-
-
-def endGame():
-    driver.get(THIS_SERVER + "/endgame")
+def endGame(driver, url):
+    driver.get(url)
 
 
 def randomize(lista):
@@ -33,8 +29,9 @@ def randomize(lista):
     return new_list
 
 if __name__ == '__main__':
-    a = {'p': 1, 'q': 2}
+    """a = {'p': 1, 'q': 2}
     b = dict(a)
     print(b)
     a['s']=3
-    print(b)
+    print(b)"""
+    print(chr(ord('a')+1))

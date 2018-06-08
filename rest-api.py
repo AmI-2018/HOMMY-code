@@ -1,15 +1,10 @@
-from flask import Flask, render_template, redirect, url_for, request, jsonify, session
-import requests, winsound as ws, threading, service as srv
+from flask import Flask, render_template, redirect, url_for, request, jsonify, session, abort
+import requests, winsound as ws, threading, service as srv, match
 
 app = Flask(__name__)
 app.secret_key = "alksjd@1'fjksjdh3mnjnrmajkr092i'#"
-ONLINE_SERVER = "http://127.0.0.1:5000"
-THIS_SERVER = "http://192.168.1.111:5000"
-MAX_PLAYERS = 8
-players = list()
-played_chal = list()
-admin = ''
-current_trivia = ''
+
+m = match.Match()
 
 @app.route('/')
 def lobby():
@@ -18,32 +13,38 @@ def lobby():
 
 @app.route('/categories')
 def categories():
-    r = requests.get(ONLINE_SERVER + "/categories")
+    r = requests.get(m.ONLINE_SERVER + "/categories")
     return render_template('categories.html', res=r.json())
 
 
 @app.route('/viewChallenge/<challenge>')
 def viewChallenge(challenge):
-    result = requests.get(ONLINE_SERVER + "/getChallenge/" + challenge)
+    result = requests.get(m.ONLINE_SERVER + "/getChallenge/" + challenge)
     json = result.json()
     trivia = int(json['challenges'][0]['trivia'])
 
     if trivia == 1:
-        current_trivia = requests.get(ONLINE_SERVER + "/getQuiz/" + challenge).json()
-        info = dict(current_trivia)
+        info = requests.get(m.ONLINE_SERVER + "/getQuiz/" + challenge).json()
         info_list = [info['answer'], info['wrong1'], info['wrong2'], info['wrong3']]
-        info_list = srv.randomize(info_list)
-        info = [info['q_id'], info['question']] + info_list
         size = len(info_list)
+        info_list = srv.randomize(info_list)
+
+        answer = ""
+        for i in range(0, size):
+            if info['answer'] == info_list[i]:
+                answer = i
+
+        m.updateTrivia({'chal_id': info['chal_id'], 'q_id': info['q_id'], 'answer': answer})
+        info = [info['chal_id'], info['q_id'], info['question']] + info_list
     else:
         info = ""
         size = -1
-    return render_template('challenges.html', res=json, info=info, size_info=size)
+    return render_template('challenges.html', res=json, info=info, size_info=size, players=m.player_turn)
 
 
 @app.route('/players')
 def showPlayers():
-    return render_template('lobby.html', players=players, admin=admin, n=len(players))
+    return render_template('lobby.html', players=m.players, admin=m.admin, n=len(m.players))
 
 
 @app.route('/endgame')
@@ -63,7 +64,7 @@ def login():
     user = request.form['username']
     psw = request.form['psw']
     json = {'username': user, 'psw': psw}
-    result = requests.post(ONLINE_SERVER + "/login", json=json)
+    result = requests.post(m.ONLINE_SERVER + "/login", json=json)
 
     if result.text != "WRONG" and result.text != "ERROR JSON":
         session['username'] = user
@@ -75,14 +76,14 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('username')
-    return redirect(url_for('hello_world'))
+    return redirect(url_for('lobby'))
 
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     if request.method == "GET":
         if session.get('username'):
-            return redirect(url_for('hello_world'))
+            return redirect(url_for('lobby'))
         else:
             return render_template('signin.html')
 
@@ -92,51 +93,68 @@ def signin():
         date = request.form['date']
         genre = request.form['genre']
         json = {"username": user, "psw": psw, "birth": date, "genre": genre}
-        res = requests.post(ONLINE_SERVER + "/signin", json=json)
+        res = requests.post(m.ONLINE_SERVER + "/signin", json=json)
         return res.text
 
 
 # MOBILE
 @app.route('/categoriesM')
 def categoriesM():
-    result = requests.get(ONLINE_SERVER + "/categories")
-    threading.Thread(target=srv.categories).start()
+    result = requests.get(m.ONLINE_SERVER + "/categories")
+    threading.Thread(target=srv.categories, args=(m.driver, m.THIS_SERVER + "/categories")).start()
     return jsonify(result.json())
 
 
 # MOBILE
 @app.route('/getChallenge/<category>')
 def getChallenge(category):
-    r = requests.post(ONLINE_SERVER + "/getChallenge/" + category, json={'list': played_chal})
+    r = requests.post(m.ONLINE_SERVER + "/getChallenge/" + category, json={'list': m.played_chal})
     if r.text == "-1":
-        threading.Thread(target=srv.endGame).start()
+        threading.Thread(target=srv.endGame, args=(m.driver, m.THIS_SERVER + "/endgame")).start()
         return "SFIDE TERMINATE"
+    m.playerTurn(2)
     json = r.json()
     chal_id = str(json['challenges'][0]['id'])
-    played_chal.append(int(chal_id))
-    threading.Thread(target=srv.challenge, args=(chal_id,)).start()
+    m.played_chal.append(int(chal_id))
+    threading.Thread(target=srv.challenge, args=(m.driver, m.THIS_SERVER + "/viewChallenge/" + chal_id)).start()
     return jsonify(r.json())
 
 
 # MOBILE
 @app.route('/join', methods=['POST'])
 def joinMatch():
-    global admin
     json = request.json
     if(json is None) or ('username' not in json):
         return "ERROR USER"
-    if len(players) == 0:
-        players.append(json['username'])
-        admin = json['username']
-        threading.Thread(target=srv.players).start()
+    if len(m.players) == 0:
+        m.newPlayer(json['username'])
+        m.setAdmin(json['username'])
+        threading.Thread(target=srv.players, args=(m.driver, m.THIS_SERVER + "/players")).start()
         return "ADMIN"
-    elif len(players) < MAX_PLAYERS:
-        players.append(json['username'])
-        threading.Thread(target=srv.players).start()
+    elif len(m.players) < m.MAX_PLAYERS:
+        m.newPlayer(json['username'])
+        threading.Thread(target=srv.players, args=(m.driver, m.THIS_SERVER + "/players")).start()
     else:
         return "LIMITE GIOCATORI RAGGIUNTO"
     return "SUCCESS"
 
+# MOBILE
+@app.route('/answer/<int:chal_id>/<answer>')
+def chooseAnswer(chal_id, answer):
+    if chal_id != m.current_trivia['chal_id']:
+        abort(409)
+
+    user = request.headers['authorization']
+    #Calcolo indice risposta attraverso i codici ascii
+    a = ord(answer.lower()) - ord("a")
+    for p in m.player_turn:
+        if user == p:
+            if m.current_trivia['answer'] == a:
+                return user + " RISPOSTA CORRETTA"
+            else:
+                return user + " RISPOSTA ERRATA"
+
+    abort(401)
 
 if __name__ == '__main__':
     app.run()

@@ -94,7 +94,7 @@ LOBBY.html
   color: white;
   font-size: 65px;
   margin: 0 5%;
-  padding-top: 1%;
+  padding-top: 50px;
 }
 #wifi{
   height: 500px;
@@ -128,8 +128,3 @@ LOBBY.html
 }
 .central_field{margin: 5% 0; text-align: center;}
 #join{background: #93DE74; color: white; border-radius: 25px; padding: 0 20px;}
-.settings{text-align: right; padding: 0 0;}
-.settings img{
-  height: 80px;
-  margin: 20px 0;
-}
