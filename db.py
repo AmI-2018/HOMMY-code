@@ -72,7 +72,7 @@ def getChallenge(id):
 
 def getRandomQuiz(id):
     conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
-    query = "SELECT idQuestion, question, answer, wrong1, wrong2, wrong3 FROM triviachallenge WHERE idChal = %s"
+    query = "SELECT idChal, idQuestion, question, answer, wrong1, wrong2, wrong3 FROM triviachallenge WHERE idChal = %s"
 
     cursor = conn.cursor()
     cursor.execute(query, (id,))

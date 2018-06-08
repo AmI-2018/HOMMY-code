@@ -48,12 +48,13 @@ def getChallenge(id):
 def getRandomQuiz(id):
     res = db.getRandomQuiz(id)
     quiz = {
-        'q_id': res[0],
-        'question': res[1],
-        'answer': res[2],
-        'wrong1': res[3],
-        'wrong2': res[4],
-        'wrong3': res[5]
+        'chal_id': res[0],
+        'q_id': res[1],
+        'question': res[2],
+        'answer': res[3],
+        'wrong1': res[4],
+        'wrong2': res[5],
+        'wrong3': res[6]
     }
     return jsonify(quiz)
 
