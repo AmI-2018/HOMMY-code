@@ -51,6 +51,12 @@ ul{list-style: none; margin: 0 0; padding: 0 0;}
 #rate{
   height: 150px;
 }
+#song{
+  height: 200px;
+}
+#notes{
+  height: 90px;
+}
 .central_field{margin: 5% 0; text-align: center;}
 #join{background: #93DE74; color: white; border-radius: 30px; padding: 0 15px;}
 .setting{text-align: right;}
@@ -76,5 +82,10 @@ ul{list-style: none; margin: 0 0; padding: 0 0;}
   }
 .challenge_room_form h2{
     font-family: 'Gugi', cursive;
-    color: red;
-    font-size: 40px;
+    color: #FEDB4C;
+    font-size: 50px;
+}
+.central_fieldch{margin: 0% 0; text-align: right;}
+.chname{
+  height: 90px;
+}
