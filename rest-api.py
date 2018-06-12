@@ -22,7 +22,7 @@ def viewChallenge(challenge):
     result = requests.get(m.ONLINE_SERVER + "/getChallenge/" + challenge)
     json = result.json()
     trivia = int(json['challenges'][0]['trivia'])
-
+    print(trivia)
     if trivia == 1:
         info = requests.get(m.ONLINE_SERVER + "/getQuiz/" + challenge).json()
         info_list = [info['answer'], info['wrong1'], info['wrong2'], info['wrong3']]
@@ -61,9 +61,8 @@ def do(challenge):
 
 @app.route('/login', methods=['POST'])
 def login():
-    user = request.form['username']
-    psw = request.form['psw']
-    json = {'username': user, 'psw': psw}
+    info=request.json
+    json = {'username': info['username'],'psw': info['psw']}
     result = requests.post(m.ONLINE_SERVER + "/login", json=json)
 
     if result.text != "WRONG" and result.text != "ERROR JSON":
