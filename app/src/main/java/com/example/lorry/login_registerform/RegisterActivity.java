@@ -30,7 +30,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText usernameET, passwordET, confirmPasswordET, birthdateET;
     private CardView register;
     private Calendar calendar;
-
     private String gender;
 
     @Override
@@ -43,8 +42,8 @@ public class RegisterActivity extends AppCompatActivity {
         confirmPasswordET = findViewById(R.id.confpsw);
         register = findViewById(R.id.register_card);
         birthdateET = findViewById(R.id.Birthday);
-
         calendar = Calendar.getInstance();
+
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override

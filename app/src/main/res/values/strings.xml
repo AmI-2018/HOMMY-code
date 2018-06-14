@@ -8,4 +8,5 @@
     <string name="join">Join Game</string>
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
+    <string name="welcome">Hello %s!</string>
 </resources>

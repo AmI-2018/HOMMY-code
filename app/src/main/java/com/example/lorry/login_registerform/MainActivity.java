@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                                 try {
                                     if (response.getInt("result") > 0) {
                                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-                                                .edit().putString("username", username).apply();
+                                                .edit().putString("user_info", response.toString()).apply();
                                         Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);

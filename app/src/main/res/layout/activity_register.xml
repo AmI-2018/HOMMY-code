@@ -84,7 +84,7 @@
         android:layout_marginTop="16dp"
         android:background="#11000000"
         android:clickable="true"
-        android:drawableStart="@drawable/ic_action_user"
+        android:drawableStart="@drawable/ic_action_calendar"
         android:ems="10"
         android:focusable="false"
         android:hapticFeedbackEnabled="false"
