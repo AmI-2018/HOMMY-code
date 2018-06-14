@@ -2,7 +2,7 @@ from service import randomize
 from selenium import webdriver as wd
 class Match:
     ONLINE_SERVER = "http://127.0.0.1:5000"
-    THIS_SERVER = "http://192.168.1.108:5000"
+    THIS_SERVER = "http://192.168.1.111:5000"
     MAX_PLAYERS = 8
 
     driver = wd.Firefox()

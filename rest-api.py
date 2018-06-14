@@ -59,41 +59,12 @@ def do(challenge):
     return "success"
 
 
-@app.route('/login', methods=['POST'])
-def login():
-    info=request.json
-    json = {'username': info['username'],'psw': info['psw']}
-    result = requests.post(m.ONLINE_SERVER + "/login", json=json)
-
-    if result.text != "WRONG" and result.text != "ERROR JSON":
-        session['username'] = user
-        return redirect(url_for('lobby'))
-
-    return "USERNAME O PASSWORD ERRATI"
-
 
 @app.route('/logout')
 def logout():
     session.pop('username')
     return redirect(url_for('lobby'))
 
-
-@app.route('/signin', methods=['GET', 'POST'])
-def signin():
-    if request.method == "GET":
-        if session.get('username'):
-            return redirect(url_for('lobby'))
-        else:
-            return render_template('signin.html')
-
-    elif request.method == "POST":
-        user = request.form['username']
-        psw = request.form['psw']
-        date = request.form['date']
-        genre = request.form['genre']
-        json = {"username": user, "psw": psw, "birth": date, "genre": genre}
-        res = requests.post(m.ONLINE_SERVER + "/signin", json=json)
-        return res.text
 
 
 # MOBILE
@@ -154,6 +125,34 @@ def chooseAnswer(chal_id, answer):
                 return user + " RISPOSTA ERRATA"
 
     abort(401)
+
+
+#MOBILE
+@app.route('/login', methods=['POST'])
+def login():
+    info = request.json
+    result = requests.post(m.ONLINE_SERVER + "/login", json=info)
+
+    if result.text != "WRONG" and result.text != "ERROR JSON":
+        tmp = result.json()
+        tmp['result'] = 1
+        return jsonify(tmp)
+
+    return jsonify({"result": -1})
+
+
+@app.route('/signin', methods=['POST'])
+def signin():
+    info = request.json
+    res = requests.post(m.ONLINE_SERVER + "/signin", json=info)
+    return jsonify({"result": res.text})
+
+@app.route('/provaPost', methods=['POST'])
+def provaPost():
+    info = request.headers
+    print(info)
+
+    return "SUCCESS"
 
 if __name__ == '__main__':
     app.run()
