@@ -34,6 +34,7 @@
         <activity
             android:name=".RegisterActivity"
             android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".Profile" />
     </application>
 
 </manifest>

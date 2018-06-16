@@ -9,4 +9,11 @@
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
     <string name="welcome">Hello %s!</string>
+    <string name="welcomeP">Welcome to your profile %s!</string>
+    <string name="information">Here you can find your information:</string>
+    <string name="user_id">User ID:</string>
+    <string name="birthdate">Birth Date:</string>
+    <string name="genre">Genre:</string>
+    <string name="most_played_category">Most Played Category:</string>
+    <string name="challenges_won">Challenges won:</string>
 </resources>

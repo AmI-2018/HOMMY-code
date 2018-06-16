@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         user = findViewById(R.id.username);
-        psw = findViewById(R.id.psw);
+        psw = findViewById(R.id.MpC);
         login = findViewById(R.id.login_card);
         register = findViewById(R.id.register_text);
 

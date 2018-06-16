@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         usernameET = findViewById(R.id.username);
-        passwordET = findViewById(R.id.psw);
+        passwordET = findViewById(R.id.MpC);
         confirmPasswordET = findViewById(R.id.confpsw);
         register = findViewById(R.id.register_card);
         birthdateET = findViewById(R.id.Birthday);
