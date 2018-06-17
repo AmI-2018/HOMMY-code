@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/MpC"
+        android:id="@+id/mpc_text"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginEnd="8dp"
@@ -73,7 +73,7 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MpC" />
+        app:layout_constraintTop_toBottomOf="@+id/mpc_text" />
 
     <EditText
         android:id="@+id/Birthday"

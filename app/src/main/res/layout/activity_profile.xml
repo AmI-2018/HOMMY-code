@@ -1,171 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/bg"
+    android:orientation="vertical"
     tools:context=".Profile">
 
-    <TextView
-        android:id="@+id/welcome_profile"
+    <LinearLayout
+        android:id="@+id/welcome_lay"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="40dp"
         android:layout_weight="1"
-        android:textAlignment="center"
-        android:textColor="#fff"
-        android:textSize="40sp" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/information"
+        <TextView
+            android:id="@+id/welcome_profile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/cinzel"
+            android:paddingBottom="30dp"
+            android:paddingTop="30dp"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/info_lay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_below="@id/welcome_profile"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="125dp"
-        android:layout_weight="10"
-        android:gravity="top"
-        android:text="@string/information"
-        android:textColor="#fff"
-        android:textSize="30sp" />
+        android:layout_height="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/user_ID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="212dp"
-        android:text="@string/user_id"
-        android:layout_below="@id/information"
-        android:layout_alignLeft="@id/ID"
-        android:textAlignment="textStart"
-        android:textColor="#fff"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/info_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/information"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="30sp" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/ID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/user_ID"
-        android:text="TextView"
-        android:layout_below="@id/information"
-        android:textAlignment="textEnd"
-        android:textColor="#fff"
-        android:textSize="20sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/mcp"
-        android:layout_width="126dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="160dp"
-        android:text="Most Played Category:"
-        android:textAlignment="textStart"
-        android:textColor="#fff"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/user_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_weight="1"
+            android:paddingStart="25dp"
+            android:text="@string/user_id"
+            android:textAlignment="textStart"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:text="@string/birthdate"
-        android:layout_below="@id/user_ID"
-        android:layout_alignLeft="@id/date"
-        android:textAlignment="textStart"
-        android:textColor="#fff"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/id_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="10dp"
+            android:textAlignment="textEnd"
+            android:textColor="#fff"
+            android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/genreT"
-        android:layout_width="93dp"
-        android:layout_height="34dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="236dp"
-        android:text="@string/genre"
-        android:textAlignment="textStart"
-        android:textColor="#fff"
-        android:textSize="20sp" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/MpC"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_alignBottom="@+id/mcp"
-        android:layout_alignParentEnd="true"
-        android:text="TextView"
-        android:textAlignment="textEnd"
-        android:textColor="#fff"
-        android:textSize="20sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:text="TextView"
-        android:layout_below="@id/ID"
-        android:textAlignment="textEnd"
-        android:textColor="#fff"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/birtdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingStart="25dp"
+            android:text="@string/birthdate"
+            android:textAlignment="textStart"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/genre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/genreT"
-        android:text="TextView"
-        android:textAlignment="textEnd"
-        android:textColor="#fff"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/birthdate_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="10dp"
+            android:textAlignment="textEnd"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="245dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="110dp"
-        android:text="@string/challenges_won"
-        android:textAlignment="textStart"
-        android:textColor="#fff"
-        android:textSize="20sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/won"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/textView13"
-        android:text="TextView"
-        android:layout_below="@id/MpC"
-        android:textAlignment="textEnd"
-        android:textColor="#fff"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/genre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingStart="25dp"
+            android:text="@string/genre"
+            android:textAlignment="textStart"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/profile_back_button"
-        android:layout_width="219dp"
-        android:layout_height="64dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/rounded_button"
-        android:text="Back"
-        android:textColor="#fff"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/genre_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="10dp"
+            android:textAlignment="textEnd"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+    </LinearLayout>
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/won"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingStart="25dp"
+            android:text="@string/challenges_won"
+            android:textAlignment="textStart"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/won_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="10dp"
+            android:textAlignment="textEnd"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mpc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingStart="25dp"
+            android:text="@string/most_played_category"
+            android:textAlignment="textStart"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/mpc_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="10dp"
+            android:textAlignment="textEnd"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_weight="1"
+        android:gravity="center|top"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/profile_back_button"
+            android:layout_width="219dp"
+            android:layout_height="64dp"
+            android:layout_marginEnd="0dp"
+            android:background="@drawable/rounded_button"
+            android:text="Back"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+    </LinearLayout>
+</LinearLayout>

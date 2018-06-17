@@ -12,21 +12,25 @@ import org.json.JSONObject;
 
 public class Profile extends AppCompatActivity {
 
+    TextView user;
+    TextView birthDate;
+    TextView genre;
+    TextView won;
+    TextView mpChallenge;
+    Button back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        TextView user = findViewById(R.id.ID);
-        TextView birthDate = findViewById(R.id.date);
-        TextView genre = findViewById(R.id.genre);
-        TextView won = findViewById(R.id.won);
-        TextView mpChallenge = findViewById(R.id.MpC);
-        Button back = findViewById(R.id.profile_back_button);
-
-
-
-        back.setOnClickListener(new View.OnClickListener() {
+        user = findViewById(R.id.id_text);
+        birthDate = findViewById(R.id.birthdate_text);
+        genre = findViewById(R.id.genre_text);
+        won = findViewById(R.id.won_text);
+        mpChallenge = findViewById(R.id.mpc_text);
+        back = findViewById(R.id.profile_back_button);
+       back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -37,14 +41,16 @@ public class Profile extends AppCompatActivity {
             ((TextView) findViewById(R.id.welcome_profile)).setText(getResources().getString(R.string.welcomeP,
                     tmp.get("username").toString()));
             user.setText(tmp.get("username").toString());
-            birthDate.setText(tmp.get("birthDate").toString());
+            String[] birth = tmp.get("birthDate").toString().split("\\s+");
+            birthDate.setText(getResources().getString(R.string.birthdate_text, birth[1], birth[2], birth[3]));
             genre.setText(tmp.get("genre").toString());
             won.setText(tmp.get("challengeWon").toString());
-            if (tmp.get("mostPlayedCat")!=null)
+            System.out.println(tmp.get("mostPlayedCat"));
+            if (!tmp.get("mostPlayedCat").toString().equals("null"))
                 mpChallenge.setText(tmp.get("mostPlayedCat").toString());
             else {
-                mpChallenge.setVisibility(View.GONE);
-                findViewById(R.id.MpC).setVisibility(View.GONE);
+                /*mpChallenge.setVisibility(View.GONE);
+                findViewById(R.id.mpc).setVisibility(View.GONE);*/
             }
         }
         catch(JSONException e) {

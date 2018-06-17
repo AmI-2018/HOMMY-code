@@ -3,6 +3,7 @@
     package="com.example.lorry.login_registerform">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission-group.SENSORS" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -35,6 +35,8 @@
             android:name=".RegisterActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".Profile" />
+        <activity android:name=".Categories" />
+        <activity android:name=".Lobby"></activity>
     </application>
 
 </manifest>

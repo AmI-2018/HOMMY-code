@@ -36,7 +36,7 @@
             android:textSize="16dp" />
 
         <EditText
-            android:id="@+id/MpC"
+            android:id="@+id/mpc_text"
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
