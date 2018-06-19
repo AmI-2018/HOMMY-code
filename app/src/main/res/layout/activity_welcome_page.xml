@@ -69,6 +69,12 @@
             android:paddingTop="20dp"
             android:text="@string/logout"
             android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/show_token"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Token" />
     </LinearLayout>
 
 </RelativeLayout>

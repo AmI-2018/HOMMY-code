@@ -21,4 +21,8 @@
     <string name="categories_text">Choose a category:</string>
     <string name="lobby_text1">Press the button when everyone is ready!</string>
     <string name="lobby_text2">Wait for the other players!</string>
+
+
+    <string name="FCM_PREF">com.example.lorry.login_registerform.fcm_pref</string>
+    <string name="FCM_TOKEN">com.example.lorry.login_registerform.fcm_token</string>
 </resources>

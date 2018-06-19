@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "524974870871",
+    "firebase_url": "https://hommy-76121.firebaseio.com",
+    "project_id": "hommy-76121",
+    "storage_bucket": "hommy-76121.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:524974870871:android:5d4c6329d66a8d38",
+        "android_client_info": {
+          "package_name": "com.example.lorry.login_registerform"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "524974870871-0jdot1n55rbbn9ditj7uc4vmf6liemn9.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "524974870871-0jdot1n55rbbn9ditj7uc4vmf6liemn9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5gZgCymtwYYpFzSokEnxDSf3nPlrMASo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

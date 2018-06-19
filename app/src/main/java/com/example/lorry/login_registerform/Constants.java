@@ -1,9 +1,10 @@
 package com.example.lorry.login_registerform;
 
 public class Constants {
-    public static final String LOGIN_URL = "http://192.168.1.111:5000/login";
-    public static final String REGISTER_URL = "http://192.168.1.111:5000/signin";
-    public static final String JOIN_URL = "http://192.168.1.111:5000/join";
-    public static final String CATEGORIES_URL = "http://192.168.1.111:5000/categoriesM";
-    public static final String GET_CHALLENGE = "http://192.168.1.111:5000/getChallenge/";
+    private static final String BASE_URL = "http://192.168.1.111:5000/";
+    public static final String LOGIN_URL = BASE_URL + "login";
+    public static final String REGISTER_URL = BASE_URL + "signin";
+    public static final String JOIN_URL = BASE_URL + "join";
+    public static final String CATEGORIES_URL = BASE_URL + "categoriesM";
+    public static final String GET_CHALLENGE = BASE_URL + "getChallenge/";
 }

@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +28,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Categories extends AppCompatActivity {
 
-    private TextView categ_text;
     private CardView[] cards = new CardView[4];
     private TextView[] texts = new TextView[4];
     private String[] cat_names = new String[4];
@@ -40,7 +39,6 @@ public class Categories extends AppCompatActivity {
         setContentView(R.layout.activity_categories);
 
         admin = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("admin", false);
-        categ_text = findViewById(R.id.categories_text);
         cards[0] = findViewById(R.id.card_a);
         cards[1] = findViewById(R.id.card_b);
         cards[2] = findViewById(R.id.card_c);
@@ -51,11 +49,9 @@ public class Categories extends AppCompatActivity {
         texts[3] = findViewById(R.id.cat_d);
 
 
-        Map<String, String> map = new HashMap<>();
-        map.put("authorization", "ciao");
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                 Constants.CATEGORIES_URL,
-                new JSONObject(map),
+                null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -87,7 +83,20 @@ public class Categories extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
                     }
-                });
+                })
+        {
+
+            /**
+             * Passing some request headers
+             */
+            @Override
+            public Map<String, String> getHeaders(){
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("authorization", "CIAO");
+                return headers;
+            }
+        };
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(jsonObjectRequest);
     }
@@ -109,7 +118,7 @@ public class Categories extends AppCompatActivity {
             for(int i = 0; i<4; i++){
                 JSONObject tmp = json.getJSONObject(i);
                 cat_names[i] = new String(tmp.getString(key));
-                if(tmp.getInt(disabled) == 0){
+                if(tmp.getInt(disabled) == 0 && admin == true){
                     final int index = i;
                     cards[i].setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -155,7 +164,7 @@ public class Categories extends AppCompatActivity {
                     });
                 }
                 else{
-                    cards[i].setCardBackgroundColor(getResources().getColor(R.color.gray));
+                    cards[i].setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.gray));
                 }
             }
         }catch (JSONException j){

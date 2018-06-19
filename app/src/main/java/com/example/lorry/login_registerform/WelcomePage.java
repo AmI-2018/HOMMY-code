@@ -1,10 +1,13 @@
 package com.example.lorry.login_registerform;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +31,7 @@ import java.util.Map;
 public class WelcomePage extends AppCompatActivity {
 
     private TextView welcome;
-    private Button join, profile, logout;
+    private Button join, profile, logout, token;
     private JSONObject user_info;
 
     @Override
@@ -47,6 +51,17 @@ public class WelcomePage extends AppCompatActivity {
         profile.setTypeface(custom_font);
         logout = findViewById(R.id.logout_button);
         logout.setTypeface(custom_font);
+
+        token = findViewById(R.id.show_token);
+
+        token.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String token = FirebaseInstanceId.getInstance().getToken();
+                Toast.makeText(getApplicationContext(), token,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         try{
@@ -72,6 +87,8 @@ public class WelcomePage extends AppCompatActivity {
                 try{
                     Map<String, String> map = new HashMap<>();
                     map.put("username", user_info.get("username").toString());
+                    String token = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("token", FirebaseInstanceId.getInstance().getToken());
+                    map.put("token", token);
                     JSONObject json = new JSONObject(map);
 
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
