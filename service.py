@@ -1,18 +1,7 @@
-import random
-
-def categories(driver, url):
-    driver.get(url)
+import random, requests
 
 
-def challenge(driver, url):
-    driver.get(url)
-
-
-def players(driver, url):
-    driver.get(url)
-
-
-def endGame(driver, url):
+def openWebPage(driver, url):
     driver.get(url)
 
 
@@ -28,10 +17,12 @@ def randomize(lista):
 
     return new_list
 
+
+
 if __name__ == '__main__':
     """a = {'p': 1, 'q': 2}
     b = dict(a)
     print(b)
     a['s']=3
-    print(b)"""
-    print(chr(ord('a')+1))
+    print(b)
+    print(chr(ord('a')+1))"""

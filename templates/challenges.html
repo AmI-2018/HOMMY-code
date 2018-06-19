@@ -15,13 +15,13 @@
 <body>
     {% if info == '' %}
         <div class="challenge">
-            <h1 id="{{ res['challenges'][0]['id'] }}">{{ res['challenges'][0]['name'] }} - {{ res['challenges'][0]['description'] }}</h1>
+            <h1 id="{{ res['id'] }}">{{ res['name'] }} - {{ res['description'] }}</h1>
             <button class="btn btn-primary" id="play">PLAY</button>
             <button class="btn btn-primary" id="stop">STOP</button>
         </div>
     {% else %}
         <div class="trivia">
-            <h1 id="{{ info[0] }}">{{ res['challenges'][0]['name'] }}</h1>
+            <h1 id="{{ info[0] }}">{{ res['name'] }}</h1>
             <h2 id="{{ info[1] }}">{{ info[2] }}</h2>
             <div class="row">
                 <div class="col-md-6 answer">
@@ -47,8 +47,6 @@
                 {{ p }}
             {% endfor %}
             </h3>
-            <button class="btn btn-primary" id="play">PLAY</button>
-            <button class="btn btn-primary" id="stop">STOP</button>
         </div>
     {% endif %}
 
