@@ -28,20 +28,16 @@ def getRandomChallenge(category):
     res = db.getRandomChallenge(category, chal_list['list'])
     if res == -1:
         return str(res)
-    chal = []
 
     res = prepare_chal_json(res)
-    chal.append(res)
-    return jsonify({'challenges': chal})
+    return jsonify(res)
 
 @app.route('/getChallenge/<int:id>', methods=['GET'])
 def getChallenge(id):
     res = db.getChallenge(id)
-    chal = []
 
     res = prepare_chal_json(res)
-    chal.append(res)
-    return jsonify({'challenges': chal})
+    return jsonify(res)
 
 
 @app.route('/getQuiz/<int:id>')
@@ -74,7 +70,6 @@ def login():
 @app.route('/signin', methods=['POST'])
 def signin():
     json = request.json
-    print(json)
     if (json is not None) and ('username' in json) and ('psw' in json) and ('birth' in json):
         return db.registerUser(json['username'], json['psw'], json['birth'], json['genre'])
 
