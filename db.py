@@ -15,6 +15,15 @@ def chalQuery(query, n):
 
     return query
 
+def quizQuery(query, n):
+    if(n!=0):
+        query = query + " AND idQuestion NOT IN (SELECT idQuestion FROM triviachallenge WHERE idQuestion = %s"
+        for i in range(1,n):
+            query= query + " or idQuestion = %s"
+        query = query +')'
+
+    return query
+
 
 def showCategories():
     conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
@@ -70,7 +79,7 @@ def getChallenge(id):
     return res
 
 
-def getRandomQuiz(id):
+"""def getRandomQuiz(id):
     conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
     query = "SELECT idChal, idQuestion, question, answer, wrong1, wrong2, wrong3 FROM triviachallenge WHERE idChal = %s"
 
@@ -78,13 +87,36 @@ def getRandomQuiz(id):
     cursor.execute(query, (id,))
     res = cursor.fetchall()
     rand = random.randint(1, len(res))
-    res = res[rand-1]
+    #res = res[rand-1]
 
     cursor.close()
     conn.close()
 
-    return res
+    return res"""
 
+def getRandomQuiz(id, quiz_list):
+    conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
+    query = "SELECT idChal, idQuestion, question, answer, wrong1, wrong2, wrong3, resource FROM triviachallenge WHERE idChal = %s"
+    query = quizQuery(query, len(quiz_list))
+    query2 = "SELECT COUNT(*) FROM triviachallenge"
+
+    c1 = conn.cursor()
+    """c2 = conn.cursor()
+    
+    c2.execute(query2)
+    nQuiz = int((c2.fetchone())[0]) - len(quiz_list)
+    c2.close()"""
+
+    tmp = [id] + quiz_list
+    c1.execute(query, tuple(tmp))
+    res = c1.fetchall()
+    rand = random.randint(1, len(res))
+    res = res[rand-1]
+
+    c1.close()
+    conn.close()
+
+    return res
 
 def getUserInfo(username, psw):
     conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
@@ -117,11 +149,10 @@ def registerUser(username, psw, date, genre):
     return "SUCCESS"
 
 
-
 if __name__ == '__main__':
     #getUserInfo("lorry03","asdf12345")
     #print(registerUser("lorry96", "abdullah", "1996-12-25", "M"))
     #print(getRandomChallenge("DEMO", [1,2]))
     #print(getRandomChallenge("DEMO", []))
-    print(getRandomQuiz(4))
+    print(getRandomQuiz(4, [1,2,3,4,5]))
 

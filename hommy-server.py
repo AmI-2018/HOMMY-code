@@ -40,7 +40,7 @@ def getChallenge(id):
     return jsonify(res)
 
 
-@app.route('/getQuiz/<int:id>')
+"""@app.route('/getQuiz/<int:id>')
 def getRandomQuiz(id):
     res = db.getRandomQuiz(id)
     quiz = {
@@ -52,8 +52,24 @@ def getRandomQuiz(id):
         'wrong2': res[5],
         'wrong3': res[6]
     }
-    return jsonify(quiz)
+    return jsonify(quiz)"""
 
+@app.route('/getQuiz/<int:id>', methods=['POST'])
+def getRandomQuiz(id):
+    quiz_list = request.json
+    res = db.getRandomQuiz(id, quiz_list['list'])
+
+    quiz = {
+        'chal_id': res[0],
+        'q_id': res[1],
+        'question': res[2],
+        'answer': res[3],
+        'wrong1': res[4],
+        'wrong2': res[5],
+        'wrong3': res[6],
+        'resource': res[7]
+    }
+    return jsonify(quiz)
 
 @app.route('/login', methods=['POST'])
 def login():
