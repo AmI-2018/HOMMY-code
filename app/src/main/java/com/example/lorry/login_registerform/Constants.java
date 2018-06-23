@@ -7,4 +7,6 @@ public class Constants {
     public static final String JOIN_URL = BASE_URL + "join";
     public static final String CATEGORIES_URL = BASE_URL + "categoriesM";
     public static final String GET_CHALLENGE = BASE_URL + "getChallenge/";
+    public static final String CURRENT_CHALLENGE = BASE_URL + "currentChallenge";
+    public static final String ANSWER_CHALLENGE = BASE_URL + "answer/";
 }

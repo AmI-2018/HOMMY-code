@@ -36,20 +36,20 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".Profile" />
         <activity android:name=".Categories" />
-        <activity android:name=".Lobby"></activity>
+        <activity android:name=".Lobby" />
 
-        <service
-            android:name=".FcmInstanceIdService">
+        <service android:name=".FcmInstanceIdService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service
-            android:name=".FcmMessagingService">
+        <service android:name=".FcmMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <activity android:name=".Challenge"></activity>
     </application>
 
 </manifest>

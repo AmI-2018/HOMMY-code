@@ -49,8 +49,8 @@ public class Profile extends AppCompatActivity {
             if (!tmp.get("mostPlayedCat").toString().equals("null"))
                 mpChallenge.setText(tmp.get("mostPlayedCat").toString());
             else {
-                /*mpChallenge.setVisibility(View.GONE);
-                findViewById(R.id.mpc).setVisibility(View.GONE);*/
+                mpChallenge.setVisibility(View.GONE);
+                findViewById(R.id.mpc).setVisibility(View.GONE);
             }
         }
         catch(JSONException e) {

@@ -60,6 +60,7 @@ public class Categories extends AppCompatActivity {
                                 JSONArray list = response.getJSONArray("categories");
                                 setTexts(list, "name", "n_chal");
                                 setListeners(list, "name", "disabled");
+
                             }
                             else {
                                 Toast.makeText(getApplicationContext(), "Something went wrong! Try again later",
@@ -97,8 +98,8 @@ public class Categories extends AppCompatActivity {
                 return headers;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(jsonObjectRequest);
+        SingletonRequest singletonRequest = SingletonRequest.getmInstance(getApplicationContext());
+        singletonRequest.addToRequestQueue(jsonObjectRequest);
     }
 
     private void setTexts(JSONArray json, String key, String nchal){
@@ -158,8 +159,8 @@ public class Categories extends AppCompatActivity {
                                             error.printStackTrace();
                                         }
                                     });
-                            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                            requestQueue.add(jsonObjectRequest);
+                            SingletonRequest singletonRequest = SingletonRequest.getmInstance(getApplicationContext());
+                            singletonRequest.addToRequestQueue(jsonObjectRequest);
                         }
                     });
                 }

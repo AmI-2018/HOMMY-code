@@ -124,8 +124,10 @@ public class WelcomePage extends AppCompatActivity {
                                     error.printStackTrace();
                                 }
                             });
-                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                    requestQueue.add(jsonObjectRequest);
+                    /*RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                    requestQueue.add(jsonObjectRequest);*/
+                    SingletonRequest singletonRequest = SingletonRequest.getmInstance(getApplicationContext());
+                    singletonRequest.addToRequestQueue(jsonObjectRequest);
                 }catch (JSONException j){
                     j.printStackTrace();
                 }

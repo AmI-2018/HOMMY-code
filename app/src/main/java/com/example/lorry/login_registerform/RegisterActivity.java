@@ -94,8 +94,8 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                         });
 
-                RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                requestQueue.add(jsonObjectRequest);
+                SingletonRequest singletonRequest = SingletonRequest.getmInstance(getApplicationContext());
+                singletonRequest.addToRequestQueue(jsonObjectRequest);
             }
         });
 
