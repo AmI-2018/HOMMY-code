@@ -20,7 +20,7 @@
             <button class="btn btn-primary" id="stop">STOP</button>
         </div>
     {% else %}
-        <div class="trivia">
+        <div class="trivia" resource = {{ info[7] }}>
             <h1 id="{{ info[0] }}">{{ res['name'] }}</h1>
             <h2 id="{{ info[1] }}">{{ info[2] }}</h2>
             <div class="row">

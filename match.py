@@ -22,8 +22,11 @@ class Match:
     score = dict()
     player_queue = list()
     player_turn = list()
-    played_chal = list()
+    played_chal = list([1,2,3])
+    number_played_challenge = 0
+    quiz = list()
     admin = ''
+    current_categ = ""
     current_chal = dict()
     current_trivia = dict()
     active = False
@@ -42,23 +45,29 @@ class Match:
     def updateTrivia(self, info):
         if info is None:
             self.current_trivia = dict()
+            self.quiz = list()
         else:
             self.current_trivia = dict(info)
+            self.quiz.append(info['q_id'])
 
     def updateChallenge(self, challenge):
         self.current_chal = dict(challenge)
+        self.number_played_challenge = self.number_played_challenge + 1
 
     # Choose Randomly who have to play the challenge
     def playerTurn(self, number):
+        flag =1
         if len(self.players) < number:
             return False
         elif len(self.player_queue) < number:
             self.player_queue = randomize(list(self.players))
+            flag = -1
 
         self.player_turn = list()
         for i in range(0,number):
             self.player_turn.append(self.player_queue.pop())
 
+        return flag
     def setActive(self, status):
         if (status == True) or (status == False):
             self.active = status
@@ -85,10 +94,16 @@ class Match:
                             }
                           }
                 res = requests.post(self.FIREBASE_URL, headers=headers, json=fields)
-                return res
+                return res.text
 
     def getToken(self, player):
         return str(self.tokens[player])
+
+    def setCategory(self, category):
+        self.current_categ = category
+
+    def getCategory(self):
+        return self.current_categ
 
 if __name__ == '__main__':
     match = Match()
@@ -99,6 +114,5 @@ if __name__ == '__main__':
     match.playerTurn(2)
     print(match.player_queue)"""
     match.setActive(True)
-    print(match.active)
-    m2 = Match()
-    print(m2.active)
+    match.newPlayer("lorry03", "token")
+    match.newPlayer("syrien95", "token")

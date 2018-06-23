@@ -1,8 +1,13 @@
 import random, requests
+from threading import Lock
+mutex = Lock()
 
 
 def openWebPage(driver, url):
+    global mutex
+    mutex.acquire()
     driver.get(url)
+    mutex.release()
 
 
 def randomize(lista):

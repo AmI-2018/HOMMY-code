@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify, abort
-import requests, winsound as ws, threading, service as srv, match
+import requests, winsound as ws, threading, service as srv, match, time
 
 app = Flask(__name__)
 m = match.Match()
@@ -12,7 +12,8 @@ def lobby():
 @app.route('/categories')
 def categories():
     r = requests.get(m.ONLINE_SERVER + "/categories")
-    return render_template('categories.html', res=r.json())
+    r = r.json()
+    return render_template('categories.html', res=r)
 
 
 @app.route('/viewChallenge/<challenge>')
@@ -21,7 +22,7 @@ def viewChallenge(challenge):
     json = result.json()
     trivia = int(json['trivia'])
     if trivia == 1:
-        info = requests.get(m.ONLINE_SERVER + "/getQuiz/" + challenge).json()
+        info = requests.post(m.ONLINE_SERVER + "/getQuiz/" + challenge, json={'list': m.quiz}).json()
         info_list = [info['answer'], info['wrong1'], info['wrong2'], info['wrong3']]
         size = len(info_list)
         info_list = srv.randomize(info_list)
@@ -32,13 +33,14 @@ def viewChallenge(challenge):
                 answer = i
 
         m.updateTrivia({'chal_id': info['chal_id'], 'q_id': info['q_id'], 'answer': answer})
-        info = [info['chal_id'], info['q_id'], info['question']] + info_list
+        resource = info['resource']
+        info = [info['chal_id'], info['q_id'], info['question']] + info_list + [resource.replace(' ', '_')]
     else:
         m.updateTrivia(None)
         info = ""
         size = -1
 
-    m.sendNotifications(m.getToken(m.admin))
+    m.sendNotifications("") # m.getToken(m.admin)
     return render_template('challenges.html', res=json, info=info, size_info=size, players=m.player_turn)
 
 
@@ -54,7 +56,7 @@ def endgame():
 
 @app.route('/do/<int:challenge>')
 def do(challenge):
-    if int(challenge)==2:
+    if int(challenge) == 2:
         ws.Beep(1000, 1000)
     return "success"
 
@@ -76,10 +78,12 @@ def getChallenge(category):
     r = requests.post(m.ONLINE_SERVER + "/getChallenge/" + category, json={'list': m.played_chal})
     if r.text == "-1":
         threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/endgame")).start()
+        m.sendNotifications("")
         return jsonify({'result': -1})
     m.playerTurn(1)
     json = r.json()
     m.updateChallenge(json)
+    m.setCategory(json['type'])
     chal_id = str(json['id'])
     m.played_chal.append(int(chal_id))
     threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/viewChallenge/" + chal_id)).start()
@@ -106,7 +110,7 @@ def joinMatch():
     json = request.json
     if(json is None) or ('username' not in json):
         return jsonify({"result": "ERROR USER"})
-    print(json['token'])
+
     # Check if the user already joined
     if m.containsPlayer(json['username']):
         if m.admin == json['username']:
@@ -144,13 +148,23 @@ def chooseAnswer(chal_id, answer):
     for p in m.player_turn:
         if user == p:
             if m.current_trivia['answer'] == a:
+                # If the player answer correctly HOMMY provides a new Quiz
                 ws.PlaySound(correct, ws.SND_FILENAME | ws.SND_ASYNC)
+                threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/viewChallenge/" + str(chal_id))).start()
                 return jsonify({'result': "CORRECT"})
             else:
+                # If the player answer wrongly HOMMY provides a new Quiz and change player turn
                 ws.PlaySound(wrong, ws.SND_FILENAME | ws.SND_ASYNC)
+                time.sleep(2)
+                if m.playerTurn(1) == -1:
+                    # Manda notifica per far fare il refresh challenge
+                    # threading.Thread(target=srv.openWebPage,args=(m.driver, m.THIS_SERVER + "/getChallenge/" + str(m.getCategory() ))).start()
+                    getChallenge(m.getCategory())
+                else:
+                    threading.Thread(target=srv.openWebPage,args=(m.driver, m.THIS_SERVER + "/viewChallenge/" + str(chal_id))).start()
                 return jsonify({'result': "WRONG"})
 
-    abort(401)
+    return jsonify({'result': "NOT AUTHORIZED"})
 
 
 # MOBILE
