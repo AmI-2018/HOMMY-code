@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Login-register form</string>
+    <string name="app_name">HOMMY</string>
     <string name="user">Username</string>
     <string name="psw">Password</string>
     <string name="logo">hommy_logo</string>
@@ -21,9 +21,7 @@
     <string name="categories_text">Choose a category:</string>
     <string name="lobby_text1">Press the button when everyone is ready!</string>
     <string name="lobby_text2">Wait for the other players!</string>
-    <string name="trivia_description">Player needs to answer questions until he makes a mistake\nWatch the screen to know when it\'s your turn</string>
+    <string name="turn_text">%s\nWatch the screen to know when it\'s your turn!</string>
 
 
-    <string name="FCM_PREF">com.example.lorry.login_registerform.fcm_pref</string>
-    <string name="FCM_TOKEN">com.example.lorry.login_registerform.fcm_token</string>
 </resources>

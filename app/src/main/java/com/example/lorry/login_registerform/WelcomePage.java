@@ -62,7 +62,7 @@ public class WelcomePage extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
-
+        token.setVisibility(View.GONE);
 
         try{
             user_info = new JSONObject(PreferenceManager.getDefaultSharedPreferences(this).getString("user_info", ""));
@@ -101,9 +101,11 @@ public class WelcomePage extends AppCompatActivity {
                                         if (response.getString("result").equals("SUCCESS")) {
                                             PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
                                                     .edit().putBoolean("admin", response.getBoolean("admin")).apply();
-                                            Intent intent = new Intent(getApplicationContext(), Lobby.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                            startActivity(intent);
+                                            if (!response.getBoolean("active")){
+                                                Intent intent = new Intent(getApplicationContext(), Lobby.class);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                startActivity(intent);
+                                            }
                                         } else if (response.getString("result").equals("LIMITE GIOCATORI RAGGIUNTO")){
                                             Toast.makeText(getApplicationContext(), "Limit players has been reached!",
                                                     Toast.LENGTH_SHORT).show();
@@ -122,10 +124,10 @@ public class WelcomePage extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     error.printStackTrace();
+                                    Toast.makeText(getApplicationContext(), "Something went wrong! Try again later",
+                                            Toast.LENGTH_SHORT).show();
                                 }
                             });
-                    /*RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                    requestQueue.add(jsonObjectRequest);*/
                     SingletonRequest singletonRequest = SingletonRequest.getmInstance(getApplicationContext());
                     singletonRequest.addToRequestQueue(jsonObjectRequest);
                 }catch (JSONException j){

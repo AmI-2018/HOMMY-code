@@ -9,4 +9,5 @@ public class Constants {
     public static final String GET_CHALLENGE = BASE_URL + "getChallenge/";
     public static final String CURRENT_CHALLENGE = BASE_URL + "currentChallenge";
     public static final String ANSWER_CHALLENGE = BASE_URL + "answer/";
+    public static final String START_CHALLENGE = BASE_URL + "startchallenge/";
 }
