@@ -3,7 +3,7 @@ import requests, winsound as ws, threading, service as srv, match, time
 
 app = Flask(__name__)
 m = match.Match()
-
+previous_chal = {'id': -1}
 @app.route('/')
 def lobby():
     return redirect(url_for('showPlayers'))
@@ -18,6 +18,7 @@ def categories():
 
 @app.route('/viewChallenge/<challenge>')
 def viewChallenge(challenge):
+    global previous_chal
     result = requests.get(m.ONLINE_SERVER + "/getChallenge/" + challenge)
     json = result.json()
     trivia = int(json['trivia'])
@@ -40,8 +41,10 @@ def viewChallenge(challenge):
         info = ""
         size = -1
 
-    m.sendNotifications("") # m.getToken(m.admin)
-    return render_template('challenges.html', res=json, info=info, size_info=size, players=m.player_turn)
+    if previous_chal['id'] != m.current_chal['id']:
+        previous_chal = dict(m.current_chal)
+        m.sendNotifications()
+    return render_template('challenges.html', res=json, info=info, size_info=size, players=m.player_turn, active=m.current_chal['active'])
 
 
 @app.route('/players')
@@ -60,13 +63,12 @@ def do(challenge):
         ws.Beep(1000, 1000)
     return "success"
 
-
 # MOBILE
 @app.route('/categoriesM')
 def categoriesM():
     result = requests.get(m.ONLINE_SERVER + "/categories")
     threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/categories")).start()
-    m.setActive(True)
+    m.setActiveMatch(True)
     tmp = result.json()
     tmp['result'] = 1
     return jsonify(tmp)
@@ -114,6 +116,7 @@ def joinMatch():
     # Check if the user already joined
     if m.containsPlayer(json['username']):
         if m.admin == json['username']:
+            threading.Thread(target=m.sendNotifications,args=([json['username']])).start()
             return jsonify({"result": "SUCCESS", "admin": True, "active": m.active})
         else:
             return jsonify({"result": "SUCCESS", "admin": False, "active": m.active})
@@ -129,7 +132,7 @@ def joinMatch():
     elif len(m.players) < m.MAX_PLAYERS:
         m.newPlayer(json['username'], json['token'])
         threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/players")).start()
-        return jsonify({"result": "SUCCESS", "admin": False})
+        return jsonify({"result": "SUCCESS", "admin": False, "active": m.active})
     else:
         return jsonify({"result": "LIMITE GIOCATORI RAGGIUNTO", "active": m.active})
 
@@ -158,7 +161,6 @@ def chooseAnswer(chal_id, answer):
                 time.sleep(2)
                 if m.playerTurn(1) == -1:
                     # Manda notifica per far fare il refresh challenge
-                    # threading.Thread(target=srv.openWebPage,args=(m.driver, m.THIS_SERVER + "/getChallenge/" + str(m.getCategory() ))).start()
                     getChallenge(m.getCategory())
                 else:
                     threading.Thread(target=srv.openWebPage,args=(m.driver, m.THIS_SERVER + "/viewChallenge/" + str(chal_id))).start()
@@ -187,6 +189,23 @@ def signin():
     info = request.json
     res = requests.post(m.ONLINE_SERVER + "/signin", json=info)
     return jsonify({"result": res.text})
+
+# MOBILE
+@app.route('/startchallenge/<int:id>')
+def startChallenge(id):
+    user = request.headers['authorization']
+    found = False
+    for p in m.player_turn:
+        if user == p:
+            found = True
+            if not m.isActive(m.current_chal):
+                m.setActive(m.current_chal, True)
+                threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/viewChallenge/" + str(id))).start()
+                return jsonify({'result': 1})
+
+    if found is False:
+        return jsonify({'result': -1})
+    return jsonify({'result': 2})
 
 
 if __name__ == '__main__':

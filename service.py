@@ -1,7 +1,19 @@
-import random, requests
+import random, time
 from threading import Lock
+from urllib import request
 mutex = Lock()
 
+
+def homePage(driver, url):
+    while True:
+        try:
+            request.urlopen(url=url)
+            break
+        except Exception as e:
+            print(e)
+            time.sleep(1)
+
+    openWebPage(driver,url)
 
 def openWebPage(driver, url):
     global mutex

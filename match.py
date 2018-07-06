@@ -1,6 +1,5 @@
-from service import randomize
 from selenium import webdriver as wd
-import requests
+import requests, threading, service as srv
 
 
 class Match:
@@ -12,17 +11,13 @@ class Match:
     FIREBASE_URL = "https://fcm.googleapis.com/fcm/send"
     MAX_PLAYERS = 8
 
-    # INIT SELENIUM
-    driver = wd.Firefox()
-    driver.maximize_window()
-
     # GAME INFO
     players = list()
     tokens = dict()
     score = dict()
     player_queue = list()
     player_turn = list()
-    played_chal = list([1,2,3])
+    played_chal = list()
     number_played_challenge = 0
     quiz = list()
     admin = ''
@@ -30,6 +25,12 @@ class Match:
     current_chal = dict()
     current_trivia = dict()
     active = False
+
+    def __init__(self):
+        # INIT SELENIUM
+        self.driver = wd.Firefox()
+        self.driver.maximize_window()
+        threading.Thread(target=srv.homePage, args=(self.driver, self.THIS_SERVER + "/players")).start()
 
     def newPlayer(self, new_player, token):
         if len(self.players) < self.MAX_PLAYERS:
@@ -52,15 +53,16 @@ class Match:
 
     def updateChallenge(self, challenge):
         self.current_chal = dict(challenge)
+        self.current_chal['active'] = False
         self.number_played_challenge = self.number_played_challenge + 1
 
     # Choose Randomly who have to play the challenge
     def playerTurn(self, number):
-        flag =1
+        flag = 1
         if len(self.players) < number:
             return False
         elif len(self.player_queue) < number:
-            self.player_queue = randomize(list(self.players))
+            self.player_queue = srv.randomize(list(self.players))
             flag = -1
 
         self.player_turn = list()
@@ -68,11 +70,12 @@ class Match:
             self.player_turn.append(self.player_queue.pop())
 
         return flag
-    def setActive(self, status):
-        if (status == True) or (status == False):
+
+    def setActiveMatch(self, status):
+        if (status is True) or (status is False):
             self.active = status
 
-    #Check if an user exist among the current players
+    # Check if an user exist among the current players
     def containsPlayer(self, player):
         tmp = str.lower(player)
         for p in self.players:
@@ -82,19 +85,32 @@ class Match:
 
     # Send a notification to every user (except who clicked the button for the next challenge) in order to update
     # mobile activity
-    def sendNotifications(self, exclude_token=""):
-        headers = {'Authorization': 'key=' + self.FIREBASE_SERVER_KEY, 'Content-Type': 'application/json'}
+    def sendNotifications(self, players=list()):
+        all = False
+        if len(players) == 0:
+            all = True
 
-        for token in self.tokens:
-            if token != exclude_token:
+        headers = {'Authorization': 'key=' + self.FIREBASE_SERVER_KEY, 'Content-Type': 'application/json'}
+        res = list()
+        if all:
+            for token in self.tokens:
                 fields = {'to': self.tokens[token],
                           'notification': {
                               'title': 'refresh',
                               'body': 'challenge'
                             }
                           }
-                res = requests.post(self.FIREBASE_URL, headers=headers, json=fields)
-                return res.text
+                res.append(requests.post(self.FIREBASE_URL, headers=headers, json=fields).text)
+        else:
+            for p in players:
+                fields = {'to': self.tokens[p],
+                          'notification': {
+                              'title': 'refresh',
+                              'body': 'challenge'
+                            }
+                          }
+                res.append(requests.post(self.FIREBASE_URL, headers=headers, json=fields).text)
+        return res
 
     def getToken(self, player):
         return str(self.tokens[player])
@@ -104,6 +120,12 @@ class Match:
 
     def getCategory(self):
         return self.current_categ
+
+    def isActive(self, dictionary):
+        return dictionary['active']
+
+    def setActive(self, dictionary, bool):
+        dictionary['active'] = bool
 
 if __name__ == '__main__':
     match = Match()

@@ -12,6 +12,8 @@ body{
 }
 ul{list-style: none; margin: 0 0; padding: 0 0;}
 .lead{font-size: 25px;}
+.row{margin: 0 0; padding: 0 0;}
+.turn{font-size: 50px; margin: 0 0; text-align: center; padding-top: 50px;}
 /*-------------------
 CATEGORIES.html
 -------------------*/
@@ -57,6 +59,23 @@ CHALLENGES.html
 }
 #box-chal{margin: 30px 10%;}
 .challenge p{padding: 100px 0;}
+/*--------------------------------*/
+#pulse{height: 350px}
+#biglogo{height: 130px; margin: 0 0%; margin-bottom: 40px;}
+#rate{width: 300px;}
+.challenge_room{text-align: center;}
+.name{
+  color: white; font-style: normal; font-weight: bold; font-family: "gugi"; font-size: 90px;
+  margin: 0 0;
+  padding: 2% 0;
+  }
+.challenge_room_form{margin-top: 5%;}
+.challenge_room_form h2{
+    font-family: 'Gugi', cursive;
+    color: #FEDB4C;
+    font-size: 50px;
+}
+
 /*-------------------
 TRIVIA
 -------------------*/
@@ -66,15 +85,15 @@ TRIVIA
   color: white;
   font-size: 50px;
   margin: 0 0;
-  padding: 20px 0;
+  padding: 30px 0;
 }
-.trivia h2,h3{
+.trivia h2{
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   color: #93DE74;
   font-size: 60px;
   padding: 80px 0 ;
 }
-.trivia h3{color: white; font-size: 30px; margin: 0 0;}
+/*.trivia h3{color: white; font-size: 30px; margin: 0 0;}*/
 .trivia span{
   background: orange;
   padding: 0 150px;
@@ -82,6 +101,7 @@ TRIVIA
   border-radius: 25px;
   font-size: 45px;
 }
+#trivia_logo {text-align: left; height: 100px; float: left; padding-left: 30px;}
 .answer{
   padding: 50px 0;
 }

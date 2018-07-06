@@ -13,15 +13,72 @@
     <title>HOMMY</title>
 </head>
 <body>
-    {% if info == '' %}
+    {% if active == False %}
+        <!--
         <div class="challenge">
             <h1 id="{{ res['id'] }}">{{ res['name'] }} - {{ res['description'] }}</h1>
             <button class="btn btn-primary" id="play">PLAY</button>
             <button class="btn btn-primary" id="stop">STOP</button>
         </div>
-    {% else %}
+        -->
+
+        <div class="challenge_room">
+            <h1 class="name"><img src="{{ url_for('static', filename='img/hommy_logo.png') }}" alt="HOMMY" id="biglogo">O M M Y</h1>
+
+            <div class="row challenge_room_form">
+                {% if res['id'] == 1 %}
+                    <div class="col-md-3">
+                        <img src="{{ url_for('static', filename='img/pulse.png') }}" alt="pulse" id="pulse">
+                    </div>
+                    <div class="col-md-6">
+                        <h2>{{ res['name'] }}</h2>
+                        <p class="lead">{{ res['description'] }}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="{{ url_for('static', filename='img/heartbeat.gif') }}" alt="rate" id="rate">
+                    </div>
+                {% elif  res['id'] == 2 %}
+                    <div class="col-md-3">
+                        <img src="{{ url_for('static', filename='img/microphone.png') }}" alt="pulse" id="pulse">
+                    </div>
+                    <div class="col-md-6">
+                        <h2>{{ res['name'] }}</h2>
+                        <p class="lead">{{ res['description'] }}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="{{ url_for('static', filename='img/songman.gif') }}" alt="rate">
+                    </div>
+                {% elif  res['id'] == 3 %}
+                    <div class="col-md-3">
+                        <img src="{{ url_for('static', filename='img/dance.png') }}" alt="pulse" id="pulse">
+                    </div>
+                    <div class="col-md-6">
+                        <h2>{{ res['name'] }}</h2>
+                        <p class="lead">{{ res['description'] }}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="{{ url_for('static', filename='img/dancingman.gif') }}" alt="rate">
+                    </div>
+                {% elif  res['id'] == 4 %}
+                    <div class="col-md-3">
+                        <img src="{{ url_for('static', filename='img/music.png') }}" alt="pulse" id="pulse">
+                    </div>
+                    <div class="col-md-6">
+                        <h2>{{ res['name'] }}</h2>
+                        <p class="lead">{{ res['description'] }}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="{{ url_for('static', filename='img/notes.gif') }}" alt="rate">
+                    </div>
+                {% endif %}
+
+            </div>
+            <h2>Press <span id="join">START</span> on your app to begin!</h2>
+        </div>
+
+    {% elif info != '' %}
         <div class="trivia" resource = {{ info[7] }}>
-            <h1 id="{{ info[0] }}">{{ res['name'] }}</h1>
+            <h1 id="{{ info[0] }}"><img id="trivia_logo" src="{{ url_for('static', filename='img/hommy_logo.png') }}" alt="">{{ res['name'] }}</h1>
             <h2 id="{{ info[1] }}">{{ info[2] }}</h2>
             <div class="row">
                 <div class="col-md-6 answer">
@@ -42,13 +99,15 @@
                 </div>
             {% endif %}
             <h3>Choose the correct answer on your App</h3>
-            <h3>Turn:
-            {% for p in players %}
-                {{ p }}
-            {% endfor %}
-            </h3>
         </div>
+    {% else %}
+        <h1>CIAO CIAO CIAO</h1>
     {% endif %}
+    <h3 class="turn">Turn:
+        {% for p in players %}
+            {{ p }}
+        {% endfor %}
+    </h3>
 
 
 <!-- Latest compiled and minified JavaScript -->
