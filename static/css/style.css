@@ -47,19 +47,6 @@ CATEGORIES.html
 /*-------------------
 CHALLENGES.html
 -------------------*/
-.challenge{
-  height: 100%;
-  width: 100%;
-  background: url(/static/img/bg.jpg);
-  background-size: cover;
-  -o-background-size: cover;
-  -moz-background-size: cover;
-  background-position: center center;
-  text-align: center;
-}
-#box-chal{margin: 30px 10%;}
-.challenge p{padding: 100px 0;}
-/*--------------------------------*/
 #pulse{height: 350px}
 #biglogo{height: 130px; margin: 0 0%; margin-bottom: 40px;}
 #rate{width: 300px;}

@@ -34,6 +34,10 @@ def randomize(lista):
 
     return new_list
 
+def randomFrequency():
+    ran = random.randint(6,30)
+    ran = ran*50
+    return ran
 
 
 if __name__ == '__main__':

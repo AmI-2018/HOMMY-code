@@ -17,7 +17,7 @@ class Match:
     score = dict()
     player_queue = list()
     player_turn = list()
-    played_chal = list()
+    played_chal = list([1,3,4])
     number_played_challenge = 0
     quiz = list()
     admin = ''
@@ -25,12 +25,13 @@ class Match:
     current_chal = dict()
     current_trivia = dict()
     active = False
+    voice_hz = dict()
 
     def __init__(self):
         # INIT SELENIUM
         self.driver = wd.Firefox()
         self.driver.maximize_window()
-        threading.Thread(target=srv.homePage, args=(self.driver, self.THIS_SERVER + "/players")).start()
+        threading.Thread(target=srv.homePage, args=(self.driver, self.THIS_SERVER)).start()
 
     def newPlayer(self, new_player, token):
         if len(self.players) < self.MAX_PLAYERS:
@@ -126,6 +127,14 @@ class Match:
 
     def setActive(self, dictionary, bool):
         dictionary['active'] = bool
+
+    def voiceHzResult(self, user, given_frequency):
+        self.voice_hz[user] = given_frequency
+
+    def getVoiceHzResult(self, key):
+        if key in self.voice_hz:
+            return self.voice_hz[key]
+        return -1
 
 if __name__ == '__main__':
     match = Match()
