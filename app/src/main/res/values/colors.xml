@@ -6,4 +6,6 @@
     <color name="lightGreen">#93DE74</color>
     <color name="orange">#ffa500</color>
     <color name="gray">#b3b3b3</color>
+    <color name="red_recording">#ff0000</color>
+    <color name="title_color">#FEDB4C</color>
 </resources>

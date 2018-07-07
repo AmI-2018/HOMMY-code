@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Categories extends AppCompatActivity {
 
+    private TextView title;
     private CardView[] cards = new CardView[4];
     private TextView[] texts = new TextView[4];
     private String[] cat_names = new String[4];
@@ -39,6 +40,7 @@ public class Categories extends AppCompatActivity {
         setContentView(R.layout.activity_categories);
 
         admin = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("admin", false);
+        title = findViewById(R.id.categories_text);
         cards[0] = findViewById(R.id.card_a);
         cards[1] = findViewById(R.id.card_b);
         cards[2] = findViewById(R.id.card_c);
@@ -47,6 +49,9 @@ public class Categories extends AppCompatActivity {
         texts[1] = findViewById(R.id.cat_b);
         texts[2] = findViewById(R.id.cat_c);
         texts[3] = findViewById(R.id.cat_d);
+
+        Typeface custom_font = Typeface.createFromAsset(getAssets(), Constants.GUGI);
+        title.setTypeface(custom_font);
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,

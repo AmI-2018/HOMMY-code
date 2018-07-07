@@ -34,7 +34,7 @@
             android:text="Music Quiz Challenge"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="#fff"
+            android:textColor="@color/title_color"
             android:textSize="30sp"
             android:textStyle="bold" />
 

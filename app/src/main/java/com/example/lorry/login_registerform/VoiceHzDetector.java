@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class VoiceHzDetector {
-    private int frequency;
+    //private int frequency;
     private final int SAMPLE_RATE = 44100;
     private String LOG_TAG="VoiceHzDetector";
     private Handler handler;
@@ -28,45 +28,45 @@ public class VoiceHzDetector {
     private boolean isPlaying=false;
     private List<short[]> shorts;
 
-    private short[] frequencySamples;
-    private int sampleCount;
+    //private short[] frequencySamples;
+    //private int sampleCount;
 
 
     //Initialized with the frequency of this match
-    public VoiceHzDetector(int freq){
-        frequency=freq;
+    public VoiceHzDetector(){           //int freq){
+        //frequency=freq;
         handler=new Handler();
         shorts=new ArrayList<>();
 
-        sampleCount = (int)(SAMPLE_RATE * 2.0 * (1 / 1000.0)) & ~1;
-        frequencySamples = getSineWave(frequency, sampleCount);
+        //sampleCount = (int)(SAMPLE_RATE * 2.0 * (1 / 1000.0)) & ~1;
+        //frequencySamples = getSineWave(frequency, sampleCount);
 
     }
     //generate the player for the current tone frequency
-    private AudioTrack generateTonePlayer()
+   /* private AudioTrack generateTonePlayer()
     {
         AudioTrack track = new AudioTrack(AudioManager.STREAM_MUSIC, SAMPLE_RATE,
                 AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT,
                 sampleCount * (Short.SIZE / 8), AudioTrack.MODE_STATIC);
         track.write(frequencySamples, 0, sampleCount);
         return track;
-    }
+    }*/
     //generate sine wave tone for specified frequency
-    private short[] getSineWave(double freqHz, int count) {
+    /*private short[] getSineWave(double freqHz, int count) {
         short[] samples = new short[count];
         for(int i = 0; i < count; i += 1){
             short sample = (short)(Math.sin(2 * Math.PI * i / (44100.0 / freqHz)) * 0x7FFF);
             samples[i] = sample;
         }
         return samples;
-    }
+    }*/
     //play the generated tone
-    public void playHz(){
+    /*public void playHz(){
         generateTonePlayer().play();
        isPlaying=true;
        handler.postDelayed(()->isPlaying=false,1000);
 
-    }
+    }*/
     //start recording pcm audio from mic unill @stopRecTone is called
     public void startRecTone(){
         if(isPlaying) return;
@@ -88,7 +88,7 @@ public class VoiceHzDetector {
 
                 short[] audioBuffer = new short[bufferSize / 2];
 
-                AudioRecord record = new AudioRecord(MediaRecorder.AudioSource.DEFAULT,
+                AudioRecord record = new AudioRecord(MediaRecorder.AudioSource.MIC,
                         SAMPLE_RATE,
                         AudioFormat.CHANNEL_IN_MONO,
                         AudioFormat.ENCODING_PCM_16BIT,
@@ -223,7 +223,7 @@ public class VoiceHzDetector {
             }
         }).start();
     }
-    public short[] getUserTone(){
+    /*public short[] getUserTone(){
         int size=0;
         if(shorts.size()==0) throw new IllegalStateException("Should record before playing audio!!");
 
@@ -233,6 +233,6 @@ public class VoiceHzDetector {
         for(short[] shortA:shorts)
             mSamples.put(shortA);
         return mSamples.array();
-    }
+    }*/
 
 }

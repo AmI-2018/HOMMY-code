@@ -1,5 +1,7 @@
 package com.example.lorry.login_registerform;
 
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,29 +49,29 @@ public class Challenge extends AppCompatActivity {
             current_challenge = new JSONObject(PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
                     .getString("current_chal", ""));
             challenge_text.setText(current_challenge.getString("name"));
+            Typeface custom_font = Typeface.createFromAsset(getAssets(), Constants.GUGI);
+            challenge_text.setTypeface(custom_font);
             description_text.setText(getString(R.string.turn_text, current_challenge.getString("description")));
-
+            findViewById(R.id.answer_layout1).setVisibility(View.GONE);
+            findViewById(R.id.answer_layout2).setVisibility(View.GONE);
             switch(current_challenge.getInt("id")){
                 case 1:
                     image.setImageResource(R.drawable.pulse);
-                    findViewById(R.id.answer_layout1).setVisibility(View.GONE);
-                    findViewById(R.id.answer_layout2).setVisibility(View.GONE);
+                    /*findViewById(R.id.answer_layout1).setVisibility(View.GONE);
+                    findViewById(R.id.answer_layout2).setVisibility(View.GONE);*/
                     break;
                 case 2:
                     image.setImageResource(R.drawable.voice);
-                    //description_text.setText(getString(R.string.voice_hz));
-                    findViewById(R.id.answer_layout1).setVisibility(View.GONE);
-                    findViewById(R.id.answer_layout2).setVisibility(View.GONE);
+                    /*findViewById(R.id.answer_layout1).setVisibility(View.GONE);
+                    findViewById(R.id.answer_layout2).setVisibility(View.GONE);*/
                     break;
                 case 3:
                     image.setImageResource(R.drawable.dance);
-                    //description_text.setText(getString(R.string.dance_description));
-                    findViewById(R.id.answer_layout1).setVisibility(View.GONE);
-                    findViewById(R.id.answer_layout2).setVisibility(View.GONE);
+                    /*findViewById(R.id.answer_layout1).setVisibility(View.GONE);
+                    findViewById(R.id.answer_layout2).setVisibility(View.GONE);*/
                     break;
                 case 4:
                     image.setImageResource(R.drawable.music_quiz);
-                    //description_text.setText(getString(R.string.trivia_description));
                     break;
                 default:
                     break;
@@ -85,17 +87,53 @@ public class Challenge extends AppCompatActivity {
                         null,
                         response->{
                                 try {
+                                    int id = current_challenge.getInt("id");
                                     switch (response.getInt("result")){
                                         case 1:
                                             //Starting activity
                                             Toast.makeText(getApplicationContext(), "CASE 1",
                                                     Toast.LENGTH_SHORT).show();
-                                            start.setVisibility(View.GONE);
+                                            switch (id){
+                                                case 1:
+                                                    break;
+                                                case 2:
+                                                    Intent intent = new Intent(getApplicationContext(), VoiceHzChallenge.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    startActivity(intent);
+                                                    break;
+                                                case 3:
+                                                    break;
+                                                case 4:
+                                                    findViewById(R.id.answer_layout1).setVisibility(View.VISIBLE);
+                                                    findViewById(R.id.answer_layout2).setVisibility(View.VISIBLE);
+                                                    start.setVisibility(View.GONE);
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
                                             break;
                                         case 2:
                                             //Starting activity
                                             Toast.makeText(getApplicationContext(), "CASE 2",
                                                     Toast.LENGTH_SHORT).show();
+                                            switch (id){
+                                                case 1:
+                                                    break;
+                                                case 2:
+                                                    Intent intent = new Intent(getApplicationContext(), VoiceHzChallenge.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    startActivity(intent);
+                                                    break;
+                                                case 3:
+                                                    break;
+                                                case 4:
+                                                    findViewById(R.id.answer_layout1).setVisibility(View.VISIBLE);
+                                                    findViewById(R.id.answer_layout2).setVisibility(View.VISIBLE);
+                                                    start.setVisibility(View.GONE);
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
                                             break;
                                         default:
                                             Toast.makeText(getApplicationContext(), "It's not your turn!",

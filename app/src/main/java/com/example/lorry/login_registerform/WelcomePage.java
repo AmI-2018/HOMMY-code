@@ -43,7 +43,7 @@ public class WelcomePage extends AppCompatActivity {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
-        Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/Gugi-Regular.ttf");
+        Typeface custom_font = Typeface.createFromAsset(getAssets(), Constants.GUGI);
         welcome = findViewById(R.id.welcome_text);
         join = findViewById(R.id.join_button);
         join.setTypeface(custom_font);
@@ -57,12 +57,15 @@ public class WelcomePage extends AppCompatActivity {
         token.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String token = FirebaseInstanceId.getInstance().getToken();
+                /*String token = FirebaseInstanceId.getInstance().getToken();
                 Toast.makeText(getApplicationContext(), token,
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
+                Intent intent = new Intent(getApplicationContext(), VoiceHzChallenge.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
-        token.setVisibility(View.GONE);
+        //token.setVisibility(View.GONE);
 
         try{
             user_info = new JSONObject(PreferenceManager.getDefaultSharedPreferences(this).getString("user_info", ""));

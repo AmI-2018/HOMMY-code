@@ -2,9 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lorry.login_registerform">
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-feature android:name="android.hardware.sensor.gyroscope"/>
-    <uses-feature android:name="android.hardware.sensor.accelerometer"  android:required="true" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-feature android:name="android.hardware.sensor.gyroscope" />
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission-group.SENSORS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -26,6 +30,7 @@
         <activity android:name=".WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -52,7 +57,10 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Challenge"/>
+        <activity android:name=".Challenge" />
+        <activity
+            android:name=".VoiceHzChallenge"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>
