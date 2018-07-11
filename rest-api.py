@@ -7,8 +7,7 @@ m = match.Match()
 previous_chal = {'id': -1}
 music_player = MediaPlayer("static/music trivia/payday.mp3")
 music_on = False
-ready = 0;
-turn = True
+ready = 0
 @app.route('/')
 def lobby():
     return redirect(url_for('showPlayers'))
