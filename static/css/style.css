@@ -64,6 +64,15 @@ CHALLENGES.html
 }
 
 /*-------------------
+FITNESS CHALLENGE
+-------------------*/
+.fitness_chal{text-align: center;}
+.fitness_chal h1{font-size: 60px;}
+.fitness_chal h2{font-size: 40px;}
+.fitness_chal_body{margin-top: 10%;}
+.hb{height: 100px;}
+
+/*-------------------
 TRIVIA
 -------------------*/
 .trivia{text-align: center;}
