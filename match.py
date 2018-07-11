@@ -1,5 +1,5 @@
 from selenium import webdriver as wd
-import requests, threading, service as srv
+import requests, threading, service as srv, player
 
 
 class Match:
@@ -12,12 +12,10 @@ class Match:
     MAX_PLAYERS = 8
 
     # GAME INFO
-    players = list()
-    tokens = dict()
-    score = dict()
+    players = dict()
     player_queue = list()
     player_turn = list()
-    played_chal = list([1,3,4])
+    played_chal = list()
     number_played_challenge = 0
     quiz = list()
     admin = ''
@@ -35,9 +33,8 @@ class Match:
 
     def newPlayer(self, new_player, token):
         if len(self.players) < self.MAX_PLAYERS:
-            self.players.append(new_player)
-            self.score[new_player] = 0
-            self.tokens[new_player] = token
+            p = player.Player(new_player,token)
+            self.players[new_player] = p
             return True
         return False
 
@@ -63,7 +60,7 @@ class Match:
         if len(self.players) < number:
             return False
         elif len(self.player_queue) < number:
-            self.player_queue = srv.randomize(list(self.players))
+            self.player_queue = srv.randomize(self.getPlayersName())
             flag = -1
 
         self.player_turn = list()
@@ -80,7 +77,7 @@ class Match:
     def containsPlayer(self, player):
         tmp = str.lower(player)
         for p in self.players:
-            if str.lower(p) == tmp:
+            if str.lower(self.players[p].getName()) == tmp:
                 return True
         return False
 
@@ -94,8 +91,8 @@ class Match:
         headers = {'Authorization': 'key=' + self.FIREBASE_SERVER_KEY, 'Content-Type': 'application/json'}
         res = list()
         if all:
-            for token in self.tokens:
-                fields = {'to': self.tokens[token],
+            for p in self.players:
+                fields = {'to': self.players[p].getToken(),
                           'notification': {
                               'title': 'refresh',
                               'body': 'challenge'
@@ -104,7 +101,7 @@ class Match:
                 res.append(requests.post(self.FIREBASE_URL, headers=headers, json=fields).text)
         else:
             for p in players:
-                fields = {'to': self.tokens[p],
+                fields = {'to': self.players[p].getToken(),
                           'notification': {
                               'title': 'refresh',
                               'body': 'challenge'
@@ -114,7 +111,7 @@ class Match:
         return res
 
     def getToken(self, player):
-        return str(self.tokens[player])
+        return str(self.players[player].getToken())
 
     def setCategory(self, category):
         self.current_categ = category
@@ -135,6 +132,12 @@ class Match:
         if key in self.voice_hz:
             return self.voice_hz[key]
         return -1
+
+    def getPlayersName(self):
+        """players = list()
+        for p in self.players:
+            players.append(self.players[p].getName())"""
+        return list(self.players)
 
 if __name__ == '__main__':
     match = Match()

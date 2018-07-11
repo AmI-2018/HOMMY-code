@@ -1,11 +1,11 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify, abort
 import requests, winsound as ws, threading, service as srv, match, time
-import vlc
+from vlc import MediaPlayer
 
 app = Flask(__name__)
 m = match.Match()
 previous_chal = {'id': -1}
-music_player = vlc.MediaPlayer("static/music trivia/payday.mp3")
+music_player = MediaPlayer("static/music trivia/payday.mp3")
 music_on = False
 @app.route('/')
 def lobby():
@@ -47,12 +47,13 @@ def viewChallenge(challenge):
     if previous_chal['id'] != m.current_chal['id']:
         previous_chal = dict(m.current_chal)
         m.sendNotifications()
-    return render_template('challenges.html', res=json, info=info, size_info=size, players=m.player_turn, active=m.current_chal['active'])
+    return render_template('challenges.html', res=json, info=info, size_info=size, players=m.player_turn, active=m.current_chal['active'],
+                           p_number= len(m.player_turn))
 
 
 @app.route('/players')
 def showPlayers():
-    return render_template('lobby.html', players=m.players, admin=m.admin, n=len(m.players))
+    return render_template('lobby.html', players=m.getPlayersName(), admin=m.admin, n=len(m.players))
 
 
 @app.route('/endgame')
@@ -95,9 +96,14 @@ def getChallenge(category):
         threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/endgame")).start()
         m.sendNotifications()
         return jsonify({'result': -1})
-    m.playerTurn(1)
+
     json = r.json()
+    if json['id'] == 1:
+        m.playerTurn(len(m.players))
+    else:
+        m.playerTurn(1)
     m.updateChallenge(json)
+    m.setActive(m.current_chal, False)
     m.setCategory(json['type'])
     chal_id = str(json['id'])
     m.played_chal.append(int(chal_id))
@@ -160,6 +166,7 @@ def chooseAnswer(chal_id, answer):
         abort(409)
 
     user = request.headers['authorization']
+
     # Calcolo indice risposta attraverso i codici ascii
     a = ord(answer.lower()) - ord("a")
     for p in m.player_turn:
@@ -177,6 +184,7 @@ def chooseAnswer(chal_id, answer):
                     # Manda notifica per far fare il refresh challenge
                     getChallenge(m.getCategory())
                 else:
+                    m.setActive(m.current_chal, False)
                     threading.Thread(target=srv.openWebPage,args=(m.driver, m.THIS_SERVER + "/viewChallenge/" + str(chal_id))).start()
                 return jsonify({'result': "WRONG"})
 
@@ -207,6 +215,7 @@ def signin():
 # MOBILE
 @app.route('/startchallenge/<int:id>')
 def startChallenge(id):
+    global music_on
     user = request.headers['authorization']
     found = False
     for p in m.player_turn:
@@ -216,11 +225,15 @@ def startChallenge(id):
             if not m.isActive(m.current_chal):
                 m.setActive(m.current_chal, True)
                 threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/viewChallenge/" + str(id))).start()
+                music_on = False
+                music_player.pause()
                 return jsonify({'result': 1})
 
     if found is False:
         return jsonify({'result': -1})
 
+    music_on = False
+    music_player.pause()
     return jsonify({'result': 2})
 
 # MOBILE
@@ -240,15 +253,16 @@ def do(challenge):
             freq = srv.randomFrequency()
             m.voiceHzResult(user,freq)
         threading.Thread(target=ws.Beep, args=(freq,5000)).start()
-        # ws.Beep(freq, 5000) # frequency, duration
+
     return jsonify({"result": "SUCCESS"})
 
 
 # MOBILE
 @app.route('/challengeResult', methods=['POST'])
 def challengeResult():
+    global music_on
     res = request.json
-    user = request.headers['username']
+    user = request.headers['authorization']
     found = False
     for p in m.player_turn:
         if user == p:
@@ -258,11 +272,28 @@ def challengeResult():
     id = res['id']
 
     if id == 1:
-        pass
+        for key in res:
+            if key != 'id':
+                # Calcolo punteggio per tempi
+                print(key+": " + str(res[key]))
+        time.sleep(2)
+        m.setActive(m.current_chal, False)
+        getChallenge(m.getCategory())
     elif id == 2:
         given_freq = m.getVoiceHzResult(user)
         recorded_freq = res['frequency']
         # Calculate the error between the two frequency assign a score to the performance, and set a winner
+
+        if m.playerTurn(1) == -1:
+            # Manda notifica per far fare il refresh challenge
+            getChallenge(m.getCategory())
+        else:
+            m.setActive(m.current_chal, False)
+            threading.Thread(target=srv.openWebPage,args=(m.driver, m.THIS_SERVER + "/viewChallenge/" + str(id))).start()
+
+        music_on = True
+        music_player.play()
+
     elif id == 3:
         pass
     elif id == 4:

@@ -25,6 +25,13 @@ $(document).ready(function () {
 function wrongAnswer() {
     //Richiesta HTTP per risposta sbagliata
     let turn = $('.turn').text();
-    turn = turn.replace("Turn: ", "");
+    turn = turn.replace(/ /g, '');
+    turn = turn.replace("Turn:", "");
+    let headers = {"authorization": turn};
 
+    $.get({
+        "url": SERVER + "/answer/4/E",
+        "headers": headers,
+        "contentType": "application/json",
+    });
 }

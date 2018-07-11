@@ -102,18 +102,36 @@
             <h3>Choose the correct answer on your App</h3>
         </div>
     {% else %}
-        <h1>CIAO CIAO CIAO</h1>
+        {% if res['id'] == 1 %}
+            <div class="fitness_chal" id_chal="chal{{ res['id'] }}">
+                <h1 class="name"><img src="{{ url_for('static', filename='img/hommy_logo.png') }}" alt="HOMMY" id="trivia_logo">Fitness Challenge</h1>
+                <div class="row fitness_chal_body">
+                    <div class="col-md-4 exercise">
+                        <h2>Squats:</h2>
+                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    </div>
+                    <div class="col-md-5">
+                        <img src="{{ url_for('static', filename='img/fitness/squats.jpg') }}" alt="" id="exercise_img">
+                    </div>
+                    <div class="col-md-3 players_list" player_number="{{ p_number }}">
+                        {% for p in players %}
+                             <h2>{{ p }}: <span id="p{{ loop.index }}"></span><img src="{{ url_for('static', filename='img/fitness/heart_beat.gif') }}" alt="HB" class="hb"></h2>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <h1>CIAO CIAO CIAO</h1>
+        {% endif %}
     {% endif %}
-    <h3 class="turn">Turn:
-        {% for p in players %}
-            {{ p }}
-        {% endfor %}
-    </h3>
+    <h3 class="turn">Turn: {% for p in players %}{{ p }} {% endfor %}</h3>
 
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='js/chal.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='js/fitness.js') }}" type="text/javascript"></script>
 </body>
 </html>
