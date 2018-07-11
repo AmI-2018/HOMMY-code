@@ -65,7 +65,7 @@ public class WelcomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //token.setVisibility(View.GONE);
+        token.setVisibility(View.GONE);
 
         try{
             user_info = new JSONObject(PreferenceManager.getDefaultSharedPreferences(this).getString("user_info", ""));

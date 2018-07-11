@@ -35,8 +35,9 @@ public class VoiceHzChallenge extends AppCompatActivity {
     private CardView card;
     private VoiceHzDetector challengeHandler;
     private Button repr_btn, continue_btn;
-    private boolean start;
+    private boolean start, tone;
     private final int id = 2;
+    private int frequency_recorded;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,7 @@ public class VoiceHzChallenge extends AppCompatActivity {
         if(!checkPermissionFromDevice())
             requestPermission();
 
-        start = false;
+        start = tone = false;
         title = findViewById(R.id.voice_title);
         description = findViewById(R.id.voice_description);
         image = findViewById(R.id.voice_mic);
@@ -59,13 +60,18 @@ public class VoiceHzChallenge extends AppCompatActivity {
         title.setTypeface(custom_font);
 
         image.setOnClickListener(v->{
-            start = true;
-            description.setText("Recording...");
-            card.setVisibility(View.VISIBLE);
-            challengeHandler = new VoiceHzDetector();
-            startRecording();
-            image.setEnabled(false);
-            repr_btn.setVisibility(View.GONE);
+            if (!tone)
+                Toast.makeText(getApplicationContext(), "You should listen to the tone first!",
+                        Toast.LENGTH_SHORT).show();
+            else{
+                start = true;
+                description.setText("Recording...");
+                card.setVisibility(View.VISIBLE);
+                challengeHandler = new VoiceHzDetector();
+                startRecording();
+                image.setEnabled(false);
+                repr_btn.setVisibility(View.GONE);
+            }
         });
 
         repr_btn.setOnClickListener(v->{
@@ -106,10 +112,50 @@ public class VoiceHzChallenge extends AppCompatActivity {
                 };
                 SingletonRequest singletonRequest = SingletonRequest.getmInstance(getApplicationContext());
                 singletonRequest.addToRequestQueue(jsonObjectRequest);
+                tone = true;
             }
-
+            // Or Listen to your tone
             else challengeHandler.playTone();
 
+        });
+
+        continue_btn.setOnClickListener(v->{
+            Map<String,Integer> map = new HashMap<>();
+            map.put("frequency", frequency_recorded);
+            map.put("id", this.id);
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                    Constants.NEXT_CHALLENGE,
+                    new JSONObject(map),
+                    response->{
+                        try {
+                            if (response.getString("result").equals("INVALID CHALLENGE")){
+                                Toast.makeText(getApplicationContext(), "INVALID CHALLENGE!",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    },
+                    Exception::printStackTrace)
+            {
+                @Override
+                public Map<String, String> getHeaders(){
+                    Map<String, String> headers = new HashMap<>();
+                    try{
+                        JSONObject user_info = new JSONObject(PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                                .getString("user_info", ""));
+                        headers.put("authorization", user_info.getString("username"));
+                        return headers;
+                    }catch (JSONException j){
+                        j.printStackTrace();
+                    }
+                    return headers;
+                }
+            };
+            SingletonRequest singletonRequest = SingletonRequest.getmInstance(getApplicationContext());
+            singletonRequest.addToRequestQueue(jsonObjectRequest);
+            continue_btn.setVisibility(View.GONE);
         });
     }
 
@@ -165,6 +211,7 @@ public class VoiceHzChallenge extends AppCompatActivity {
                 repr_btn.setVisibility(View.VISIBLE);
                 repr_btn.setText("Your Tone");
                 continue_btn.setVisibility(View.VISIBLE);
+                frequency_recorded = res;
                 Toast.makeText(getApplicationContext(), res.toString(),
                         Toast.LENGTH_SHORT).show();
             }

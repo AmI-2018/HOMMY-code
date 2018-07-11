@@ -22,6 +22,7 @@
     <string name="lobby_text1">Press the button when everyone is ready!</string>
     <string name="lobby_text2">Wait for the other players!</string>
     <string name="turn_text">%s\nWatch the screen to know when it\'s your turn!</string>
+    <string name="voice_hz">Voice HZ Detector</string>
 
 
 </resources>

@@ -57,23 +57,15 @@ public class Challenge extends AppCompatActivity {
             switch(current_challenge.getInt("id")){
                 case 1:
                     image.setImageResource(R.drawable.pulse);
-                    /*findViewById(R.id.answer_layout1).setVisibility(View.GONE);
-                    findViewById(R.id.answer_layout2).setVisibility(View.GONE);*/
                     break;
                 case 2:
                     image.setImageResource(R.drawable.voice);
-                    /*findViewById(R.id.answer_layout1).setVisibility(View.GONE);
-                    findViewById(R.id.answer_layout2).setVisibility(View.GONE);*/
                     break;
                 case 3:
                     image.setImageResource(R.drawable.dance);
-                    /*findViewById(R.id.answer_layout1).setVisibility(View.GONE);
-                    findViewById(R.id.answer_layout2).setVisibility(View.GONE);*/
                     break;
                 case 4:
                     image.setImageResource(R.drawable.music_quiz);
-                    break;
-                default:
                     break;
             }
         }catch (JSONException j){
@@ -95,6 +87,8 @@ public class Challenge extends AppCompatActivity {
                                                     Toast.LENGTH_SHORT).show();
                                             switch (id){
                                                 case 1:
+                                                    start.setVisibility(View.GONE);
+                                                    description_text.setText("Follow the instruction on the screen and...\nHold On!");
                                                     break;
                                                 case 2:
                                                     Intent intent = new Intent(getApplicationContext(), VoiceHzChallenge.class);
@@ -118,6 +112,8 @@ public class Challenge extends AppCompatActivity {
                                                     Toast.LENGTH_SHORT).show();
                                             switch (id){
                                                 case 1:
+                                                    start.setVisibility(View.GONE);
+                                                    description_text.setText("Follow the instruction on the screen and...\nHold On!");
                                                     break;
                                                 case 2:
                                                     Intent intent = new Intent(getApplicationContext(), VoiceHzChallenge.class);
@@ -185,6 +181,10 @@ public class Challenge extends AppCompatActivity {
                                             if(response.getString("result").equals("NOT AUTHORIZED")){
                                                 Toast.makeText(getApplicationContext(), "It's not your turn!",
                                                         Toast.LENGTH_SHORT).show();
+                                            }
+                                            else if (response.getString("result").equals("WRONG")){
+                                                findViewById(R.id.answer_layout1).setVisibility(View.INVISIBLE);
+                                                findViewById(R.id.answer_layout2).setVisibility(View.INVISIBLE);
                                             }
                                         } catch (JSONException e) {
                                             e.printStackTrace();

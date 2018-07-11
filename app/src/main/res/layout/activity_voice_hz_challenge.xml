@@ -16,7 +16,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:paddingTop="0dp"
-        android:text="Voice HZ Detector"
+        android:text="@string/voice_hz"
         android:textAlignment="center"
         android:textColor="@color/title_color"
         android:textSize="35sp"
@@ -31,13 +31,33 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/voice_rec"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="@color/red_recording"
+        app:cardBackgroundColor="#222"
         app:cardCornerRadius="25dp"
-        app:cardElevation="10dp" />
+        app:cardElevation="10dp">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            app:cardBackgroundColor="@color/gray"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="10dp">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical|center_horizontal"
+                app:cardBackgroundColor="@color/red_recording"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="10dp">
+
+            </android.support.v7.widget.CardView>
+        </android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/voice_description"
