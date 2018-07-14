@@ -18,3 +18,8 @@ if __name__ == '__main__':
     ciao[p2.getName()] = p2
     print(ciao)
     print(list(ciao))
+
+    VOICE_HZ = {0: 1000, 50: 500, 100: 400, 150: 300, 250: 100, 350: 20}
+    lista = list(VOICE_HZ)
+    lista.sort()
+    print(lista)

@@ -15,7 +15,7 @@ class Match:
     players = dict()
     player_queue = list()
     player_turn = list()
-    played_chal = list([3])
+    played_chal = list([4,2,3])
     number_played_challenge = 0
     quiz = list()
     admin = ''
@@ -143,6 +143,10 @@ class Match:
         if "id" in self.current_chal:
             return self.current_chal['id']
         return -1
+
+    def getPlayer(self, name):
+        return self.players[name]
+
 
 if __name__ == '__main__':
     match = Match()

@@ -112,6 +112,10 @@ LOBBY.html
   margin: 0 5%;
   padding-top: 50px;
 }
+#logo_lobby{
+    height: 100px;
+    margin-bottom: 30px;
+}
 #wifi{
   height: 500px;
   margin-top: 15%;

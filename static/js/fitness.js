@@ -31,8 +31,11 @@ function sleep(ms) {
 
 async function demo(number) {
   for(let i=0;i<180;i++){
-    //console.log('Taking a break...');
-    if(checkArray(eliminated, number)== number-1){
+
+    let offset = checkThreshold(number,i);
+    offset = offset == 0 ? 1 : offset;
+
+    if(checkArray(eliminated, number)== number-offset){
       let winners = findWinners(eliminated,number);
       for(let j = 0; j<winners.length; j++){
         let id = "#p" + (winners[j]+1);
@@ -56,7 +59,6 @@ async function demo(number) {
     }
     else updateChallenge(i,number);
     await sleep(tc);
-    //console.log('Two second later');
   }
 
 }
@@ -77,7 +79,6 @@ function getRandomInt(min, max) {
 }
 
 function updateChallenge(index, p_number){
-
 
   if(checkArray(th3,p_number) == p_number){
     $(".exercise h2").text("Burpees:");
@@ -143,4 +144,13 @@ function findWinners(array,n){
       winners[cnt++]=i;
 
   return winners;
+}
+
+function checkThreshold(n, index){
+  let offset = 0;
+  for (let i = 0;i<n;i++){
+    if(eliminated[i] == 0 && players[i][index]>=120)
+      offset++;
+  }
+  return offset;
 }
