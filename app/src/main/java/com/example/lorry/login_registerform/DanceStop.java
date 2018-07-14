@@ -20,7 +20,7 @@ public class DanceStop implements SensorEventListener {
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private Sensor mGyroscope;
-    private MediaPlayer mMediaPlayer;
+//    private MediaPlayer mMediaPlayer;
     private double initAcce=Double.NaN;
     private double initGyro=Double.NaN;
     private static final int GRACE=100;
@@ -47,43 +47,43 @@ public class DanceStop implements SensorEventListener {
             handler=new Handler();
     }
     // set audio file from url or file
-    public void setMedia(String url){
-        mMediaPlayer=new MediaPlayer();
-        try {
-            mMediaPlayer.setDataSource(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        initMediaPlayer();
-    }
-    // set audio file from assets
-    public void setMedia(AssetFileDescriptor afd) throws IOException {
-        mMediaPlayer=new MediaPlayer();
-        mMediaPlayer.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
-        initMediaPlayer();
-    }
-    //inits media player
-    private void initMediaPlayer(){
-        mMediaPlayer.setOnCompletionListener((mediaPlayer -> {
-            mediaPlayer.stop();
-            try {
-                mediaPlayer.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            mediaPlayer.start();
-        }));
-        try {
-            mMediaPlayer.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void setMedia(String url){
+//        mMediaPlayer=new MediaPlayer();
+//        try {
+//            mMediaPlayer.setDataSource(url);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        initMediaPlayer();
+//    }
+//    // set audio file from assets
+//    public void setMedia(AssetFileDescriptor afd) throws IOException {
+//        mMediaPlayer=new MediaPlayer();
+//        mMediaPlayer.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+//        initMediaPlayer();
+//    }
+//    //inits media player
+//    private void initMediaPlayer(){
+//        mMediaPlayer.setOnCompletionListener((mediaPlayer -> {
+//            mediaPlayer.stop();
+//            try {
+//                mediaPlayer.prepare();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            mediaPlayer.start();
+//        }));
+//        try {
+//            mMediaPlayer.prepare();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
     //game start signal , plays music and starts listening for sensors
     public void gameStart(){
         isMusicOn=true;
-        mMediaPlayer.start();
-       handler.postDelayed(() -> {
+//        mMediaPlayer.start();
+        handler.postDelayed(() -> {
            mSensorManager.registerListener(DanceStop.this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
            if (mGyroscope != null)
                mSensorManager.registerListener(DanceStop.this, mGyroscope, SensorManager.SENSOR_DELAY_FASTEST);
@@ -138,7 +138,7 @@ public class DanceStop implements SensorEventListener {
     }
     //stop listening to sensor and stop music
     private void stopGame(){
-        mMediaPlayer.stop();
+//        mMediaPlayer.stop();
         mSensorManager.unregisterListener(this);
 
     }
