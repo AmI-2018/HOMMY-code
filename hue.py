@@ -19,6 +19,27 @@ def base():
         hueApi.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
     return 1
 
+def fitness():
+    for light in all_the_lights:
+        url_to_call = lights_URL + light + '/state'
+        body = '{ "on" : true, "hue": 12750 }'
+        hueApi.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
+    return 1
+
+def voice():
+    for light in all_the_lights:
+        url_to_call = lights_URL + light + '/state'
+        body = '{ "on" : true, "hue": 46920 }'
+        hueApi.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
+    return 1
+
+def dance():
+    for light in all_the_lights:
+        url_to_call = lights_URL + light + '/state'
+        body = '{ "on" : true, "hue": 12750, "effect" : "colorloop" }'
+        hueApi.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
+    return 1
+
 def wrong():
     for light in all_the_lights:
         url_to_call = lights_URL + light + '/state'
