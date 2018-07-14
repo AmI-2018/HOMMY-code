@@ -26,7 +26,7 @@ public class DanceStop implements SensorEventListener {
     private static final int GRACE=100;
     private int skips =GRACE;
     private Listener listener;
-    private boolean isMusicOn=false;
+    static public boolean isMusicOn=false;
     private Handler handler;
 
     public DanceStop(Context context,@NonNull Listener callback){
@@ -44,7 +44,7 @@ public class DanceStop implements SensorEventListener {
             Toast.makeText(context, "No accelerometer hardware found", Toast.LENGTH_SHORT).show();
         }
         listener=callback;
-            handler=new Handler();
+        handler=new Handler();
     }
     // set audio file from url or file
     public void setMedia(String url){

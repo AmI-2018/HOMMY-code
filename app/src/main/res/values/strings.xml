@@ -23,6 +23,7 @@
     <string name="lobby_text2">Wait for the other players!</string>
     <string name="turn_text">%s\nWatch the screen to know when it\'s your turn!</string>
     <string name="voice_hz">Voice HZ Detector</string>
+    <string name="feedback_text">Did you enjoyed the challenge?\nGive us your feedback!</string>
 
 
 </resources>

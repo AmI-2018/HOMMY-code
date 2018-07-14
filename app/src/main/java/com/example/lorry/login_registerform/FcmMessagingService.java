@@ -28,8 +28,8 @@ public class FcmMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        /*String title = remoteMessage.getNotification().getTitle();
-        String message = remoteMessage.getNotification().getBody();
+        String title = remoteMessage.getNotification().getTitle();
+        /*String message = remoteMessage.getNotification().getBody();
 
         Intent intent = new Intent(this, WelcomePage.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -43,60 +43,71 @@ public class FcmMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0,builder.build());*/
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                Constants.CURRENT_CHALLENGE,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            if (response.getInt("result") > 0) {
-                                PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-                                        .edit().putString("current_categ", response.getString("type")).apply();
-                                PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-                                        .edit().putString("current_chal", response.toString()).apply();
+        if(title.toLowerCase().equals("feedback")){
+            Intent intent = new Intent(getApplicationContext(), Feedback.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
+        else if (title.toLowerCase().equals("musicon")){
+            DanceStop.isMusicOn = true;
+        }
+        else if (title.toLowerCase().equals("musicoff")){
+            DanceStop.isMusicOn = false;
+        }
+        else {
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                    Constants.CURRENT_CHALLENGE,
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                if (response.getInt("result") > 0) {
+                                    PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                                            .edit().putString("current_categ", response.getString("type")).apply();
+                                    PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                                            .edit().putString("current_chal", response.toString()).apply();
 
-                                Intent intent2 = new Intent(getApplicationContext(), Challenge.class);
-                                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent2);
+                                    Intent intent2 = new Intent(getApplicationContext(), Challenge.class);
+                                    intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent2);
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Something went wrong! Try again later",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                            else {
-                                Toast.makeText(getApplicationContext(), "Something went wrong! Try again later",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+
                         }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                        }
+                    }) {
 
+                /**
+                 * Passing some request headers
+                 */
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> headers = new HashMap<>();
+                    try {
+                        JSONObject user_info = new JSONObject(PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                                .getString("user_info", ""));
+                        headers.put("authorization", user_info.getString("username"));
+                        return headers;
+                    } catch (JSONException j) {
+                        j.printStackTrace();
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                })
-        {
 
-            /**
-             * Passing some request headers
-             */
-            @Override
-            public Map<String, String> getHeaders(){
-                Map<String, String> headers = new HashMap<>();
-                try{
-                    JSONObject user_info = new JSONObject(PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-                            .getString("user_info", ""));
-                    headers.put("authorization", user_info.getString("username"));
                     return headers;
-                }catch (JSONException j){
-                    j.printStackTrace();
                 }
-
-                return headers;
-            }
-        };
-        SingletonRequest singletonRequest = SingletonRequest.getmInstance(getApplicationContext());
-        singletonRequest.addToRequestQueue(jsonObjectRequest);
+            };
+            SingletonRequest singletonRequest = SingletonRequest.getmInstance(getApplicationContext());
+            singletonRequest.addToRequestQueue(jsonObjectRequest);
+        }
     }
 }

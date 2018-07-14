@@ -12,6 +12,7 @@ public class Constants {
     public static final String START_CHALLENGE = BASE_URL + "startchallenge/";
     public static final String DO = BASE_URL + "do/";
     public static final String NEXT_CHALLENGE = BASE_URL + "challengeResult";
+    public static final String FEEDBACK = BASE_URL + "feedback/";
 
     //FONT
     public static final String GUGI = "fonts/Gugi-Regular.ttf";
