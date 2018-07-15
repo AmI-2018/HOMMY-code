@@ -60,6 +60,16 @@
             android:textColor="#fff" />
 
         <Button
+            android:id="@+id/ranking_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_button"
+            android:text="@string/ranking"
+            android:textColor="#fff" />
+
+        <Button
             android:id="@+id/logout_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

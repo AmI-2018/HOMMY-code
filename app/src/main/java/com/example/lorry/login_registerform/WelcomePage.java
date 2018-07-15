@@ -31,7 +31,7 @@ import java.util.Map;
 public class WelcomePage extends AppCompatActivity {
 
     private TextView welcome;
-    private Button join, profile, logout, token;
+    private Button join, profile, logout, token, ranking;
     private JSONObject user_info;
 
     @Override
@@ -51,6 +51,8 @@ public class WelcomePage extends AppCompatActivity {
         profile.setTypeface(custom_font);
         logout = findViewById(R.id.logout_button);
         logout.setTypeface(custom_font);
+        ranking =findViewById(R.id.ranking_button);
+        ranking.setTypeface(custom_font);
 
         token = findViewById(R.id.show_token);
 
@@ -81,6 +83,15 @@ public class WelcomePage extends AppCompatActivity {
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().remove("user_info").apply();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
+            }
+        });
+
+        ranking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RankingActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
 

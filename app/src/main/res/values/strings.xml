@@ -7,7 +7,12 @@
     <string name="register">or Create an Account here!</string>
     <string name="join">Join Game</string>
     <string name="profile">Profile</string>
+    <string name="ranking">Ranking</string>
     <string name="logout">Logout</string>
+    <string name="fitness">Fitness Challenge:</string>
+    <string name="voice">Voice Hz Detector:</string>
+    <string name="dancestop">Dance and stop:</string>
+    <string name="musictrivia">Music Trivia Challenge:</string>
     <string name="welcome">Hello %s!</string>
     <string name="welcomeP">~ %s ~</string>
     <string name="information">Here you can find your information:</string>
