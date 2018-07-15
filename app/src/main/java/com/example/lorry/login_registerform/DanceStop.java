@@ -20,7 +20,7 @@ public class DanceStop implements SensorEventListener {
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private Sensor mGyroscope;
-//    private MediaPlayer mMediaPlayer;
+//  private MediaPlayer mMediaPlayer;
     private double initAcce=Double.NaN;
     private double initGyro=Double.NaN;
     private static final int GRACE=100;

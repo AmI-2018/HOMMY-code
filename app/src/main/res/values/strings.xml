@@ -24,6 +24,7 @@
     <string name="turn_text">%s\nWatch the screen to know when it\'s your turn!</string>
     <string name="voice_hz">Voice HZ Detector</string>
     <string name="feedback_text">Did you enjoyed the challenge?\nGive us your feedback!</string>
+    <string name="feedback_support">Thanks for your support!</string>
 
 
 </resources>

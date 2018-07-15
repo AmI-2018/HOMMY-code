@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,6 +79,9 @@ public class Feedback extends AppCompatActivity {
             };
             SingletonRequest singletonRequest = SingletonRequest.getmInstance(getApplicationContext());
             singletonRequest.addToRequestQueue(jsonObjectRequest);
+            up.setVisibility(View.GONE);
+            down.setVisibility(View.GONE);
+            feedback_text.setText(getString(R.string.feedback_support));
         });
 
         down.setOnClickListener(v->{
@@ -114,6 +118,9 @@ public class Feedback extends AppCompatActivity {
             };
             SingletonRequest singletonRequest = SingletonRequest.getmInstance(getApplicationContext());
             singletonRequest.addToRequestQueue(jsonObjectRequest);
+            up.setVisibility(View.GONE);
+            down.setVisibility(View.GONE);
+            feedback_text.setText(getString(R.string.feedback_support));
         });
     }
 }
