@@ -25,6 +25,10 @@
     <string name="voice_hz">Voice HZ Detector</string>
     <string name="feedback_text">Did you enjoyed the challenge?\nGive us your feedback!</string>
     <string name="feedback_support">Thanks for your support!</string>
+    <string name="fitness">Fitness Challenge:</string>
+    <string name="voice">Voice Hz Detector:</string>
+    <string name="dancestop">Dance and stop:</string>
+    <string name="musictrivia">Music Trivia Challenge:</string>
 
 
 </resources>

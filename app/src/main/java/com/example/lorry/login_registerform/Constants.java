@@ -13,6 +13,7 @@ public class Constants {
     public static final String DO = BASE_URL + "do/";
     public static final String NEXT_CHALLENGE = BASE_URL + "challengeResult";
     public static final String FEEDBACK = BASE_URL + "feedback/";
+    public static final String RANKING = BASE_URL + "getRanking/";
 
     //FONT
     public static final String GUGI = "fonts/Gugi-Regular.ttf";
