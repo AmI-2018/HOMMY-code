@@ -15,7 +15,7 @@ class Match:
     players = dict()
     player_queue = list()
     player_turn = list()
-    played_chal = list([4,2,3])
+    played_chal = list([3])
     number_played_challenge = 0
     quiz = list()
     admin = ''
@@ -83,7 +83,7 @@ class Match:
 
     # Send a notification to every user (except who clicked the button for the next challenge) in order to update
     # mobile activity
-    def sendNotifications(self, players=list()):
+    def sendNotifications(self, players=list(), title="refresh", body="challenge"):
         all = False
         if len(players) == 0:
             all = True
@@ -94,8 +94,8 @@ class Match:
             for p in self.players:
                 fields = {'to': self.players[p].getToken(),
                           'notification': {
-                              'title': 'refresh',
-                              'body': 'challenge'
+                              'title': title,
+                              'body': body
                             }
                           }
                 res.append(requests.post(self.FIREBASE_URL, headers=headers, json=fields).text)
@@ -103,8 +103,8 @@ class Match:
             for p in players:
                 fields = {'to': self.players[p].getToken(),
                           'notification': {
-                              'title': 'refresh',
-                              'body': 'challenge'
+                              'title': title,
+                              'body': body
                             }
                           }
                 res.append(requests.post(self.FIREBASE_URL, headers=headers, json=fields).text)
@@ -147,6 +147,17 @@ class Match:
     def getPlayer(self, name):
         return self.players[name]
 
+    def updateScores(self):
+        for p in self.players:
+            self.players[p].updateScore()
+
+    def getPlayersScore(self):
+        scores = dict()
+        for p in self.players:
+            scores[self.players[p].getName()] = [self.players[p].getScore(), self.players[p].getCurrentScore()]
+
+        return scores
+
 
 if __name__ == '__main__':
     match = Match()
@@ -156,6 +167,7 @@ if __name__ == '__main__':
     match.setAdmin("Enzham")
     match.playerTurn(2)
     print(match.player_queue)"""
-    match.setActive(True)
+
     match.newPlayer("lorry03", "token")
     match.newPlayer("syrien95", "token")
+    print(match.getPlayersScore())

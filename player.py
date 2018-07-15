@@ -3,6 +3,7 @@ class Player:
     def __init__(self, name, token):
         self.name = name
         self.token = token
+        self.current_score = 0
         self.score = 0
         self.challenge_won = 0
         self.correct_answer = 0
@@ -16,6 +17,9 @@ class Player:
     def getScore(self):
         return self.score
 
+    def getCurrentScore(self):
+        return self.current_score
+
     def getChallengeWon(self):
         return self.challenge_won
 
@@ -28,9 +32,13 @@ class Player:
             multiplier = 1
             if self.correct_answer % 4 == 0:
                 multiplier = 1 + int(self.correct_answer / 3)
-            self.score = self.score + points * multiplier
+            self.current_score = self.current_score + points * multiplier
         else:
-            self.score = self.score + points
+            self.current_score = self.current_score + points
+
+    def updateScore(self):
+        self.score = self.score + self.current_score
+        self.current_score = 0
 
     def resetCorrectAnswer(self):
         self.correct_answer = 0

@@ -121,6 +121,12 @@
                     </div>
                 </div>
             </div>
+        {% elif res['id'] == 2 %}
+            <div class="voice_hz">
+                <h1 class="name"><img src="{{ url_for('static', filename='img/hommy_logo.png') }}" alt="HOMMY" id="trivia_logo">Voice Hz Detector</h1>
+                <img src="{{ url_for('static', filename='img/microphone.png') }}" alt="">
+                <h2>Press <span id="join">Get Tone</span> to listen to your sound to reproduce by your voice!</h2>
+            </div>
         {% else %}
             <h1>CIAO CIAO CIAO</h1>
         {% endif %}

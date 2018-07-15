@@ -148,3 +148,20 @@ LOBBY.html
 }
 .central_field{margin: 5% 0; text-align: center;}
 #join{background: #93DE74; color: white; border-radius: 25px; padding: 0 20px;}
+
+/*-------------------
+FEEDBACK.html
+-------------------*/
+.feedback{text-align: center;}
+.feedback h1{font-size: 50px;}
+.feedback h2{font-size: 30px;}
+.feedback_body{margin-top: 7%;}
+.feedback_body img{margin-top: 20px;}
+.feedback_body li{margin-top: 20px;}
+
+/*-------------------
+VOICE_HZ.html
+-------------------*/
+.voice_hz{text-align: center;}
+.voice_hz img{height: 400px;margin-top: 30px;}
+.voice_hz h2{padding-top: 40px;}

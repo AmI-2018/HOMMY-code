@@ -8,7 +8,7 @@ previous_chal = {'id': -1}
 music_player = MediaPlayer("static/music trivia/payday.mp3")
 music_on = False
 ready = 0
-feedback = {"times": 0, "rate": 0}
+fb = {"times": 0, "rate": 0}
 
 RIGHT_ANSWER = 100
 VOICE_HZ = {5: 1000, 50: 500, 100: 400, 150: 300, 250: 100, 350: 20}
@@ -63,6 +63,17 @@ def showPlayers():
     return render_template('lobby.html', players=m.getPlayersName(), admin=m.admin, n=len(m.players))
 
 
+@app.route('/scores')
+def scores():
+    return render_template('feedback.html', players=m.getPlayersScore(), n=len(m.players))
+
+
+@app.route('/updateScores')
+def updateScores():
+    m.updateScores()
+    return jsonify({'result': "SUCCESS"})
+
+
 @app.route('/endgame')
 def endgame():
     return render_template('endgame.html')
@@ -108,9 +119,11 @@ def getChallenge(category):
     json = r.json()
     lastChal = m.getCurrentIdChal()
     if json['id'] == 1:
-        m.playerTurn(len(m.players))
+        print(m.playerTurn(len(m.players)))
+        print("getChallenge: fitnessChallenge")
     elif (lastChal != 2) and (lastChal !=4):
-        m.playerTurn(1)
+        print(m.playerTurn(1))
+        print("getChallenge")
 
     m.updateChallenge(json)
     m.setActive(m.current_chal, False)
@@ -196,9 +209,15 @@ def chooseAnswer(chal_id, answer):
                 ws.PlaySound(wrong, ws.SND_FILENAME | ws.SND_ASYNC)
                 time.sleep(2)
                 if m.playerTurn(1) == -1:
+                    print(-1)
+                    print("chooseAnswer")
                     # Manda notifica per far fare il refresh challenge
-                    getChallenge(m.getCategory())
+                    # getChallenge(m.getCategory())
+                    m.sendNotifications(title="feedback")
+                    threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/scores")).start()
                 else:
+                    print(1)
+                    print("chooseAnswer")
                     ready = 0
                     m.setActive(m.current_chal, False)
                     threading.Thread(target=srv.openWebPage,args=(m.driver, m.THIS_SERVER + "/viewChallenge/" + str(chal_id))).start()
@@ -301,8 +320,9 @@ def challengeResult():
                 print(current_player.getScore())
 
         time.sleep(2)
-        m.setActive(m.current_chal, False)
-        getChallenge(m.getCategory())
+        # getChallenge(m.getCategory())
+        m.sendNotifications(title="feedback")
+        threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/scores")).start()
     # VOICE HZ DETECTOR
     elif id == 2:
         current_player = m.getPlayer(user)
@@ -316,14 +336,21 @@ def challengeResult():
 
         for i in points:
             if diff < i:
+                print(VOICE_HZ[i])
                 current_player.addPoints(VOICE_HZ[i])
                 break
         print(user + ": " + str(current_player.getScore()))
 
         if m.playerTurn(1) == -1:
+            print(-1)
+            print("challengeResult: VoiceHz")
             # Manda notifica per far fare il refresh challenge
-            getChallenge(m.getCategory())
+            # getChallenge(m.getCategory())
+            m.sendNotifications(title="feedback")
+            threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/scores")).start()
         else:
+            print(1)
+            print("challengeResult: VoiceHz")
             m.setActive(m.current_chal, False)
             ready = 0
             threading.Thread(target=srv.openWebPage,args=(m.driver, m.THIS_SERVER + "/viewChallenge/" + str(id))).start()
@@ -340,26 +367,28 @@ def challengeResult():
 
     return jsonify({"result": "SUCCESS"})
 
+# MOBILE
 @app.route('/feedback/<int:chal_id>', methods=['POST'])
 def feedback(chal_id):
-    global feedback
+    global fb
     user = request.headers['authorization']
 
     found = False
-    for p in m.player_turn:
+    for p in m.players:
         if user == p:
             found = True
+            break
     if found is False:
         return jsonify({"result": "NOT AUTHORIZED"})
 
     json = request.json
-    feedback['times'] = feedback['times'] + 1
-    feedback['rate'] = feedback['rate'] + int(json['rate'])
+    fb['times'] = fb['times'] + 1
+    fb['rate'] = fb['rate'] + int(json['rate'])
 
-    if feedback['times'] == len(m.players):
-        res = requests.post(m.ONLINE_SERVER + "/feedback/" + str(chal_id), json=feedback)
-        feedback['times'] = 0
-        feedback['rate'] = 0
+    if fb['times'] == len(m.players):
+        res = requests.post(m.ONLINE_SERVER + "/feedback/" + str(chal_id), json=fb)
+        fb['times'] = 0
+        fb['rate'] = 0
         getChallenge(m.getCategory())
         return jsonify({'result': res.text})
 
