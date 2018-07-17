@@ -39,21 +39,6 @@ def getChallenge(id):
     res = prepare_chal_json(res)
     return jsonify(res)
 
-
-"""@app.route('/getQuiz/<int:id>')
-def getRandomQuiz(id):
-    res = db.getRandomQuiz(id)
-    quiz = {
-        'chal_id': res[0],
-        'q_id': res[1],
-        'question': res[2],
-        'answer': res[3],
-        'wrong1': res[4],
-        'wrong2': res[5],
-        'wrong3': res[6]
-    }
-    return jsonify(quiz)"""
-
 @app.route('/getQuiz/<int:id>', methods=['POST'])
 def getRandomQuiz(id):
     quiz_list = request.json
@@ -90,6 +75,24 @@ def signin():
         return db.registerUser(json['username'], json['psw'], json['birth'], json['genre'])
 
     return "ERROR JSON"
+
+@app.route('/feedback/<int:chal_id>', methods=['POST'])
+def feedback(chal_id):
+    json = request.json
+    if (json is not None) and ('rate' in json) and (int(json['rate']) != 0):
+        return db.rate(chal_id, int(json['rate']))
+
+    return "ERROR JSON"
+
+
+@app.route('/getRanking/<int:chal_id>')
+def ranking(chal_id):
+   res = db.getRanking(chal_id)
+   lista = list()
+   for score in res:
+       lista.append(score[0])
+
+   return jsonify({'result':"SUCCESS", 'scores': lista})
 
 def prepare_cat_json(item):
     cat = dict()

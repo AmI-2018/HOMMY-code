@@ -148,11 +148,48 @@ def registerUser(username, psw, date, genre):
     conn.close()
     return "SUCCESS"
 
+def rate(chal_id, rate):
+    conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
+    query1 = "SELECT times, rate FROM challenges WHERE id = %s"
+    query2 = "UPDATE challenges SET times = %s, rate = %s WHERE id = %s"
+
+    cursor = conn.cursor()
+    cursor.execute(query1, (chal_id,))
+    res = cursor.fetchone()
+
+    if res[1] is None:
+        new_rate = rate
+    else:
+        new_rate = res[1] + rate
+    times = res[0] + 1
+
+    try:
+        cursor.execute(query2, (times, new_rate, chal_id))
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        cursor.close()
+        conn.close()
+        return "SOMETHING WENT WRONG"
+
+    return "SUCCESS"
+
+def getRanking(id):
+    conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
+    query = "SELECT bestScore FROM `profiles-challenges` WHERE idChal = %s ORDER BY bestScore DESC"
+
+    cursor = conn.cursor()
+    cursor.execute(query,(id,))
+    res = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+    return res
 
 if __name__ == '__main__':
     #getUserInfo("lorry03","asdf12345")
     #print(registerUser("lorry96", "abdullah", "1996-12-25", "M"))
     #print(getRandomChallenge("DEMO", [1,2]))
     #print(getRandomChallenge("DEMO", []))
-    print(getRandomQuiz(4, [1,2,3,4,5]))
+    getRanking(4)
 
