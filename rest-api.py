@@ -394,6 +394,16 @@ def feedback(chal_id):
 
     return jsonify({"result": "SUCCESS"})
 
+# MOBILE
+@app.route('/getRanking/<int:chal_id>')
+def ranking(chal_id):
+    res = requests.get(m.ONLINE_SERVER+"/getRanking/" + str(chal_id))
+    print(res.text)
+    print(res.json())
+    if res.text != "ERROR":
+        return jsonify(res.json())
+
+    return jsonify({'result', "ERROR"})
 
 
 if __name__ == '__main__':
