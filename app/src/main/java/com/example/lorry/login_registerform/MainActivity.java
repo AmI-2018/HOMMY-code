@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                        Constants.LOGIN_URL,
+                        Constants.getLoginUrl(),
                         new JSONObject(map),
                         new Response.Listener<JSONObject>() {
                             @Override

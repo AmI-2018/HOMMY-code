@@ -31,7 +31,7 @@ public class RankingActivity extends AppCompatActivity {
         for (int chal_id = 1; chal_id <= 4; chal_id++) {
             final int id = chal_id;
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                    Constants.RANKING + chal_id,
+                    Constants.getRankingUrl() + chal_id,
                     null,
                     response -> {
                         try {

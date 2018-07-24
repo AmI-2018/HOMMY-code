@@ -62,7 +62,8 @@
             android:name=".VoiceHzChallenge"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".Feedback" />
-        <activity android:name=".RankingActivity"></activity>
+        <activity android:name=".RankingActivity" />
+        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>

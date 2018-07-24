@@ -75,7 +75,7 @@ public class Challenge extends AppCompatActivity {
         start.setOnClickListener(v->{
             try{
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                        Constants.START_CHALLENGE + current_challenge.getInt("id"),
+                        Constants.getStartChallenge() + current_challenge.getInt("id"),
                         null,
                         response->{
                                 try {
@@ -172,7 +172,7 @@ public class Challenge extends AppCompatActivity {
                         char answer = (char)(index + ((int)'A'));
                         String api = current_challenge.getInt("id") + "/" + answer;
                         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                                Constants.ANSWER_CHALLENGE + api,
+                                Constants.getAnswerChallenge() + api,
                                 null,
                                 new Response.Listener<JSONObject>() {
                                     @Override

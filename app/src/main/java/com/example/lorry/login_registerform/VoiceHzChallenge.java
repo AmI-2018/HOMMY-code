@@ -78,7 +78,7 @@ public class VoiceHzChallenge extends AppCompatActivity {
             if(!start) {
                 //HTTP Request to reproduce again the sound given by HOMMY
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                        Constants.DO + id,
+                        Constants.getDoUrl() + id,
                         null,
                         response->{
                             try {
@@ -125,7 +125,7 @@ public class VoiceHzChallenge extends AppCompatActivity {
             map.put("id", this.id);
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                    Constants.NEXT_CHALLENGE,
+                    Constants.getNextChallenge(),
                     new JSONObject(map),
                     response->{
                         try {

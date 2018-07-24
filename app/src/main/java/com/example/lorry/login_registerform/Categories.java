@@ -55,7 +55,7 @@ public class Categories extends AppCompatActivity {
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                Constants.CATEGORIES_URL,
+                Constants.getCategoriesUrl(),
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -130,7 +130,7 @@ public class Categories extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                                    Constants.GET_CHALLENGE + cat_names[index],
+                                    Constants.getChallenge() + cat_names[index],
                                     null,
                                     new Response.Listener<JSONObject>() {
                                         @Override

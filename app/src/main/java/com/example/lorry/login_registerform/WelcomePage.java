@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,7 +32,8 @@ import java.util.Map;
 public class WelcomePage extends AppCompatActivity {
 
     private TextView welcome;
-    private Button join, profile, logout, token, ranking;
+    private Button join, profile, logout, ranking;
+    private CardView settings;
     private JSONObject user_info;
 
     @Override
@@ -54,20 +56,23 @@ public class WelcomePage extends AppCompatActivity {
         ranking =findViewById(R.id.ranking_button);
         ranking.setTypeface(custom_font);
 
-        token = findViewById(R.id.show_token);
+        settings = findViewById(R.id.settings_button);
+        Constants.initBaseUrl(getApplicationContext());
+
+        /*token = findViewById(R.id.show_token);
 
         token.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*String token = FirebaseInstanceId.getInstance().getToken();
+                String token = FirebaseInstanceId.getInstance().getToken();
                 Toast.makeText(getApplicationContext(), token,
-                        Toast.LENGTH_SHORT).show();*/
+                        Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), RankingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
-        //token.setVisibility(View.GONE);
+        token.setVisibility(View.GONE);*/
 
         try{
             user_info = new JSONObject(PreferenceManager.getDefaultSharedPreferences(this).getString("user_info", ""));
@@ -101,12 +106,13 @@ public class WelcomePage extends AppCompatActivity {
                 try{
                     Map<String, String> map = new HashMap<>();
                     map.put("username", user_info.get("username").toString());
-                    String token = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("token", FirebaseInstanceId.getInstance().getToken());
+                    String token = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                            .getString("token", FirebaseInstanceId.getInstance().getToken());
                     map.put("token", token);
                     JSONObject json = new JSONObject(map);
 
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                            Constants.JOIN_URL,
+                            Constants.getJoinUrl(),
                             json,
                             new Response.Listener<JSONObject>() {
                                 @Override
@@ -155,6 +161,11 @@ public class WelcomePage extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Profile.class));
             }
+        });
+
+        settings.setOnClickListener(v->{
+            Intent intent = new Intent(getApplicationContext(), Settings.class);
+            startActivity(intent);
         });
     }
 }

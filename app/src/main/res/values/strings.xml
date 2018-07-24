@@ -9,10 +9,6 @@
     <string name="profile">Profile</string>
     <string name="ranking">Ranking</string>
     <string name="logout">Logout</string>
-    <string name="fitness">Fitness Challenge:</string>
-    <string name="voice">Voice Hz Detector:</string>
-    <string name="dancestop">Dance and stop:</string>
-    <string name="musictrivia">Music Trivia Challenge:</string>
     <string name="welcome">Hello %s!</string>
     <string name="welcomeP">~ %s ~</string>
     <string name="information">Here you can find your information:</string>
@@ -34,6 +30,8 @@
     <string name="voice">Voice Hz Detector:</string>
     <string name="dancestop">Dance and stop:</string>
     <string name="musictrivia">Music Trivia Challenge:</string>
-
+    <string name="hub_ip">Hub IP:</string>
+    <string name="port">Port:</string>
+    <string name="settings">Settings</string>
 
 </resources>

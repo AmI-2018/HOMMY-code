@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".Settings">
+
+    <ImageView
+        android:id="@+id/close_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cross" />
+
+    <TextView
+        android:id="@+id/settings_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="98dp"
+        android:layout_marginStart="62dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/settings"
+        android:textColor="#fff"
+        android:textSize="45sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/close_settings"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/hub_ip_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="132dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="96dp"
+        android:text="@string/hub_ip"
+        android:textColor="#fff"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_text" />
+
+    <TextView
+        android:id="@+id/port_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="148dp"
+        android:layout_marginStart="149dp"
+        android:layout_marginTop="56dp"
+        android:text="@string/port"
+        android:textColor="#fff"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ip_2" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/ip_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="44dp"
+        android:background="#AAFFFFFF"
+        android:ems="3"
+        android:hint="10"
+        android:inputType="number"
+        android:maxLength="3"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        app:layout_constraintEnd_toStartOf="@+id/ip_2"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hub_ip_text" />
+
+    <EditText
+        android:id="@+id/ip_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="44dp"
+        android:background="#AAFFFFFF"
+        android:ems="3"
+        android:hint="0"
+        android:inputType="number"
+        android:maxLength="3"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        app:layout_constraintEnd_toStartOf="@+id/ip_3"
+        app:layout_constraintStart_toEndOf="@+id/ip_1"
+        app:layout_constraintTop_toBottomOf="@+id/hub_ip_text" />
+
+    <EditText
+        android:id="@+id/ip_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="44dp"
+        android:background="#AAFFFFFF"
+        android:ems="3"
+        android:hint="0"
+        android:inputType="number"
+        android:maxLength="3"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        app:layout_constraintEnd_toStartOf="@+id/ip_4"
+        app:layout_constraintStart_toEndOf="@+id/ip_2"
+        app:layout_constraintTop_toBottomOf="@+id/hub_ip_text" />
+
+    <EditText
+        android:id="@+id/ip_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="44dp"
+        android:background="#AAFFFFFF"
+        android:ems="3"
+        android:hint="0"
+        android:inputType="number"
+        android:maxLength="3"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ip_3"
+        app:layout_constraintTop_toBottomOf="@+id/hub_ip_text" />
+
+    <EditText
+        android:id="@+id/port_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="71dp"
+        android:layout_marginStart="71dp"
+        android:layout_marginTop="32dp"
+        android:background="#AAFFFFFF"
+        android:ems="10"
+        android:hint="5000"
+        android:inputType="number"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/port_text" />
+
+    <Button
+        android:id="@+id/upgrade_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/rounded_button"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="Upgrade"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/port_field" />
+</android.support.constraint.ConstraintLayout>

@@ -49,7 +49,7 @@ public class Feedback extends AppCompatActivity {
             Map<String, Integer> map = new HashMap<>();
             map.put("rate", 1);
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                    Constants.FEEDBACK + id_chal,
+                    Constants.getFeedbackUrl() + id_chal,
                     new JSONObject(map),
                     response->{
                         try {
@@ -88,7 +88,7 @@ public class Feedback extends AppCompatActivity {
             Map<String, Integer> map = new HashMap<>();
             map.put("rate", 0);
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                    Constants.FEEDBACK + id_chal,
+                    Constants.getFeedbackUrl() + id_chal,
                     new JSONObject(map),
                     response->{
                         try {

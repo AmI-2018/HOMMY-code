@@ -70,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
                 map.put("genre", gender);
 
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                        Constants.REGISTER_URL,
+                        Constants.getRegisterUrl(),
                         new JSONObject(map),
                         new Response.Listener<JSONObject>() {
                             @Override

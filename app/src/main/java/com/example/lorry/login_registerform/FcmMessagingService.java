@@ -56,7 +56,7 @@ public class FcmMessagingService extends FirebaseMessagingService {
         }
         else {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                    Constants.CURRENT_CHALLENGE,
+                    Constants.getCurrentChallenge(),
                     null,
                     new Response.Listener<JSONObject>() {
                         @Override
