@@ -90,7 +90,7 @@ def ranking(chal_id):
    res = db.getRanking(chal_id)
    lista = list()
    for score in res:
-       lista.append(score[0])
+       lista.append(score[0]+ ' -> ' + str(score[1]))
 
    return jsonify({'result':"SUCCESS", 'scores': lista})
 
@@ -122,3 +122,4 @@ def prepare_user_json(item):
 
 if __name__ == '__main__':
     app.run()
+    ranking(4)

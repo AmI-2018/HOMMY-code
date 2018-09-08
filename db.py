@@ -2,7 +2,7 @@ import mysql.connector
 import random
 
 userdb = 'root'
-pswdb = 'asdf12345'
+pswdb = '231195Pierluigi'
 host = 'localhost'
 db = 'hommy'
 
@@ -176,7 +176,7 @@ def rate(chal_id, rate):
 
 def getRanking(id):
     conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
-    query = "SELECT bestScore FROM `profiles-challenges` WHERE idChal = %s ORDER BY bestScore DESC"
+    query = "SELECT username,bestScore FROM `profiles-challenges` WHERE idChal = %s ORDER BY bestScore DESC"
 
     cursor = conn.cursor()
     cursor.execute(query,(id,))
@@ -191,5 +191,6 @@ if __name__ == '__main__':
     #print(registerUser("lorry96", "abdullah", "1996-12-25", "M"))
     #print(getRandomChallenge("DEMO", [1,2]))
     #print(getRandomChallenge("DEMO", []))
-    getRanking(4)
+    res=getRanking(4)
+    print(res)
 
