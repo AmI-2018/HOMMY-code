@@ -37,9 +37,9 @@ public class RankingActivity extends AppCompatActivity {
                         try {
                             if (response.getString("result").equals("SUCCESS")) {
                                 JSONArray j = response.getJSONArray("scores");
-                                List<Integer> l = new LinkedList<>();
+                                List<String> l = new LinkedList<>();
                                 for (int i = 0; i < j.length(); i++)
-                                    l.add(j.getInt(i));
+                                    l.add(j.getString(i));
                                 ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, l);
                                 best[id-1].setAdapter(adapter);
                             }
