@@ -1,19 +1,21 @@
 from requests import request, RequestException
-import random, time
+import random, time, hue
 from threading import Lock
-from urllib import request
+from urllib import request as rq
 mutex = Lock()
 
 
 def homePage(driver, url):
     while True:
         try:
-            request.urlopen(url=url)
+            rq.urlopen(url=url)
             break
         except Exception as e:
             print(e)
             time.sleep(1)
 
+    hue.init()
+    hue.base()
     openWebPage(driver,url)
 
 def openWebPage(driver, url):

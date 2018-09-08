@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify, abort
-import requests, winsound as ws, threading, service as srv, match, time
+import requests, winsound as ws, threading, service as srv, match, time, hue
 from vlc import MediaPlayer
 
 app = Flask(__name__)
@@ -199,6 +199,9 @@ def chooseAnswer(chal_id, answer):
             if m.current_trivia['answer'] == a:
                 # If the player answer correctly HOMMY provides a new Quiz
                 ws.PlaySound(correct, ws.SND_FILENAME | ws.SND_ASYNC)
+                hue.right()
+                time.sleep(2)
+                hue.base()
                 current_player.addPoints(RIGHT_ANSWER, 4)
                 threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/viewChallenge/" + str(chal_id))).start()
                 return jsonify({'result': "CORRECT"})
@@ -207,7 +210,9 @@ def chooseAnswer(chal_id, answer):
                 current_player.resetCorrectAnswer()
                 print(user + ": " + str(current_player.getScore()))
                 ws.PlaySound(wrong, ws.SND_FILENAME | ws.SND_ASYNC)
+                hue.wrong()
                 time.sleep(2)
+                hue.base()
                 if m.playerTurn(1) == -1:
                     print(-1)
                     print("chooseAnswer")
@@ -261,6 +266,14 @@ def startChallenge(id):
             if (not m.isActive(m.current_chal)) and (ready == len(m.player_turn)):
                 m.setActive(m.current_chal, True)
                 threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/viewChallenge/" + str(id))).start()
+                if (id == 1):
+                    hue.fitness()
+                elif (id == 2):
+                    hue.voice()
+                elif (id == 3):
+                    hue.dance()
+                elif (id == 4):
+                    hue.base()
                 stopMusic()
 
                 return jsonify({'result': 1})

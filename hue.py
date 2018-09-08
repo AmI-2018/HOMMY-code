@@ -10,8 +10,10 @@ username = 'newdeveloper'
 
 lights_URL = base_URL + '/api/' + username + '/lights/'
 
-all_the_lights = service.send(url=lights_URL)
-
+all_the_lights=""
+def init():
+    global all_the_lights
+    all_the_lights = service.send(url=lights_URL)
 def base():
     for light in all_the_lights:
         url_to_call = lights_URL + light + '/state'
