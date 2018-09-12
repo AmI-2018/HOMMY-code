@@ -13,14 +13,29 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" />
-  <title>HOMMY</title>
+  <title>Game Over</title>
 </head>
 
 <body>
 
-    <h1 align="center">GAME OVER !</h1>
+  <div class="gameover">
+    <h1 class="name"><img src="logos/hommy logo.png" alt="HOMMY" id="trivia_logo">Game Over</h1>
+    <div class="gameover_results">
+      <h2 class="winner">The Winner is:</h2>
+      <h3><span class="winner__span">Lorry03 -> 2000pts</span></h3>
+      <ul class="rank">
+        <li><span>Syrien95 -> 1700pts</span></li>
+        <li><span>Giangio -> 1500pts</span></li>
+        <li><span>Mohamad -> 950</span></li>
+      </ul>
+    </div>
+
+  <h3>Press <span id="join">New Game</span> on your app to start a new match!</h3>
+  </div>
+
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='js/gameover.js') }}" type="text/javascript"></script>
 </body>
 </html>

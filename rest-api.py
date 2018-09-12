@@ -13,6 +13,7 @@ fb = {"times": 0, "rate": 0}
 RIGHT_ANSWER = 100
 VOICE_HZ = {5: 1000, 50: 500, 100: 400, 150: 300, 250: 100, 350: 20}
 FITNESS_CHAL_MULTIPLIER = 5
+DANCE_PLAYER = MediaPlayer("static/music trivia/roar.mp3")
 
 @app.route('/')
 def lobby():
@@ -55,7 +56,7 @@ def viewChallenge(challenge):
         previous_chal = dict(m.current_chal)
         m.sendNotifications()
     return render_template('challenges.html', res=json, info=info, size_info=size, players=m.player_turn, active=m.current_chal['active'],
-                           p_number= len(m.player_turn))
+                           p_number=len(m.player_turn))
 
 
 @app.route('/players')
@@ -76,6 +77,7 @@ def updateScores():
 
 @app.route('/endgame')
 def endgame():
+    # SORT PLAYER BY SCORE
     return render_template('endgame.html')
 
 
@@ -94,6 +96,16 @@ def stopMusic():
         music_player.pause()
         music_on = False
     return jsonify({"result": "SUCCESS"})
+
+@app.route('/playDance')
+def playDance():
+    m.sendNotifications(title="play")
+    DANCE_PLAYER.play()
+
+@app.route('/stopDance')
+def stopDance():
+    m.sendNotifications(title="stop")
+    DANCE_PLAYER.play()
 
 # MOBILE
 @app.route('/categoriesM')

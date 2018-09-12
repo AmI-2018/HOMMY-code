@@ -1,14 +1,14 @@
-from requests import request, RequestException
+from requests import request as rq, RequestException
 import random, time
 from threading import Lock
-from urllib import request
+from urllib import request as rq
 mutex = Lock()
 
 
 def homePage(driver, url):
     while True:
         try:
-            request.urlopen(url=url)
+            rq.urlopen(url=url)
             break
         except Exception as e:
             print(e)
@@ -50,7 +50,7 @@ def send(method='GET', url=None, data=None, headers={}):
         result = None
         try:
             # get the result
-            result = request(method, url, data=data, headers=headers)
+            result = rq(method, url, data=data, headers=headers)
         except RequestException as e:
             # print the error
             print(e)
