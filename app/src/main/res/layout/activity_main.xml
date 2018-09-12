@@ -13,6 +13,21 @@
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
+        <android.support.v7.widget.CardView
+            android:id="@+id/settings_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="top|right"
+            app:cardBackgroundColor="@color/cardview_dark_background"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/settings" />
+        </android.support.v7.widget.CardView>
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="120dp"
@@ -20,6 +35,7 @@
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/logo"
             app:srcCompat="@drawable/logo" />
+
 
         <EditText
             android:id="@+id/username"

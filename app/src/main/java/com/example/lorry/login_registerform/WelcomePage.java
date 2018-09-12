@@ -95,7 +95,6 @@ public class WelcomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), RankingActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -164,8 +163,7 @@ public class WelcomePage extends AppCompatActivity {
         });
 
         settings.setOnClickListener(v->{
-            Intent intent = new Intent(getApplicationContext(), Settings.class);
-            startActivity(intent);
+            startActivity(new Intent(getApplicationContext(), Settings.class));
         });
     }
 }
