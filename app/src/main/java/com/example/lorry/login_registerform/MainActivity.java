@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText psw;
     private CardView login;
     private TextView register;
-    private CardView setting_button;
+    private CardView settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         psw = findViewById(R.id.mpc_text);
         login = findViewById(R.id.login_card);
         register = findViewById(R.id.register_text);
-        setting_button = findViewById(R.id.settings_button);
+        settings = findViewById(R.id.settings_button);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,8 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 singletonRequest.addToRequestQueue(jsonObjectRequest);
             }
         });
-
-        setting_button.setOnClickListener(v->{
+        settings.setOnClickListener(v->{
             Intent intent = new Intent(getApplicationContext(), Settings.class);
             startActivity(intent);
         });

@@ -29,7 +29,7 @@ public class Profile extends AppCompatActivity {
         genre = findViewById(R.id.genre_text);
         won = findViewById(R.id.won_text);
         mpChallenge = findViewById(R.id.mpc_text);
-        back = findViewById(R.id.profile_back_button);
+        back = findViewById(R.id.ranking_back_button);
        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
