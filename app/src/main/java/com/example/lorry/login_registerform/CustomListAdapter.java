@@ -2,6 +2,7 @@ package com.example.lorry.login_registerform;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
             text.setBackgroundColor(Color.RED);
             int color = Color.argb( 200, 255, 64, 64 );
             text.setBackgroundColor( color );
+            text.setGravity(Gravity.CENTER);
 
         }
 
