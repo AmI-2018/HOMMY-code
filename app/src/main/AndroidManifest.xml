@@ -63,7 +63,8 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".Feedback" />
         <activity android:name=".RankingActivity" />
-        <activity android:name=".Settings"></activity>
+        <activity android:name=".Settings" />
+        <activity android:name=".DanceStopChallenge"/>
     </application>
 
 </manifest>
