@@ -1,4 +1,4 @@
-var SERVER = "http://192.168.1.111:5000";
+var SERVER = "http://192.168.1.102:5000";
 var audio = new Audio();
 $(document).ready(function(){
   audio.src = "/static/sound effects/ding.mp3";

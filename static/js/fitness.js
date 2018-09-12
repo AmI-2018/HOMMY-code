@@ -1,7 +1,7 @@
-var SERVER = "http://192.168.1.111:5000";
+var SERVER = "http://192.168.1.102:5000";
 var players = new Array();
 var th1,th2,th3,eliminated, time;
-var tc = 100;
+var tc = 500;
 var names;
 $(document).ready(function(){
   if($(".fitness_chal").attr("id_chal") == "chal1"){

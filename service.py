@@ -1,5 +1,5 @@
-from requests import request as rq, RequestException
-import random, time
+from requests import request, RequestException
+import random, time, hue
 from threading import Lock
 from urllib import request as rq
 mutex = Lock()
@@ -14,6 +14,8 @@ def homePage(driver, url):
             print(e)
             time.sleep(1)
 
+    hue.init()
+    hue.base()
     openWebPage(driver,url)
 
 def openWebPage(driver, url):
@@ -50,7 +52,7 @@ def send(method='GET', url=None, data=None, headers={}):
         result = None
         try:
             # get the result
-            result = rq(method, url, data=data, headers=headers)
+            result = request(method, url, data=data, headers=headers)
         except RequestException as e:
             # print the error
             print(e)
