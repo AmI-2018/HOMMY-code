@@ -165,3 +165,27 @@ VOICE_HZ.html
 .voice_hz{text-align: center;}
 .voice_hz img{height: 400px;margin-top: 30px;}
 .voice_hz h2{padding-top: 40px;}
+
+/*-------------------
+GAME OVER.html
+-------------------*/
+.gameover{text-align: center;}
+.gameover h2{font-size: 60px; color: orange;}
+.gameover h3{font-size: 40px; color: white;}
+.gameover_results{padding-top: 3%;}
+.winner__span{
+  background: green;
+  padding: 0 150px;
+  color: white;
+  border-radius: 25px;
+  font-size: 50px;
+}
+.gameover ul{padding-top: 70px; padding-bottom: 30px;}
+.rank span{
+  background: orange;
+  padding: 0 150px;
+  color: white;
+  border-radius: 25px;
+  font-size: 30px;
+}
+.rank li{margin: 2% 0;}

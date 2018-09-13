@@ -1,5 +1,5 @@
 import requests, winsound
-import service, player, hue, time
+import service, player, hue, time, operator
 THIS_SERVER = "http://192.168.1.102:5000"
 SERVER_KEY = "AAAAejrw0Vc:APA91bH-UEiG0Gl9TnLUUjIw44ps3ctL7tYpoEfZ0pqpPqbyo26bgMrmzgZ_wpfs1bGojbezj1qnaYJ3_WmiCZBC" \
              "pkF2QiSfETuc4afOG6E3bllxULSL9qE9nqwcuybaB2whGisOtJeK"
@@ -8,27 +8,19 @@ TOKEN = "dUYbTta-Q9Q:APA91bFleC9EbmT3UaWWYV8T4P0aw6fdtLP903c4eXsvpnE9F32g1hncMyI
 FIREBASE_URL = "https://fcm.googleapis.com/fcm/send"
 
 if __name__ == '__main__':
-    hue.base()
-    time.sleep(5)
-    hue.wrong()
-    time.sleep(5)
-    hue.right()
-    time.sleep(5)
-    hue.off()
-    time.sleep(5)
-    hue.base()
     # winsound.Beep(350, 5000)
     """player = vlc.MediaPlayer("static/music trivia/payday.mp3")
     player.play()"""
     ciao = dict()
+    prova = list()
     p1 = player.Player("lorry","asdasdads")
     p2 = player.Player("syrien", "asdasdkasda")
-    ciao[p1.getName()] = p1
-    ciao[p2.getName()] = p2
-    print(ciao)
-    print(list(ciao))
-
-    VOICE_HZ = {0: 1000, 50: 500, 100: 400, 150: 300, 250: 100, 350: 20}
-    lista = list(VOICE_HZ)
-    lista.sort()
-    print(lista)
+    p1.addPoints(500)
+    p2.addPoints(1200)
+    prova.append(p1)
+    prova.append(p2)
+    ciao[p1.getName()] = p1.getCurrentScore()
+    ciao[p2.getName()] = p2.getCurrentScore()
+    prova.sort(key=lambda x: x.getCurrentScore(), reverse=True)
+    for p in prova:
+        print(p.getCurrentScore())

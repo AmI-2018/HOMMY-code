@@ -78,7 +78,13 @@ def updateScores():
 @app.route('/endgame')
 def endgame():
     # SORT PLAYER BY SCORE
-    return render_template('endgame.html')
+    playerbyscore = m.sortedPlayerByScore()
+    players = list()
+    scores = dict()
+    for p in playerbyscore:
+        players.append(p.getName())
+        scores[p.getName()] = p.getScore()
+    return render_template('endgame.html', players=players, scores=scores)
 
 
 @app.route('/playMusic')

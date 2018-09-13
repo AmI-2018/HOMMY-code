@@ -5,7 +5,7 @@ import requests, threading, service as srv, player
 class Match:
     # CONSTANTS
     ONLINE_SERVER = "http://127.0.0.1:5000"
-    THIS_SERVER = "http://192.168.1.102:5000"
+    THIS_SERVER = "http://192.168.1.111:5000"
     FIREBASE_SERVER_KEY = "AAAAejrw0Vc:APA91bH-UEiG0Gl9TnLUUjIw44ps3ctL7tYpoEfZ0pqpPqbyo26bgMrmzgZ_wpfs1bGojbezj1qna" \
                           "YJ3_WmiCZBCpkF2QiSfETuc4afOG6E3bllxULSL9qE9nqwcuybaB2whGisOtJeK"
     FIREBASE_URL = "https://fcm.googleapis.com/fcm/send"
@@ -15,7 +15,7 @@ class Match:
     players = dict()
     player_queue = list()
     player_turn = list()
-    played_chal = list([3])
+    played_chal = list([3,1,2])
     number_played_challenge = 0
     quiz = list()
     admin = ''
@@ -157,6 +157,11 @@ class Match:
             scores[self.players[p].getName()] = [self.players[p].getScore(), self.players[p].getCurrentScore()]
 
         return scores
+
+    def sortedPlayerByScore(self):
+        sortedlist = list(self.players.values())
+        sortedlist.sort(key=lambda x: x.getScore(), reverse=True)
+        return sortedlist
 
 
 if __name__ == '__main__':

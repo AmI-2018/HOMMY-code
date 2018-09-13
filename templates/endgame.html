@@ -19,14 +19,17 @@
 <body>
 
   <div class="gameover">
-    <h1 class="name"><img src="logos/hommy logo.png" alt="HOMMY" id="trivia_logo">Game Over</h1>
+    <h1 class="name"><img src="{{ url_for('static', filename='img/hommy_logo.png') }}" alt="HOMMY" id="trivia_logo">Game Over</h1>
     <div class="gameover_results">
       <h2 class="winner">The Winner is:</h2>
-      <h3><span class="winner__span">Lorry03 -> 2000pts</span></h3>
-      <ul class="rank">
-        <li><span>Syrien95 -> 1700pts</span></li>
-        <li><span>Giangio -> 1500pts</span></li>
-        <li><span>Mohamad -> 950</span></li>
+        {% for p in players %}
+            {% if loop.index == 1 %}
+                <h3><span class="winner__span">{{ p }} -> {{ scores[p] }}</span></h3>
+                <ul class="rank">
+            {% else %}
+                <li><span>{{ p }} -> {{ scores[p] }}</span></li>
+            {% endif %}
+        {% endfor %}
       </ul>
     </div>
 
