@@ -1,8 +1,7 @@
-var SERVER = "http://192.168.1.111:5000";
+var SERVER = "http://192.168.1.106:5000";
 var audio = new Audio();
 $(document).ready(function(){
   audio.src = "/static/sound effects/ding.mp3";
-  $.get({"url": SERVER + "/updateScores"});
   demo();
 });
 
@@ -22,6 +21,8 @@ async function demo() {
     $("#score"+(i+1)).text((old + toadd));
     players = players.next();
   }
+
+  $.get({"url": SERVER + "/updateScores"});
 }
 
 async function playSound(){

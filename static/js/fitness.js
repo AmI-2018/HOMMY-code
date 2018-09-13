@@ -1,4 +1,4 @@
-var SERVER = "http://192.168.1.111:5000";
+var SERVER = "http://192.168.1.106:5000";
 var players = new Array();
 var th1,th2,th3,eliminated, time;
 var tc = 300;

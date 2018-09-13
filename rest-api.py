@@ -14,6 +14,7 @@ RIGHT_ANSWER = 100
 VOICE_HZ = {5: 1000, 50: 500, 100: 400, 150: 300, 250: 100, 350: 20}
 FITNESS_CHAL_MULTIPLIER = 5
 DANCE_PLAYER = MediaPlayer("static/music trivia/roar.mp3")
+GAME_OVER_PLAYER = MediaPlayer("static/sound effects/Vittoria!.mp3")
 
 @app.route('/')
 def lobby():
@@ -88,6 +89,8 @@ def updateBestScore():
 def endgame():
     # SORT PLAYER BY SCORE
     m.sendNotifications(title="gameover")
+    stopMusic()
+    GAME_OVER_PLAYER.play()
     playerbyscore = m.sortedPlayerByScore()
     players = list()
     scores = dict()
@@ -445,6 +448,18 @@ def ranking(chal_id):
         return jsonify(res.json())
 
     return jsonify({'result', "ERROR"})
+
+#MOBILE
+@app.route('/getScore/<string:name>')
+def getScore(name):
+
+    for p in m.players:
+        if m.players[p].getName() == name:
+            score = m.players[p].getScore()
+
+    return jsonify({'result':"SUCCESS","score":score})
+
+
 
 
 if __name__ == '__main__':
