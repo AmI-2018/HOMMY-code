@@ -38,6 +38,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
 
         if(items.get(position) != null )
         {
+            text.setTextSize(20);
             text.setTextColor(Color.WHITE);
             text.setText(items.get(position));
             text.setBackgroundColor(Color.RED);
