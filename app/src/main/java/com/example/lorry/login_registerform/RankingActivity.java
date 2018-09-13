@@ -3,7 +3,6 @@ package com.example.lorry.login_registerform;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -41,7 +40,7 @@ public class RankingActivity extends AppCompatActivity {
 
         for (int chal_id = 1; chal_id <= 4; chal_id++) {
             final int id = chal_id;
-            ;
+
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                     Constants.getRankingUrl() + chal_id,
                     null,

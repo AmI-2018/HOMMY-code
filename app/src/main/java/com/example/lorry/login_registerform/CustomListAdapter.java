@@ -44,7 +44,6 @@ public class CustomListAdapter extends ArrayAdapter<String> {
             int color = Color.argb( 200, 255, 64, 64 );
             text.setBackgroundColor( color );
             text.setGravity(Gravity.CENTER);
-
         }
 
         return mView;

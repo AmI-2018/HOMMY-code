@@ -16,7 +16,6 @@ public class Profile extends AppCompatActivity {
     TextView birthDate;
     TextView genre;
     TextView won;
-    TextView mpChallenge;
     Button back;
 
     @Override
@@ -28,7 +27,6 @@ public class Profile extends AppCompatActivity {
         birthDate = findViewById(R.id.birthdate_text);
         genre = findViewById(R.id.genre_text);
         won = findViewById(R.id.won_text);
-        mpChallenge = findViewById(R.id.mpc_text);
         back = findViewById(R.id.ranking_back_button);
        back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,13 +43,6 @@ public class Profile extends AppCompatActivity {
             birthDate.setText(getResources().getString(R.string.birthdate_text, birth[1], birth[2], birth[3]));
             genre.setText(tmp.get("genre").toString());
             won.setText(tmp.get("challengeWon").toString());
-            System.out.println(tmp.get("mostPlayedCat"));
-            if (!tmp.get("mostPlayedCat").toString().equals("null"))
-                mpChallenge.setText(tmp.get("mostPlayedCat").toString());
-            else {
-                mpChallenge.setVisibility(View.GONE);
-                findViewById(R.id.mpc).setVisibility(View.GONE);
-            }
         }
         catch(JSONException e) {
             e.printStackTrace();
