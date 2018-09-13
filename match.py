@@ -15,7 +15,7 @@ class Match:
     players = dict()
     player_queue = list()
     player_turn = list()
-    played_chal = list([3,1,2])
+    played_chal = list([3])
     number_played_challenge = 0
     quiz = list()
     admin = ''

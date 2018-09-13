@@ -74,10 +74,20 @@ def updateScores():
     m.updateScores()
     return jsonify({'result': "SUCCESS"})
 
+@app.route('/updateBestScore', methods=['POST'])
+def updateBestScore():
+    json = request.json
+    if (json is not None) and ('username' in json) and ('chal_id' in json) and ('score' in json):
+        res = requests.post(m.ONLINE_SERVER + "/updateBestScore", json=json)
+        return jsonify({'result': res.text})
+
+    return jsonify({'result': "ERROR"})
+
 
 @app.route('/endgame')
 def endgame():
     # SORT PLAYER BY SCORE
+    m.sendNotifications(title="gameover")
     playerbyscore = m.sortedPlayerByScore()
     players = list()
     scores = dict()
