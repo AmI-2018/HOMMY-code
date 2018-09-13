@@ -11,6 +11,10 @@
     <string name="logout">Logout</string>
     <string name="welcome">Hello %s!</string>
     <string name="welcomeP">~ %s ~</string>
+    <string name="game_over">Game Over!</string>
+    <string name="y_score">Your Final Score:</string>
+    <string name="score">---- %s ----</string>
+    <string name="new_game">New Game</string>
     <string name="information">Here you can find your information:</string>
     <string name="user_id">User ID:</string>
     <string name="birthdate">Birth Date:</string>

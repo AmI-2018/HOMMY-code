@@ -17,6 +17,7 @@ public class Constants {
     private static String NEXT_CHALLENGE = "challengeResult";
     private static String RANKING = "getRanking/";
     private static String FEEDBACK = "feedback/";
+    private static String SCORE = "getScore/";
 
 
     //FONT
@@ -47,4 +48,5 @@ public class Constants {
     public static String getNextChallenge(){return BASE_URL + NEXT_CHALLENGE;}
     public static String getRankingUrl(){return BASE_URL + RANKING;}
     public static String getFeedbackUrl(){return BASE_URL + FEEDBACK;}
+    public static String getScoreUrl (){return BASE_URL + SCORE;}
 }
