@@ -94,6 +94,15 @@ def ranking(chal_id):
 
    return jsonify({'result':"SUCCESS", 'scores': lista})
 
+
+@app.route('/updateBestScore', methods=['POST'])
+def updateBestScore():
+    json = request.json
+    if (json is not None) and ('username' in json) and ('chal_id' in json) and ('score' in json):
+        return db.bestScore(json['username'], json['chal_id'], json['score'])
+
+    return "ERROR JSON"
+
 def prepare_cat_json(item):
     cat = dict()
     cat['id'] = item[0]
@@ -117,7 +126,6 @@ def prepare_user_json(item):
     user['birthDate'] = item[1]
     user['genre'] = item[2]
     user['challengeWon'] = item[3]
-    user['mostPlayedCat'] = item[4]
     return user
 
 if __name__ == '__main__':

@@ -2,7 +2,7 @@ import mysql.connector
 import random
 
 userdb = 'root'
-pswdb = '231195Pierluigi'
+pswdb = 'asdf12345'
 host = 'localhost'
 db = 'hommy'
 
@@ -120,7 +120,7 @@ def getRandomQuiz(id, quiz_list):
 
 def getUserInfo(username, psw):
     conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
-    query = "SELECT username, birthDate, genre, challengeWon, mostPlayedCat FROM profiles WHERE username = %s AND psw = %s"
+    query = "SELECT username, birthDate, genre, challengeWon FROM profiles WHERE username = %s AND psw = %s"
 
     cursor = conn.cursor()
     cursor.execute(query,(username,psw))
@@ -186,11 +186,38 @@ def getRanking(id):
     conn.close()
     return res
 
+def bestScore(playerName, chal_id, score):
+    conn = mysql.connector.connect(user=userdb, password=pswdb, host=host, database=db)
+    query = "SELECT bestScore FROM `profiles-challenges` WHERE username = %s AND idChal = %s"
+
+    cursor = conn.cursor()
+    cursor.execute(query, (playerName,chal_id))
+    res = cursor.fetchone()
+    cursor.close()
+    if res is None:
+        query = "INSERT INTO `profiles-challenges`(username, idChal, bestScore) VALUES (%s, %s, %s)"
+        cursor = conn.cursor()
+        try:
+            cursor.execute(query, (playerName, chal_id, score))
+            conn.commit()
+        except Exception as e:
+            conn.rollback()
+            cursor.close()
+            conn.close()
+            return "SOMETHING WENT WRONG"
+    elif res[0] < score:
+        query = "UPDATE `profiles-challenges` SET bestScore = %s WHERE username = %s AND idChal = %s"
+        cursor = conn.cursor()
+        try:
+            cursor.execute(query, (score, playerName, chal_id))
+            conn.commit()
+        except Exception as e:
+            conn.rollback()
+            cursor.close()
+            conn.close()
+            return "SOMETHING WENT WRONG"
+    return "SUCCESS"
+
 if __name__ == '__main__':
-    #getUserInfo("lorry03","asdf12345")
-    #print(registerUser("lorry96", "abdullah", "1996-12-25", "M"))
-    #print(getRandomChallenge("DEMO", [1,2]))
-    #print(getRandomChallenge("DEMO", []))
-    res=getRanking(4)
-    print(res)
+    print(bestScore("lorry03", 1, 580))
 
