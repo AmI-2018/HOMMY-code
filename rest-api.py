@@ -88,7 +88,6 @@ def updateBestScore():
 @app.route('/endgame')
 def endgame():
     # SORT PLAYER BY SCORE
-    m.sendNotifications(title="gameover")
     stopMusic()
     GAME_OVER_PLAYER.play()
     playerbyscore = m.sortedPlayerByScore()
@@ -144,7 +143,7 @@ def getChallenge(category):
     r = requests.post(m.ONLINE_SERVER + "/getChallenge/" + category, json={'list': m.played_chal})
     if r.text == "-1":
         threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/endgame")).start()
-        m.sendNotifications()
+        m.sendNotifications(title="gameover")
         return jsonify({'result': -1})
 
     json = r.json()
@@ -450,14 +449,16 @@ def ranking(chal_id):
     return jsonify({'result', "ERROR"})
 
 #MOBILE
-@app.route('/getScore/<string:name>')
-def getScore(name):
-
+@app.route('/getScore')
+def getScore():
+    header = request.headers
+    name = header['authorization']
     for p in m.players:
         if m.players[p].getName() == name:
             score = m.players[p].getScore()
+            return jsonify({'result': "SUCCESS", "score": score})
 
-    return jsonify({'result':"SUCCESS","score":score})
+    return jsonify({'result': "ERROR"})
 
 
 
