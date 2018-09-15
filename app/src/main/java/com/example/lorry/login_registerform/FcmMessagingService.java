@@ -55,7 +55,7 @@ public class FcmMessagingService extends FirebaseMessagingService {
             DanceStop.isMusicOn = false;
         }
         else if (title.toLowerCase().equals("gameover")){
-            Intent intent = new Intent(getApplicationContext(), Feedback.class);
+            Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }

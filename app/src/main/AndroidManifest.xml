@@ -65,8 +65,7 @@
         <activity android:name=".RankingActivity" />
         <activity android:name=".Settings" />
         <activity android:name=".DanceStopChallenge"/>
-        <activity android:name=".Settings" />
-        <activity android:name=".GameOverActivity"></activity>
+        <activity android:name=".GameOverActivity"/>
     </application>
 
 </manifest>

@@ -17,7 +17,7 @@ public class Constants {
     private static String NEXT_CHALLENGE = "challengeResult";
     private static String RANKING = "getRanking/";
     private static String FEEDBACK = "feedback/";
-    private static String SCORE = "getScore/";
+    private static String SCORE = "getScore";
 
 
     //FONT
