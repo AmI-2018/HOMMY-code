@@ -118,12 +118,14 @@ def stopMusic():
 @app.route('/playDance')
 def playDance():
     m.sendNotifications(title="play")
-    DANCE_PLAYER.play()
+    # DANCE_PLAYER.play()
+    return "SUCCESS"
 
 @app.route('/stopDance')
 def stopDance():
     m.sendNotifications(title="stop")
-    DANCE_PLAYER.play()
+    # DANCE_PLAYER.play()
+    return "SUCCESS"
 
 # MOBILE
 @app.route('/categoriesM')
@@ -148,7 +150,7 @@ def getChallenge(category):
 
     json = r.json()
     lastChal = m.getCurrentIdChal()
-    if json['id'] == 1:
+    if (json['id'] == 1) or (json['id'] == 3):
         print(m.playerTurn(len(m.players)))
         print("getChallenge: fitnessChallenge")
     elif (lastChal != 2) and (lastChal !=4):
@@ -459,7 +461,6 @@ def getScore():
             return jsonify({'result': "SUCCESS", "score": score})
 
     return jsonify({'result': "ERROR"})
-
 
 
 

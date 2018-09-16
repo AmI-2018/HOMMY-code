@@ -167,6 +167,17 @@ VOICE_HZ.html
 .voice_hz h2{padding-top: 40px;}
 
 /*-------------------
+DANCE_STOP.html
+-------------------*/
+.dancestopstart{
+  text-align: center;
+}
+.dance_content{padding-top: 5%;}
+#countdown{font-size: 100px;}
+#init_text{padding-top: 5%;}
+#dance_img{height: 350px;}
+
+/*-------------------
 GAME OVER.html
 -------------------*/
 .gameover{text-align: center;}

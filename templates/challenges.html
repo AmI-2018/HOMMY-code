@@ -108,8 +108,7 @@
                 <div class="row fitness_chal_body">
                     <div class="col-md-4 exercise">
                         <h2>Squats:</h2>
-                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <p class="lead">Train like an athlete while having fun and you'll become a champion!</p>
                     </div>
                     <div class="col-md-5">
                         <img src="{{ url_for('static', filename='img/fitness/squats.jpg') }}" alt="" id="exercise_img">
@@ -128,7 +127,24 @@
                 <h2>Press <span id="join">Get Tone</span> to listen to your sound to reproduce by your voice!</h2>
             </div>
         {% else %}
-            <h1>CIAO CIAO CIAO</h1>
+              <div class="dancestopstart">
+                <h1 class="name"><img src="logos/hommy logo.png" alt="HOMMY" id="trivia_logo">Dance and Stop</h1>
+                <div class="row dance_content">
+                  <div class="col-md-3">
+                      <img src="{{ url_for('static', filename='img/dance.png') }}" alt="pulse" id="pulse">
+                  </div>
+                  <div class="col-md-6">
+                        <h2>The rules are simple: Dance when music is on, otherwise just stay put!</h2>
+                        <div id="init_text">
+                          <h3>Game starts in:</h3>
+                          <h1 id="countdown"></h1>
+                        </div>
+                  </div>
+                  <div class="col-md-3">
+                      <img src="{{ url_for('static', filename='img/stop.png') }}" alt="stop" id="dance_img">
+                  </div>
+                </div>
+              </div>
         {% endif %}
     {% endif %}
     <h3 class="turn">Turn: {% for p in players %}{{ p }} {% endfor %}</h3>
@@ -139,5 +155,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='js/chal.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='js/fitness.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='js/dancestop.js') }}" type="text/javascript"></script>
 </body>
 </html>

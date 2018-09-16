@@ -3,6 +3,9 @@ var players = new Array();
 var th1,th2,th3,eliminated, time;
 var tc = 300;
 var names;
+var s1 = "I already know what giving up feels like, show me what happens if you don't!";
+var s2 = "It never gets any easier, you just get better!";
+var s3 = "Strength doesn't come from what you can do, it comes from things you thought you couldn't!";
 $(document).ready(function(){
   if($(".fitness_chal").attr("id_chal") == "chal1"){
     let string = $(".turn").text();
@@ -83,14 +86,17 @@ function updateChallenge(index, p_number){
   if(checkArray(th3,p_number) == p_number){
     $(".exercise h2").text("Burpees:");
     $("#exercise_img").attr("src","/static/img/fitness/burpees.jpg");
+    $(".exercise p").text(s1);
   }
   else if(checkArray(th2,p_number) == p_number){
     $(".exercise h2").text("Sit Ups:");
     $("#exercise_img").attr("src","/static/img/fitness/sit_ups.jpg");
+    $(".exercise p").text(s2);
   }
   else if(checkArray(th1,p_number) == p_number){
     $(".exercise h2").text("Pushups:");
     $("#exercise_img").attr("src","/static/img/fitness/pushups.jpg");
+    $(".exercise p").text(s3);
   }
 
   for(let i=0; i<p_number;i++){
