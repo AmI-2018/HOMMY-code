@@ -1,4 +1,4 @@
-var SERVER = "http://192.168.1.111:5000";
+var SERVER = "http://192.168.0.65:5000";
 var turns=3;
 var musicOn = true;
 $(document).ready(function(){

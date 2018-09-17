@@ -1,5 +1,5 @@
 var audio = new Audio();
-var SERVER = "http://192.168.1.111:5000";
+var SERVER = "http://192.168.0.65:5000";
 $(document).ready(function () {
     if ($('#4').length){
         /*audio.src = "/static/music trivia/payday.mp3";

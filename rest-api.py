@@ -243,9 +243,10 @@ def chooseAnswer(chal_id, answer):
             if m.current_trivia['answer'] == a:
                 # If the player answer correctly HOMMY provides a new Quiz
                 ws.PlaySound(correct, ws.SND_FILENAME | ws.SND_ASYNC)
-                hue.right()
+                #hue.right()
+                threading.Thread(target=hue.right).start()
                 time.sleep(2)
-                hue.base()
+                threading.Thread(target=hue.base).start()
                 current_player.addPoints(RIGHT_ANSWER, 4)
                 threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/viewChallenge/" + str(chal_id))).start()
                 return jsonify({'result': "CORRECT"})

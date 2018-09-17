@@ -1,4 +1,4 @@
-var SERVER = "http://192.168.1.111:5000";
+var SERVER = "http://192.168.0.65:5000";
 var players = new Array();
 var audio = new Audio();
 var th1,th2,th3,eliminated, time;
