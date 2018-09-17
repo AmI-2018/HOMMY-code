@@ -26,7 +26,7 @@ public class DanceStop implements SensorEventListener {
     private static final int GRACE=100;
     private int skips =GRACE;
     private Listener listener;
-    static public boolean isMusicOn=false;
+    static public boolean isMusicOn=true;
     private Handler handler;
 
     public DanceStop(Context context,@NonNull Listener callback){
@@ -81,7 +81,7 @@ public class DanceStop implements SensorEventListener {
 //    }
     //game start signal , plays music and starts listening for sensors
     public void gameStart(){
-        isMusicOn=true;
+        //isMusicOn=true;
 //        mMediaPlayer.start();
         handler.postDelayed(() -> {
            mSensorManager.registerListener(DanceStop.this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
@@ -93,39 +93,41 @@ public class DanceStop implements SensorEventListener {
     //listen for sensor events and calc abs diff to find if player is moving or not....1 sec grace time for player to start dancing
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        if(skips ==0){
-            if(listener!=null)
-            {
-                stopGame();
-                listener.onResult(false);
+        if(!isMusicOn){
+            if(skips ==0){
+                if(listener!=null)
+                {
+                    stopGame();
+                    listener.onResult(false);
+                }
             }
-        }
-        double mag=Math.sqrt(sensorEvent.values[0]*sensorEvent.values[0]+sensorEvent.values[1]*sensorEvent.values[1]+sensorEvent.values[2]*sensorEvent.values[2]);
-        if(sensorEvent.sensor.getName().equals(mAccelerometer.getName()))
-        {
-            if(isMusicOn&&Math.abs(mag-initAcce)<0.1d)
-                skips--;
-            else if(!isMusicOn&&Math.abs(mag-initAcce)>0.5d)
-                skips--;
+            double mag=Math.sqrt(sensorEvent.values[0]*sensorEvent.values[0]+sensorEvent.values[1]*sensorEvent.values[1]+sensorEvent.values[2]*sensorEvent.values[2]);
+            if(sensorEvent.sensor.getName().equals(mAccelerometer.getName()))
+            {
+                if(isMusicOn&&Math.abs(mag-initAcce)<0.1d)
+                    skips--;
+                else if(!isMusicOn&&Math.abs(mag-initAcce)>0.5d)
+                    skips--;
+                else
+                    skips =GRACE;
+
+                initAcce=mag;
+                Log.d("Accel",String.valueOf(initAcce));
+            }
             else
-                skips =GRACE;
+                if(mGyroscope!=null)
+                    if(sensorEvent.sensor.getName().equals(mGyroscope.getName()))
+                    {
+                        if(isMusicOn&&Math.abs(mag-initGyro)<0.1d)
+                            skips--;
+                        else if(!isMusicOn&&Math.abs(mag-initGyro)>0.5d)
+                            skips--;
+                        else skips=GRACE;
+                        initGyro=mag;
+                        Log.d("Gyr",String.valueOf(initGyro));
 
-            initAcce=mag;
-            Log.d("Accel",String.valueOf(initAcce));
+                    }
         }
-        else
-            if(mGyroscope!=null)
-            if(sensorEvent.sensor.getName().equals(mGyroscope.getName()))
-            {
-                if(isMusicOn&&Math.abs(mag-initGyro)<0.1d)
-                    skips--;
-                else if(!isMusicOn&&Math.abs(mag-initGyro)>0.5d)
-                    skips--;
-                else skips=GRACE;
-                initGyro=mag;
-                Log.d("Gyr",String.valueOf(initGyro));
-
-            }
     }
     //required by interface not needed here
     @Override
@@ -145,7 +147,7 @@ public class DanceStop implements SensorEventListener {
     //game stop signal.... 1 sec grace time for player to stop
     public void gameStop(){
         stopGame();
-        isMusicOn=false;
+        //isMusicOn=false;
         handler.postDelayed(()->{
             if(skips>0&&listener!=null)
                 listener.onResult(true);

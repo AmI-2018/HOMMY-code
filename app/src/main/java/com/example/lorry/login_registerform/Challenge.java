@@ -96,6 +96,9 @@ public class Challenge extends AppCompatActivity {
                                                     startActivity(intent);
                                                     break;
                                                 case 3:
+                                                    Intent intent1 = new Intent(getApplicationContext(), DanceStopChallenge.class);
+                                                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    startActivity(intent1);
                                                     break;
                                                 case 4:
                                                     findViewById(R.id.answer_layout1).setVisibility(View.VISIBLE);
@@ -121,6 +124,9 @@ public class Challenge extends AppCompatActivity {
                                                     startActivity(intent);
                                                     break;
                                                 case 3:
+                                                    Intent intent1 = new Intent(getApplicationContext(), DanceStopChallenge.class);
+                                                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    startActivity(intent1);
                                                     break;
                                                 case 4:
                                                     findViewById(R.id.answer_layout1).setVisibility(View.VISIBLE);

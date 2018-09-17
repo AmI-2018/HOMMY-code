@@ -48,17 +48,17 @@ public class FcmMessagingService extends FirebaseMessagingService {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
-        else if (title.toLowerCase().equals("musicon")){
-            DanceStop.isMusicOn = true;
-        }
-        else if (title.toLowerCase().equals("musicoff")){
-            DanceStop.isMusicOn = false;
-        }
         else if (title.toLowerCase().equals("gameover")){
             Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
+        else if (title.toLowerCase().equals("play"))
+            DanceStopChallenge.isMusicOn=true;
+        else if (title.toLowerCase().equals("stop"))
+            DanceStopChallenge.isMusicOn=false;
+        else if (title.toLowerCase().equals("dancestop"))
+            DanceStopChallenge.active=false;
         else {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                     Constants.getCurrentChallenge(),
