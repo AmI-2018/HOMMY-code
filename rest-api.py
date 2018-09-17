@@ -9,7 +9,9 @@ music_player = MediaPlayer("static/music trivia/payday.mp3")
 music_on = False
 ready = 0
 fb = {"times": 0, "rate": 0}
+danceRank = list()
 
+DANCE_POINTS = [50, 100, 250, 400, 600, 800, 1000, 1500]
 RIGHT_ANSWER = 100
 VOICE_HZ = {5: 1000, 50: 500, 100: 400, 150: 300, 250: 100, 350: 20}
 FITNESS_CHAL_MULTIPLIER = 5
@@ -118,14 +120,16 @@ def stopMusic():
 @app.route('/playDance')
 def playDance():
     m.sendNotifications(title="play")
-    # DANCE_PLAYER.play()
-    return "SUCCESS"
+    DANCE_PLAYER.play()
+    return jsonify({"result": "SUCCESS"})
+
 
 @app.route('/stopDance')
 def stopDance():
     m.sendNotifications(title="stop")
-    # DANCE_PLAYER.play()
-    return "SUCCESS"
+    DANCE_PLAYER.pause()
+    return jsonify({"result": "SUCCESS"})
+
 
 # MOBILE
 @app.route('/categoriesM')
@@ -332,7 +336,10 @@ def do(challenge):
         if freq == -1:
             freq = srv.randomFrequency()
             m.voiceHzResult(user,freq)
-        threading.Thread(target=ws.Beep, args=(freq,5000)).start()
+        threading.Thread(target=ws.Beep, args=(freq, 5000)).start()
+
+    elif int(challenge) == 3:
+        ws.PlaySound('static\sound effects\Wrong Answer.wav', ws.SND_FILENAME | ws.SND_ASYNC)
 
     return jsonify({"result": "SUCCESS"})
 
@@ -348,6 +355,8 @@ def challengeResult():
     for p in m.player_turn:
         if user == p:
             found = True
+    if user == "dancestop":
+        found = True
     if found is False:
         return jsonify({"result": "NOT AUTHORIZED"})
     id = res['id']
@@ -401,9 +410,29 @@ def challengeResult():
             threading.Thread(target=srv.openWebPage,args=(m.driver, m.THIS_SERVER + "/viewChallenge/" + str(id))).start()
 
         playMusic()
+
     # DANCE AND STOP
     elif id == 3:
-        pass
+        global danceRank
+        if user != "dancestop":
+            danceRank.append(user)
+        if (len(danceRank) >= len(m.player_turn)-1) or user == "dancestop":
+            i = 0
+            for p in danceRank:
+                current_player = m.getPlayer(p)
+                current_player.addPoints(DANCE_POINTS[i])
+                i = i+1
+
+            index = i-1 + (len(m.player_turn) - len(danceRank))
+            for p in m.player_turn:
+                if p not in danceRank:
+                    m.getPlayer(p).addPoints(DANCE_POINTS[index])
+                    m.sendNotifications(title="dancestop", players=list(p))
+
+            time.sleep(1)
+            m.sendNotifications(title="feedback")
+            threading.Thread(target=srv.openWebPage, args=(m.driver, m.THIS_SERVER + "/scores")).start()
+
     # MUSIC TRIVIA
     elif id == 4:
         pass
