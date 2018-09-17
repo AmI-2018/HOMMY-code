@@ -32,7 +32,7 @@ public class DanceStopChallenge extends AppCompatActivity implements SensorEvent
     private Sensor mAccelerometer;
 
     private double initAcce=Double.NaN;
-    private static final int GRACE=20;
+    private static final int GRACE=25;
     private int skips =GRACE;
     static public boolean isMusicOn=false;
     static public boolean active = true;
@@ -98,6 +98,7 @@ public class DanceStopChallenge extends AppCompatActivity implements SensorEvent
             while(!isMusicOn);
             gameStart();
         }).start();
+        //gameStart();
     }
 
     @Override
