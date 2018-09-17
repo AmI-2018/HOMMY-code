@@ -37,10 +37,21 @@ def randomize(lista):
 
     return new_list
 
+
 def randomFrequency():
     ran = random.randint(6,30)
     ran = ran*50
     return ran
+
+
+def transition(isOn):
+    hue.wrong()
+    time.sleep(2)
+    if isOn:
+        hue.dance()
+    else:
+        hue.right()
+
 
 def send(method='GET', url=None, data=None, headers={}):
     # the response dictionary, initially empty

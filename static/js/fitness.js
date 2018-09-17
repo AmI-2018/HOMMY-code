@@ -1,7 +1,8 @@
 var SERVER = "http://192.168.1.111:5000";
 var players = new Array();
+var audio = new Audio();
 var th1,th2,th3,eliminated, time;
-var tc = 300;
+var tc = 80;
 var names;
 var s1 = "I already know what giving up feels like, show me what happens if you don't!";
 var s2 = "It never gets any easier, you just get better!";
@@ -11,6 +12,8 @@ $(document).ready(function(){
     let string = $(".turn").text();
     string = string.replace("Turn: ", "");
     names = string.split(" ");
+    audio.src = "/static/music trivia/eye of the tiger.mp3";
+    audio.play();
     //console.log(players);
     $(".turn").remove();
     let n = $(".players_list").attr("player_number")*1;

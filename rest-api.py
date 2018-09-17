@@ -15,7 +15,9 @@ DANCE_POINTS = [50, 100, 250, 400, 600, 800, 1000, 1500]
 RIGHT_ANSWER = 100
 VOICE_HZ = {5: 1000, 50: 500, 100: 400, 150: 300, 250: 100, 350: 20}
 FITNESS_CHAL_MULTIPLIER = 5
-DANCE_PLAYER = MediaPlayer("static/music trivia/roar.mp3")
+FITNESS_PLAYER = MediaPlayer("static/music trivia/eye of the tiger.mp3")
+DANCE_PLAYER = MediaPlayer("static/music trivia/pump it.mp3")
+MUSIC_DANCE = False
 GAME_OVER_PLAYER = MediaPlayer("static/sound effects/Vittoria!.mp3")
 
 @app.route('/')
@@ -120,14 +122,20 @@ def stopMusic():
 @app.route('/playDance')
 def playDance():
     m.sendNotifications(title="play")
-    DANCE_PLAYER.play()
+    global MUSIC_DANCE
+    if not MUSIC_DANCE:
+        DANCE_PLAYER.play()
+        MUSIC_DANCE = True
     return jsonify({"result": "SUCCESS"})
 
 
 @app.route('/stopDance')
 def stopDance():
     m.sendNotifications(title="stop")
-    DANCE_PLAYER.pause()
+    global MUSIC_DANCE
+    if MUSIC_DANCE:
+        DANCE_PLAYER.pause()
+        MUSIC_DANCE = False
     return jsonify({"result": "SUCCESS"})
 
 
@@ -288,6 +296,7 @@ def signin():
     res = requests.post(m.ONLINE_SERVER + "/signin", json=info)
     return jsonify({"result": res.text})
 
+
 # MOBILE
 @app.route('/startchallenge/<int:id>')
 def startChallenge(id):
@@ -319,6 +328,7 @@ def startChallenge(id):
 
     stopMusic()
     return jsonify({'result': 2})
+
 
 # MOBILE
 @app.route('/do/<int:challenge>')
@@ -413,10 +423,13 @@ def challengeResult():
 
     # DANCE AND STOP
     elif id == 3:
-        global danceRank
+        global danceRank, MUSIC_DANCE
         if user != "dancestop":
             danceRank.append(user)
+            ws.PlaySound('static\sound effects\Wrong Answer.wav', ws.SND_FILENAME | ws.SND_ASYNC)
+            threading.Thread(target=srv.transition, args=(MUSIC_DANCE,)).start()
         if (len(danceRank) >= len(m.player_turn)-1) or user == "dancestop":
+            stopDance()
             i = 0
             for p in danceRank:
                 current_player = m.getPlayer(p)
@@ -427,7 +440,7 @@ def challengeResult():
             for p in m.player_turn:
                 if p not in danceRank:
                     m.getPlayer(p).addPoints(DANCE_POINTS[index])
-                    m.sendNotifications(title="dancestop", players=list(p))
+                    m.sendNotifications(title="dancestop")
 
             time.sleep(1)
             m.sendNotifications(title="feedback")

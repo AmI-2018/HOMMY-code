@@ -2,7 +2,7 @@ var SERVER = "http://192.168.1.111:5000";
 var turns=3;
 var musicOn = true;
 $(document).ready(function(){
-    if($("#init_text").length)
+    if($(".dancestopstart").attr("id_chal") == 3)
         demo();
 });
 
@@ -43,6 +43,7 @@ function stopDance() {
 }
 
 function finishDance() {
+    stopDance();
     let headers = {"authorization": "dancestop"};
     let json = {"id": 3};
     json = JSON.stringify(json);

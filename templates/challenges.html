@@ -127,7 +127,7 @@
                 <h2>Press <span id="join">Get Tone</span> to listen to your sound to reproduce by your voice!</h2>
             </div>
         {% else %}
-              <div class="dancestopstart">
+              <div class="dancestopstart" id_chal="3">
                 <h1 class="name"><img src="logos/hommy logo.png" alt="HOMMY" id="trivia_logo">Dance and Stop</h1>
                 <div class="row dance_content">
                   <div class="col-md-3">
@@ -155,6 +155,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='js/chal.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='js/fitness.js') }}" type="text/javascript"></script>
-<script src="{{ url_for('static', filename='js/dancestop.js') }}" type="text/javascript"></script>
+{% if res['id'] == 3 %}
+    <script src="{{ url_for('static', filename='js/dancestop.js') }}" type="text/javascript"></script>
+{% endif %}
 </body>
 </html>
