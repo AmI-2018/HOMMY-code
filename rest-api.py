@@ -382,6 +382,7 @@ def challengeResult():
                     current_player.addPoints(600)
                 else:
                     current_player.addPoints(int(res[key] * FITNESS_CHAL_MULTIPLIER))
+
                 print(current_player.getScore())
 
         time.sleep(2)

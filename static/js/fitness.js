@@ -2,7 +2,7 @@ var SERVER = "http://192.168.0.65:5000";
 var players = new Array();
 var audio = new Audio();
 var th1,th2,th3,eliminated, time;
-var tc = 80;
+var tc = 200;
 var names;
 var s1 = "I already know what giving up feels like, show me what happens if you don't!";
 var s2 = "It never gets any easier, you just get better!";

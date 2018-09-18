@@ -10,7 +10,7 @@ username = 'byJxxNNsW5pkEi-yNr3kbt5YOqyIcRspdUi2VLBI' #username fisico
 
 lights_URL = base_URL + '/api/' + username + '/lights/'
 id1 = 12
-id2 = 9
+id2 = 5
 LOOP = False
 
 all_the_lights=""
@@ -102,7 +102,4 @@ def off():
 if __name__ == '__main__':
     init()
     print(all_the_lights)
-    base()
-
-    time.sleep(3)
-    wrong()
+    voice()

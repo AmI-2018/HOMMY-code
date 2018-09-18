@@ -15,7 +15,7 @@ class Match:
     players = dict()
     player_queue = list()
     player_turn = list()
-    played_chal = list([1,4,3])
+    played_chal = list([1,3,4])
     number_played_challenge = 0
     quiz = list()
     admin = ''
@@ -108,6 +108,7 @@ class Match:
                             }
                           }
                 res.append(requests.post(self.FIREBASE_URL, headers=headers, json=fields).text)
+        print(res)
         return res
 
     def getToken(self, player):
